@@ -1,0 +1,12 @@
+Récupérer les données sur le compte git sur le répertoire courant:
+git clone https://github.com/ghumeau/ASI334
+git pull https://github.com/ghumeau/ASI334 master
+
+Effectuer un commit du travail effectué (se placer sur le répertoire à copier):
+git add .
+git commit -m "mise à jour"
+git push https://github.com/ghumeau/ASI334 master
+
+
+
+
