@@ -1,0 +1,24 @@
+INDEX VERSION 1.130+/Users/arnaudlegrignou/Documents/eclipse-workspace/.metadata/.plugins/org.eclipse.jdt.core
+2289196694.index
+286692086.index
+2789894291.index
+2284736203.index
+4191817251.index
+995247809.index
+275094254.index
+3006069595.index
+3784666197.index
+3291250546.index
+2312369487.index
+2085917576.index
+1271342938.index
+1836111425.index
+2043206947.index
+2425607851.index
+2973570024.index
+3106509465.index
+4070421791.index
+2716574433.index
+2468038871.index
+495908567.index
+1463469286.index
