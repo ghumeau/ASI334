@@ -7,9 +7,6 @@ package fr.ensta.ldapmanager;
 
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.collections.ModifiableObservableListBase;
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
