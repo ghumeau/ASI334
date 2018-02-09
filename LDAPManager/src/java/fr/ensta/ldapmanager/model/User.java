@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.ensta.ldapmanager;
+package fr.ensta.ldapmanager.model;
 
 import java.util.HashMap;
 
@@ -30,6 +30,10 @@ public class User {
     public User(String uid, String password) {
         this.uid = uid;
         this.password = password;
+    }
+
+    public User() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     public String getUid() {
