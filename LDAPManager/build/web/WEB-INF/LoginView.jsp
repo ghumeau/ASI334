@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -23,7 +23,7 @@
         <form method="post" class="loginForm" action="">
                 <h2>Authentification</h2>
                 <div>
-                    <label for="login">Login (UID)</label><span>: </span><span class="erreur">${erreurs['login']}</span><br>
+                    <label for="login">Login (UID)</label><span>: </span><br>
                     <input type="text" id="login" name="login" class="loginForm"/>
                     <span class="erreur">${erreurs['login']}</span>
                 </div>
