@@ -12,12 +12,15 @@
         <title>JSP Page</title>
         <link type="text/css" media="screen" rel="stylesheet" href="../css/style.css" />
     </head>
-    <header><h1>LDAP Manager</h1></header>
-    <body> 
-        <form>
-        <h2>Vous avez été deconnecté</h2>
-        <a href="../login/"> <input type="button" href="../login/" value="Se connecter"></a>
+    <header>LDAP Manager</header>
+    <body>
         
+        <form>
+        <h2>Récuperation du Mot de Passe</h2>
+        <label for="password">Mot de passe</label><br>
+        <<label for="uid">Mot de passe</label><br>
+        <input type="text" href="../secure/" value="uid">
+        <input type="button" >
         </form>
     </body>
 </html>

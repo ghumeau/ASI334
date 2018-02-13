@@ -50,7 +50,7 @@ public class LoginView extends HttpServlet {
             else {                                           // authentification réussie
                 request.setAttribute("usermap", svc.RetrieveInfo());
                 // Transmission de la MAP contenant les infos utilisateur à la JSP d'affichage des données
-                this.getServletContext().getRequestDispatcher("/WEB-INF/LDAPView.jsp").forward(request, response);
+                this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
             }
         }
      
@@ -69,7 +69,7 @@ public class LoginView extends HttpServlet {
         } 
         
         // Création de la liste des caractères valides (chiffres et lettres min/maj)
-        List<String> validChar = new ArrayList<String>();
+        List<String> validChar = new ArrayList<>();
         int i;
         for (i = 48; i<=57; i++){validChar.add(Character.toString((char) i));} // chiffres
         for (i = 65; i<=90; i++){validChar.add(Character.toString((char) i));} // majuscules
@@ -87,7 +87,7 @@ public class LoginView extends HttpServlet {
             throw new Exception("Veuillez saisir un UID.");
          }
         // Création de la liste des caractères valides (chiffres et lettres min/maj)
-        List<String> validChar = new ArrayList<String>();
+        List<String> validChar = new ArrayList<>();
         int i;
         for (i = 48; i<=57; i++){validChar.add(Character.toString((char) i));} // chiffres
         for (i = 65; i<=90; i++){validChar.add(Character.toString((char) i));} // majuscules

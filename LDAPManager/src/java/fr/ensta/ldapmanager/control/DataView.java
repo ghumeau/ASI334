@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author arnaudlegrignou
  */
 @WebServlet(name = "LDAPViewer", urlPatterns = {"/LDAPViewer"})
-public class LDAPView extends HttpServlet {
+public class DataView extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -59,7 +59,7 @@ public class LDAPView extends HttpServlet {
     public void doGet( HttpServletRequest request, HttpServletResponse response )   throws ServletException, IOException {
         String message = "Transmission de variables : OK !";
         request.setAttribute( "test", message );
-        this.getServletContext().getRequestDispatcher( "/WEB-INF/LDAPView.jsp" ).forward( request, response );
+        this.getServletContext().getRequestDispatcher( "/WEB-INF/DataView.jsp" ).forward( request, response );
         //processRequest(request, response);
     }
 
