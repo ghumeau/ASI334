@@ -31,7 +31,7 @@ public class LoginServlet extends HttpServlet {
         else {
             request.setAttribute(ATT_USER, user);
             // Transmission de la MAP contenant les infos utilisateur à la JSP d'affichage des données
-            this.getServletContext().getRequestDispatcher("/WEB-INF/LDAPView.jsp").forward(request, response);
+            this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
         }
     }
 
@@ -83,7 +83,6 @@ public class LoginServlet extends HttpServlet {
         // Transmission de la paire d'objets request/response à notre JSP
         this.getServletContext().getRequestDispatcher("/WEB-INF/LoginView.jsp").forward(request, response);
     }
-<<<<<<< HEAD:LDAPManager/src/java/fr/ensta/ldapmanager/control/LoginView.java
 
 
     //Validation de la syntaxe des mots de passe saisis.
@@ -122,6 +121,5 @@ public class LoginServlet extends HttpServlet {
         
         
     }
-=======
->>>>>>> 7f372d18c600eec2a87b213083cb0447eabd4b19:LDAPManager/src/java/fr/ensta/ldapmanager/control/LoginServlet.java
+
 }

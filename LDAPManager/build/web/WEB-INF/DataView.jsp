@@ -20,6 +20,11 @@
             <h2>Données personnelles</h2>
            
             <script>
+                
+                for (var iter = 0; iter < ${user}.length; iter++) {
+                dataLine("uid","${nom}");
+                }
+                
                 dataLine("uid","${nom}");
                 dataLine("nom","${nom}");
                 dataLine("prenom","");

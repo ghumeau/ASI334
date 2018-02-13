@@ -17,9 +17,6 @@
 
     <body>
         <header><h1>LDAP Manager</h1></header>
-
-
-
         <form method="post" class="loginForm" action="">
             <h2>Authentification</h2>
             <div class="LoginLine">
@@ -34,7 +31,7 @@
                 <input type="submit" value="connection" class="bouton" id="valider"><br>
                 <span class="erreur">${resultat}</span>
                 <a class="bouton" href="../uid/" >Mot de passe perdu</a>   
-                <a class="bouton" href="../private/" >accès direct</a>   
+                <a class="bouton" href="../cheat/" >accès direct</a>   
             </div>
         </form>
     </body>
