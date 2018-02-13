@@ -31,15 +31,15 @@ public class LoginServlet extends HttpServlet {
         else {
             request.setAttribute(ATT_USER, user.GetInfo());
             // Transmission de la MAP contenant les infos utilisateur à la JSP d'affichage des données
-<<<<<<< HEAD
+
 
             this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
 
             this.getServletContext().getRequestDispatcher("/WEB-INF/DATAView.jsp").forward(request, response);
 
-=======
+
             this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
->>>>>>> 31820cc54dee0cb690fc70dd2b18caab80408b4e
+
         }
     }
 
@@ -91,7 +91,6 @@ public class LoginServlet extends HttpServlet {
         // Transmission de la paire d'objets request/response à notre JSP
         this.getServletContext().getRequestDispatcher("/WEB-INF/LoginView.jsp").forward(request, response);
     }
-<<<<<<< HEAD
 
 
     //Validation de la syntaxe des mots de passe saisis.
@@ -131,6 +130,5 @@ public class LoginServlet extends HttpServlet {
         
     }
 
-=======
->>>>>>> 31820cc54dee0cb690fc70dd2b18caab80408b4e
+
 }

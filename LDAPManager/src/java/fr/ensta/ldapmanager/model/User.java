@@ -6,6 +6,7 @@
 package fr.ensta.ldapmanager.model;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  *
@@ -28,7 +29,7 @@ public class User {
     private boolean flagTwoFactorsAuth;
     private int codeTwoFactorsAuth;
     
-    private HashMap userInfoTab;
+    private LinkedHashMap userInfoTab;
     
     public User() {
         
@@ -124,7 +125,7 @@ public class User {
     }
 
     public void setUserInfoTab(HashMap userInfoTab) {
-        this.userInfoTab = userInfoTab;
+        this.userInfoTab = (LinkedHashMap) userInfoTab;
     }
 
     /*public String getDistinguishedName() {
@@ -154,36 +155,37 @@ public class User {
     /*
     Retrieve the user info
     */
-    public HashMap GetInfo() {
+    public LinkedHashMap GetInfo() {
         try {
-            HashMap infoMap = new HashMap();
-            infoMap.put("UID", getUid());
-            infoMap.put("PWD",  getPassword());
-            if (!(getLastName().isEmpty())) {
-                infoMap.put("LASTNAME", getLastName());
+            LinkedHashMap<String,String> infoMap = new LinkedHashMap();
+            infoMap.put("uid", this.getUid());
+            infoMap.put("password",  this.getPassword());
+            
+            if (!(getFirstName().isEmpty())) {
+                infoMap.put("lastName", this.getLastName());
             }
             if (!(getFirstName().isEmpty())) {
-                infoMap.put("FIRSTNAME", getFirstName());
+                infoMap.put("firstName", this.getFirstName());
             }
             if (!(getCommonName().isEmpty())) {
-                infoMap.put("COMMONNAME", getCommonName());
+                infoMap.put("commonName", getCommonName());
             }
             if (!(getEmail().isEmpty())) {
-                infoMap.put("EMAIL", getEmail());
+                infoMap.put("eMail", getEmail());
             }
             if (!(getPhoneNumber().isEmpty())) {
-                infoMap.put("PHONENUMBER", getPhoneNumber());
+                infoMap.put("phoneNumber", getPhoneNumber());
             }
             if (!(getSecureQuestion().isEmpty())) {
-                infoMap.put("SECURITYQUESTION", getSecureQuestion());
+                infoMap.put("securityQuestion", getSecureQuestion());
             }
             if (!(getSecureAnswer().isEmpty())) {
-                infoMap.put("SECURITYANSWER", getSecureAnswer());
+                infoMap.put("securityAnswer", getSecureAnswer());
             }
             if (!(getTotpSecret().isEmpty())) {
-                infoMap.put("TOTPSECRET", getTotpSecret());
+                infoMap.put("totpSecret", getTotpSecret());
             }
-            return infoMap;
+            return  infoMap;
         }
         catch (Exception e) {
             System.out.println("Erreur dans GetInfo");

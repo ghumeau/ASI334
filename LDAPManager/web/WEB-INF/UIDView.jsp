@@ -21,7 +21,7 @@
                 
                 
             </script>
-            <a class="bouton" href="../question/" >Valider</a>  
+            <input type="submit" class="bouton" value="valider"> 
       </form>
     </body>
 </html>

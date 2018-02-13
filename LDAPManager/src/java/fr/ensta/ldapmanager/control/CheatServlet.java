@@ -5,11 +5,11 @@
  */
 package fr.ensta.ldapmanager.control;
 
-import static fr.ensta.ldapmanager.control.LoginServlet.ATT_USER;
 import fr.ensta.ldapmanager.model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -67,24 +67,21 @@ public class CheatServlet extends HttpServlet {
         
         
         usr.setFirstName("Arnaud");
-        usr.setLastName("Le Grignou");
+        usr.setLastName("LeGrignou");
         usr.setEmail("arnaudlegrignou@yahoo.fr");
         usr.setPhoneNumber("0768256292");
-        
-        String FirstName = usr.getFirstName();
-        String LastName = usr.getLastName();
-        String Email = usr.getFirstName();
-        String PhoneNumber = usr.getPhoneNumber();
-        
-        
+
         HttpSession session = request.getSession();
-        session.setAttribute(ATT_USER, usr);
-        Map<String, String> user = new HashMap<>();
-        user.put("FirstName",FirstName);
-        user.put("LastName", "2");
-        user.put("Email", "3");
-        user.put("PhoneNumber", "4");
-      //Ceci va écraser la valeur 5
+        
+        Map<String, String> user = new LinkedHashMap<>();
+        user.put("uid",usr.getUid());
+        user.put("FirstName", usr.getFirstName());
+        user.put("LastName", usr.getLastName());
+        user.put("Email", usr.getEmail());
+        user.put("PhoneNumber", usr.getPhoneNumber());
+
+        session.setAttribute("user", usr);
+        request.setAttribute("user", usr.GetInfo());
         this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
     }
 

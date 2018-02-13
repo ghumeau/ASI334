@@ -5,27 +5,58 @@
 --%>
 
 
+<%@page import="java.util.LinkedHashMap"%>
+<%@page import="java.util.Set"%>
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.Map.Entry"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.HashMap"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
+
+
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Affichage des données</title>
         <link type="text/css" media="screen" rel="stylesheet" href="../css/style.css" />
+         <script type="text/javascript" src="../scripts/affichage.js"></script>
     </head>
-    <script type="text/javascript" src="../scripts/affichage.js"></script>
     <body>
 
         <header><h1>LDAP Manager</h1></header>
         <form method="post" action="private" class="dataForm">
             <h2>Données personnelles</h2>
-           
+            
+            <div>
+                <span class="dataLabel">UID : </span><span class="data">${user.uid}</span>
+                <input type="text" id="uid" name="uid" class="dataField" placeholder="${user.uid}"/> 
+            </div>
+            <div>
+                <span class="dataLabel">Nom : </span><span class="data">${user.lastName}</span>
+                <input type="text" id="uid" name="uid" class="dataField" placeholder="${user.lastName}"/> 
+            </div>
+            <div>
+                <span class="dataLabel">prénom : </span><span class="data">${user.lastName}</span>
+                <input type="text" id="uid" name="uid" class="dataField" placeholder="${user.lastName}"/> 
+            </div>
+            <div>
+                <span class="dataLabel">Email : </span><span class="data">${user.lastName}</span>
+                <input type="text" id="uid" name="uid" class="dataField" placeholder="${user.lastName}"/> 
+            </div>
+            <div>
+                <span class="dataLabel">Email : </span><span class="data">${user.lastName}</span>
+                <input type="text" id="uid" name="uid" class="dataField" placeholder="${user.lastName}"/> 
+            </div>
+          
+         
+            
             <script>
                 
-                for (var iter = 0; iter < ${user}.length; iter++) {
-                dataLine("uid","${nom}");
-                }
+            
                 
-                dataLine("uid","${nom}");
+                dataLine("UID","${nom}");
                 dataLine("nom","${nom}");
                 dataLine("prenom","");
                 dataLine("email","");
