@@ -31,7 +31,7 @@ public class LoginServlet extends HttpServlet {
         else {
             request.setAttribute(ATT_USER, user.GetInfo());
             // Transmission de la MAP contenant les infos utilisateur à la JSP d'affichage des données
-            this.getServletContext().getRequestDispatcher("/WEB-INF/DATAView.jsp").forward(request, response);
+            this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
         }
     }
 
@@ -83,5 +83,4 @@ public class LoginServlet extends HttpServlet {
         // Transmission de la paire d'objets request/response à notre JSP
         this.getServletContext().getRequestDispatcher("/WEB-INF/LoginView.jsp").forward(request, response);
     }
-
 }
