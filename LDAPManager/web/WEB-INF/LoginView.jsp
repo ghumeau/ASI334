@@ -17,29 +17,27 @@
 
     <body>
         <header><h1>LDAP Manager</h1></header>
-        
-        
-        
+
+
+
         <form method="post" class="loginForm" action="">
-                <h2>Authentification</h2>
-                <div>
-                    <label for="login">Login (UID)</label><span>: </span><br>
-                    <input type="text" id="login" name="login" class="loginForm"/>
-                    <span class="erreur">${erreurs['login']}</span>
-                </div>
-                <div>
-                    <label for="password">Mot de passe</label><span>: </span>
-                    <input type="password" id="password" name="password" class="loginForm"  />
-                    <span class="erreur">${erreurs['password']}</span>
-                </div>
-                <div>
-                    <input type="submit" value="connection" class="valider">
-                    
-                    <p>${resultat}</p>
-                </div>
-            </form>
-            <input type="button" value="Mot de passe perdu">
-            <a href="../private/"> <input type="button" href="../private/" value="accès direct"></a>
-        
+            <h2>Authentification</h2>
+            <div class="LoginLine">
+                <input type="text" id="login" name="login" class="loginField" placeholder="login (uid)"/>
+                <span class="erreur">${erreurs['login']}</span>
+            </div>
+            <div class="loginLine">
+                <input type="password" id="password" name="password" class="loginField" placeholder="password" />
+                <span class="erreur">${erreurs['password']}</span>
+            </div>
+            <div class="LoginLine">
+                <input type="submit" value="connection" class="bouton" id="valider"><br>
+                <span class="erreur">${resultat}</span>
+                <input type="button" value="Mot de passe perdu" class="bouton"><br>
+                <a href="../private/" > <input type="button" href="../private/" value="accès direct" class="bouton"></a>   
+            </div>
+        </form>
+
+
     </body>
 </html>

@@ -12,12 +12,12 @@
         <title>JSP Page</title>
         <link type="text/css" media="screen" rel="stylesheet" href="../css/style.css" />
     </head>
-    <header>LDAP Manager</header>
-    <body>
-        
+    <header><h1>LDAP Manager</h1></header>
+    <body> 
         <form>
-        <h1>Vous avez été deconnecté</h1>
-        <a href="../secure/"> <input type="button" href="../secure/" value="Se connecter"></a>
+        <h2>Vous avez été deconnecté</h2>
+        <a href="../login/"> <input type="button" href="../login/" value="Se connecter"></a>
+        
         </form>
     </body>
 </html>

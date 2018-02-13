@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+   
     <servlet>
         <servlet-name>LoginView</servlet-name>
         <servlet-class>fr.ensta.ldapmanager.control.LoginView</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginView</servlet-name>
-        <url-pattern>/secure/*</url-pattern>
+        <url-pattern>/login/*</url-pattern>
     </servlet-mapping>
     
     <servlet>
-        <servlet-name>LDAPView</servlet-name>
-        <servlet-class>fr.ensta.ldapmanager.control.LDAPView</servlet-class>
+        <servlet-name>DataView</servlet-name>
+        <servlet-class>fr.ensta.ldapmanager.control.DataView</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>LDAPView</servlet-name>
+        <servlet-name>DataView</servlet-name>
         <url-pattern>/private/*</url-pattern>
     </servlet-mapping>
     
@@ -26,6 +27,34 @@
         <servlet-name>LogoutView</servlet-name>
         <url-pattern>/public/*</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SecurityView</servlet-name>
+        <servlet-class>fr.ensta.ldapmanager.control.SecurityView</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SecurityView</servlet-name>
+        <url-pattern>/security/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>UIDView</servlet-name>
+        <servlet-class>fr.ensta.ldapmanager.control.UIDView</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UIDView</servlet-name>
+        <url-pattern>/uid/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>QuestionView</servlet-name>
+        <servlet-class>fr.ensta.ldapmanager.control.QuestionView</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>QuestionView</servlet-name>
+        <url-pattern>/question/*</url-pattern>
+    </servlet-mapping>
+    
     <session-config>
         <session-timeout>1</session-timeout>
     </session-config>
