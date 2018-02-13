@@ -39,9 +39,9 @@ public class DataServlet extends HttpServlet {
             this.getServletContext().getRequestDispatcher("/WEB-INF/LoginView.jsp").forward(request, response);
         }
         else {
-            request.setAttribute(ATT_USER, user);
+            request.setAttribute(ATT_USER, user.GetInfo());
             // Transmission de la MAP contenant les infos utilisateur à la JSP d'affichage des données
-            this.getServletContext().getRequestDispatcher("/WEB-INF/LDAPView.jsp").forward(request, response);
+            this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
         }
     }
     
