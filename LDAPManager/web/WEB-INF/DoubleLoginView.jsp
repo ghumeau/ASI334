@@ -1,6 +1,6 @@
 <%-- 
-    Document   : index.jsp
-    Created on : 6 févr. 2018, 13:15:51
+    Document   : DoubleLoginView
+    Created on : 12 févr. 2018, 19:42:54
     Author     : arnaudlegrignou
 --%>
 
@@ -9,7 +9,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Index</title>
+        <title>JSP Page</title>
     </head>
-    <% response.sendRedirect("login/");%>
+    <body>
+        <h1>Hello World!</h1>
+    </body>
 </html>

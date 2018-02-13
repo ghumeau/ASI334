@@ -19,14 +19,14 @@ import javax.servlet.http.HttpServletResponse;
  * @author arnaudlegrignou
  */
 @WebServlet(name = "LDAPViewer", urlPatterns = {"/LDAPViewer"})
-public class LDAPView extends HttpServlet {
+public class DataView extends HttpServlet {
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Services svc = new Services();
-        request.setAttribute("usermap", svc.RetrieveInfo());
-        // A l'appel de la servlet (GET), affichage de la page 
-        this.getServletContext().getRequestDispatcher("/WEB-INF/LDAPView.jsp").forward(request, response);
+    public void doGet( HttpServletRequest request, HttpServletResponse response )   throws ServletException, IOException {
+        String message = "Transmission de variables : OK !";
+        request.setAttribute( "test", message );
+        this.getServletContext().getRequestDispatcher( "/WEB-INF/DataView.jsp" ).forward( request, response );
+        //processRequest(request, response);
     }
     
     @Override

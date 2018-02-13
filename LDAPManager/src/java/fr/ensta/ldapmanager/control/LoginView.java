@@ -70,7 +70,7 @@ public class LoginView extends HttpServlet {
                 session.setAttribute(ATT_SERVICES,svc);
                 request.setAttribute("userMap", svc.RetrieveInfo());
                 // Transmission de la MAP contenant les infos utilisateur à la JSP d'affichage des données
-                this.getServletContext().getRequestDispatcher("/WEB-INF/LDAPView.jsp").forward(request, response);
+                this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
             }
         }
      
@@ -83,5 +83,4 @@ public class LoginView extends HttpServlet {
         // Transmission de la paire d'objets request/response à notre JSP
         this.getServletContext().getRequestDispatcher("/WEB-INF/LoginView.jsp").forward(request, response);
     }
-
 }
