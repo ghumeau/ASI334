@@ -43,7 +43,7 @@ public class UIDServlet extends HttpServlet {
             this.getServletContext().getRequestDispatcher("/WEB-INF/UIDView.jsp").forward(request, response);
         }
         else {
-            request.setAttribute(ATT_USER, user);
+            request.setAttribute(ATT_USER, user.GetInfo());
             // Transmission de la MAP contenant les infos utilisateur à la JSP d'affichage des données
             this.getServletContext().getRequestDispatcher("/WEB-INF/DATAView.jsp").forward(request, response);
         }
