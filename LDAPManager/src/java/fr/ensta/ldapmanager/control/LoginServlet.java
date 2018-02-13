@@ -7,29 +7,29 @@ import java.util.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
-public class LoginView extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 
     public static final String CHAMP_LOGIN = "login";
     public static final String CHAMP_PASS = "password";
     public static final String ATT_ERREURS = "erreurs";
     public static final String ATT_RESULTAT = "resultat";
     public static final String ATT_ECHECS = "echecs";
-    public static final String ATT_SERVICES = "services";
+    public static final String ATT_USER = "user";
     public static final int maxEchecs = 5;
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Services svc = (Services) session.getAttribute(ATT_SERVICES);
+        User user = (User) session.getAttribute(ATT_USER);
         // A l'appel de la servlet (GET), affichage de la page d'authentification si l'utilisateur n'a pas de session active
-        if (svc==null){
+        if (user==null){
             Integer echecs = (Integer) session.getAttribute(ATT_ECHECS);
             if (echecs==null){session.setAttribute(ATT_ECHECS,0);}
             else if (echecs>=maxEchecs){session.setAttribute(ATT_RESULTAT, "Trop d'échec, vous avez été bloqué !!!");}
             this.getServletContext().getRequestDispatcher("/WEB-INF/LoginView.jsp").forward(request, response);
         }
         else {
-            request.setAttribute("usermap", svc.RetrieveInfo());
+            request.setAttribute(ATT_USER, user);
             // Transmission de la MAP contenant les infos utilisateur à la JSP d'affichage des données
             this.getServletContext().getRequestDispatcher("/WEB-INF/LDAPView.jsp").forward(request, response);
         }
@@ -65,10 +65,10 @@ public class LoginView extends HttpServlet {
 
         // Authentification si le couple UID/password est syntaxiquement valable
         if (errors.isEmpty()) {
-            usr = svc.Authentify(login,pwd);
+            usr = svc.AuthenticationSequence(login,pwd);
             if (usr!=null){                                  // authentification réussie
-                session.setAttribute(ATT_SERVICES,svc);
-                request.setAttribute("userMap", svc.RetrieveInfo());
+                session.setAttribute(ATT_USER, usr);
+                request.setAttribute(ATT_USER, usr);
                 // Transmission de la MAP contenant les infos utilisateur à la JSP d'affichage des données
                 this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
             }
