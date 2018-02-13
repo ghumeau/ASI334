@@ -5,9 +5,7 @@ import java.io.IOException;
 import java.util.*;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 
 public class LoginView extends HttpServlet {
 
@@ -15,11 +13,25 @@ public class LoginView extends HttpServlet {
     public static final String CHAMP_PASS = "password";
     public static final String ATT_ERREURS = "erreurs";
     public static final String ATT_RESULTAT = "resultat";
+    public static final String ATT_ECHECS = "echecs";
+    public static final int maxEchecs = 5;
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // A l'appel de la servlet (GET), affichage de la page d'authentification
-        this.getServletContext().getRequestDispatcher("/WEB-INF/LoginView.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        Services svc = (Services) session.getAttribute("svc");
+        // A l'appel de la servlet (GET), affichage de la page d'authentification si l'utilisateur n'a pas de session active
+        if (svc==null){
+            Integer echecs = (Integer) session.getAttribute(ATT_ECHECS);
+            if (echecs==null){session.setAttribute(ATT_ECHECS,0);}
+            else if (echecs>=maxEchecs){session.setAttribute(ATT_RESULTAT, "Trop d'échec, vous avez été bloqué !!!");}
+            this.getServletContext().getRequestDispatcher("/WEB-INF/LoginView.jsp").forward(request, response);
+        }
+        else {
+            request.setAttribute("usermap", svc.RetrieveInfo());
+            // Transmission de la MAP contenant les infos utilisateur à la JSP d'affichage des données
+            this.getServletContext().getRequestDispatcher("/WEB-INF/LDAPView.jsp").forward(request, response);
+        }
     }
 
     @Override
@@ -28,32 +40,41 @@ public class LoginView extends HttpServlet {
         Map<String, String> errors = new HashMap<>();
         Services svc = new Services();
         User usr = null;
-
+        HttpSession session = request.getSession();
+        Integer echecs = (Integer) session.getAttribute(ATT_ECHECS);
+        
+        // Vérification du nombre d'échecs d'authentification
+        if (echecs==null){echecs=0;}
+        if (echecs>=maxEchecs){
+            request.setAttribute(ATT_RESULTAT, "Trop d'échec, vous avez été bloqué !!!");
+            this.getServletContext().getRequestDispatcher("/WEB-INF/LoginView.jsp").forward(request, response);
+        }
+        
         //Récupération des champs du formulaire.
         String login = request.getParameter(CHAMP_LOGIN);
         String pwd = request.getParameter(CHAMP_PASS);
 
         // Verification de la syntaxe de l'UID.
-        try {testFormatUID(login);}
-        catch (Exception e) {errors.put(CHAMP_LOGIN, e.getMessage());}
+        if (Checks.isEmpty(login)){errors.put(CHAMP_LOGIN,"Veuillez saisir votre UID.");}
+        else if (!Checks.syntaxe(login,Checks.Argument.UID)){errors.put(CHAMP_LOGIN,"Veuillez saisir un UID valide.");}
 
         // Verification de la syntaxe du mot de passe.
-        try {testFormatPWD(pwd);}
-        catch (Exception e) {errors.put(CHAMP_PASS, e.getMessage());}
+        if (Checks.isEmpty(pwd)){errors.put(CHAMP_PASS,"Veuillez saisir votre mot de passe.");}
+        else if (!Checks.syntaxe(login,Checks.Argument.PWD)){errors.put(CHAMP_PASS,"Veuillez saisir un mot de passe valide.");}
 
         // Authentification si le couple UID/password est syntaxiquement valable
         if (errors.isEmpty()) {
             usr = svc.Authentify(login,pwd);
-            if (usr==null){                                  // échec de l'authentification
-                result = "Echec de l'authentification.";
-            }
-            else {                                           // authentification réussie
-                request.setAttribute("usermap", svc.RetrieveInfo());
+            if (usr!=null){                                  // authentification réussie
+                request.setAttribute("svc", svc);
                 // Transmission de la MAP contenant les infos utilisateur à la JSP d'affichage des données
                 this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
             }
         }
      
+        echecs++;
+        session.setAttribute(ATT_ECHECS,echecs);
+        result = "Echec de l'authentification, tentatives restantes : " + (maxEchecs-echecs);
         // Stockage du résultat et des messages d'erreur dans l'objet request
         request.setAttribute(ATT_ERREURS, errors);
         request.setAttribute(ATT_RESULTAT, result);
@@ -61,6 +82,7 @@ public class LoginView extends HttpServlet {
         this.getServletContext().getRequestDispatcher("/WEB-INF/LoginView.jsp").forward(request, response);
     }
 
+<<<<<<< HEAD
 
     //Validation de la syntaxe des mots de passe saisis.
     private void testFormatPWD(String pwd) throws Exception {
@@ -98,4 +120,6 @@ public class LoginView extends HttpServlet {
         
         
     }
+=======
+>>>>>>> 7ae895a760cf7c9a2fedcf0a9fcdde1fdb949060
 }
