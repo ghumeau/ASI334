@@ -83,4 +83,5 @@ public class LoginServlet extends HttpServlet {
         // Transmission de la paire d'objets request/response à notre JSP
         this.getServletContext().getRequestDispatcher("/WEB-INF/LoginView.jsp").forward(request, response);
     }
+
 }
