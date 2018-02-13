@@ -65,21 +65,26 @@ public class CheatServlet extends HttpServlet {
             throws ServletException, IOException {
         User usr =new User("toto","toto");
         
+        
         usr.setFirstName("Arnaud");
         usr.setLastName("Le Grignou");
         usr.setEmail("arnaudlegrignou@yahoo.fr");
         usr.setPhoneNumber("0768256292");
         
+        String FirstName = usr.getFirstName();
+        String LastName = usr.getLastName();
+        String Email = usr.getFirstName();
+        String PhoneNumber = usr.getPhoneNumber();
+        
+        
         HttpSession session = request.getSession();
         session.setAttribute(ATT_USER, usr);
-        Map<Integer, String> user = new HashMap<>();
-        user.put(10, "1");
-        user.put(20, "2");
-        user.put(30, "3");
-        user.put(40, "4");
-        user.put(50, "5");
+        Map<String, String> user = new HashMap<>();
+        user.put("FirstName",FirstName);
+        user.put("LastName", "2");
+        user.put("Email", "3");
+        user.put("PhoneNumber", "4");
       //Ceci va écraser la valeur 5
-      hm.put(50, "6");
         this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
     }
 
