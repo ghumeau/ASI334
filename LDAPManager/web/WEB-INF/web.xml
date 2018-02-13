@@ -1,60 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
-   
     <servlet>
         <servlet-name>LoginView</servlet-name>
-        <servlet-class>fr.ensta.ldapmanager.control.LoginView</servlet-class>
+        <servlet-class>fr.ensta.ldapmanager.control.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginView</servlet-name>
         <url-pattern>/login/*</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>DataView</servlet-name>
-        <servlet-class>fr.ensta.ldapmanager.control.DataView</servlet-class>
+        <servlet-class>fr.ensta.ldapmanager.control.DataServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DataView</servlet-name>
         <url-pattern>/private/*</url-pattern>
     </servlet-mapping>
-    
     <servlet>
-        <servlet-name>LogoutView</servlet-name>
-        <servlet-class>fr.ensta.ldapmanager.control.LogoutView</servlet-class>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>fr.ensta.ldapmanager.control.LogoutServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>LogoutView</servlet-name>
+        <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/public/*</url-pattern>
     </servlet-mapping>
-
     <servlet>
-        <servlet-name>SecurityView</servlet-name>
-        <servlet-class>fr.ensta.ldapmanager.control.SecurityView</servlet-class>
+        <servlet-name>SecurityServlet</servlet-name>
+        <servlet-class>fr.ensta.ldapmanager.control.SecurityServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>SecurityView</servlet-name>
+        <servlet-name>SecurityServlet</servlet-name>
         <url-pattern>/security/*</url-pattern>
     </servlet-mapping>
-    
     <servlet>
-        <servlet-name>UIDView</servlet-name>
-        <servlet-class>fr.ensta.ldapmanager.control.UIDView</servlet-class>
+        <servlet-name>UIDServlet</servlet-name>
+        <servlet-class>fr.ensta.ldapmanager.control.UIDServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>UIDView</servlet-name>
+        <servlet-name>UIDServlet</servlet-name>
         <url-pattern>/uid/*</url-pattern>
     </servlet-mapping>
-    
     <servlet>
-        <servlet-name>QuestionView</servlet-name>
-        <servlet-class>fr.ensta.ldapmanager.control.QuestionView</servlet-class>
+        <servlet-name>QuestionServlet</servlet-name>
+        <servlet-class>fr.ensta.ldapmanager.control.QuestionServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>QuestionView</servlet-name>
+        <servlet-name>QuestionServlet</servlet-name>
         <url-pattern>/question/*</url-pattern>
     </servlet-mapping>
-    
+<<<<<<< HEAD
+    <servlet>
+        <servlet-name>NewPassServlet</servlet-name>
+        <servlet-class>fr.ensta.ldapmanager.control.NewPassServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>NewPassServlet</servlet-name>
+        <url-pattern>/new/*</url-pattern>
+    </servlet-mapping>
+=======
+>>>>>>> 7f372d18c600eec2a87b213083cb0447eabd4b19
     <session-config>
         <session-timeout>1</session-timeout>
     </session-config>

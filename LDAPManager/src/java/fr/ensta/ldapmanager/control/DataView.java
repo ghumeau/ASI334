@@ -5,9 +5,7 @@
  */
 package fr.ensta.ldapmanager.control;
 
-import fr.ensta.ldapmanager.model.*;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,6 +25,7 @@ public class DataView extends HttpServlet {
         request.setAttribute( "test", message );
         this.getServletContext().getRequestDispatcher( "/WEB-INF/DataView.jsp" ).forward( request, response );
         //processRequest(request, response);
+
     }
     
     @Override

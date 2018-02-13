@@ -16,12 +16,11 @@
     <header>LDAP Manager</header>
     <body>
         <form>
-            <h2>Question / réponse de sécurité</h2>
-            <p>Question de sécurité</p>
             <script>
-                securityLine("Answer","entrez la réponse de sécurité");
+                securityLine("pass","entrez votre nouveau mot de passe");
+                securityLine("pass","confirmez votre mot de passe");    
             </script>
-            <a class="bouton" href="../new/" >Valider</a>  
+            <a class="bouton" href="../login/" >Valider</a>  
       </form>
     </body>
 </html>

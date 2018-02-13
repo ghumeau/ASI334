@@ -12,15 +12,16 @@
         <title>JSP Page</title>
         <link type="text/css" media="screen" rel="stylesheet" href="../css/style.css" />
     </head>
+    <script type="text/javascript" src="../scripts/affichage.js"></script>
     <header>LDAP Manager</header>
     <body>
-        
         <form>
-        <h2>Récuperation du Mot de Passe</h2>
-        <label for="password">Mot de passe</label><br>
-        <<label for="uid">Mot de passe</label><br>
-        <input type="text" href="../secure/" value="uid">
-        <input type="button" >
-        </form>
+            <script>
+                securityLine("uid","entrez votre identifiant");
+                
+                
+            </script>
+            <a class="bouton" href="../question/" >Valider</a>  
+      </form>
     </body>
 </html>

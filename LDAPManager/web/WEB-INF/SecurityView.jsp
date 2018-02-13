@@ -22,8 +22,9 @@
             <h2>Données de sécurité</h2>
            
             <script>
-                securityLine("pwd","Mot de passe");
-                securityLine("confirmation","confirmation du mot de passe");
+                securityLine("pwd","Saisir l'ancien mot de passe");
+                securityLine("newpwd","Saisir le nouveau mot de passe");
+                securityLine("confirm","confirmation du nouveaumot de passe");
                 securityLine("question","question de sécurité");
                 securityLine("answer", "réponse de sécurité");
             </script>

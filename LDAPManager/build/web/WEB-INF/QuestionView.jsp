@@ -1,6 +1,6 @@
 <%-- 
-    Document   : QuestionView
-    Created on : 12 févr. 2018, 19:43:54
+    Document   : LogoutView
+    Created on : 7 févr. 2018, 22:59:36
     Author     : arnaudlegrignou
 --%>
 
@@ -10,18 +10,18 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link type="text/css" media="screen" rel="stylesheet" href="../css/style.css" />
     </head>
     <script type="text/javascript" src="../scripts/affichage.js"></script>
+    <header>LDAP Manager</header>
     <body>
-
-        <header><h1>LDAP Manager</h1></header>
-        
-        <script>
-            
-            
-            
-        </script>
-        
-        
+        <form>
+            <h2>Question / réponse de sécurité</h2>
+            <p>Question de sécurité</p>
+            <script>
+                securityLine("Answer","entrez la réponse de sécurité");
+            </script>
+            <a class="bouton" href="../new/" >Valider</a>  
+      </form>
     </body>
 </html>
