@@ -151,6 +151,9 @@ public class User {
         this.totpSecret = totpSecret;
     }
     
+    /*
+    Retrieve the user info
+    */
     public HashMap GetInfo() {
         try {
             HashMap infoMap = new HashMap();
