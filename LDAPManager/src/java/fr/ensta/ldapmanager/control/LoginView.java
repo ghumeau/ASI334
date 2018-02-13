@@ -14,12 +14,13 @@ public class LoginView extends HttpServlet {
     public static final String ATT_ERREURS = "erreurs";
     public static final String ATT_RESULTAT = "resultat";
     public static final String ATT_ECHECS = "echecs";
+    public static final String ATT_SERVICES = "services";
     public static final int maxEchecs = 5;
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Services svc = (Services) session.getAttribute("svc");
+        Services svc = (Services) session.getAttribute(ATT_SERVICES);
         // A l'appel de la servlet (GET), affichage de la page d'authentification si l'utilisateur n'a pas de session active
         if (svc==null){
             Integer echecs = (Integer) session.getAttribute(ATT_ECHECS);
@@ -66,7 +67,8 @@ public class LoginView extends HttpServlet {
         if (errors.isEmpty()) {
             usr = svc.Authentify(login,pwd);
             if (usr!=null){                                  // authentification réussie
-                request.setAttribute("svc", svc);
+                session.setAttribute(ATT_SERVICES,svc);
+                request.setAttribute("userMap", svc.RetrieveInfo());
                 // Transmission de la MAP contenant les infos utilisateur à la JSP d'affichage des données
                 this.getServletContext().getRequestDispatcher("/WEB-INF/LDAPView.jsp").forward(request, response);
             }
