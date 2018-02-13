@@ -50,6 +50,8 @@ public class LDAPConnector {
 
     /********************
      * Connector with user credentials
+     * @param DN
+     * @param password
     ********************/
     //public LDAPConnector(String user, String password, String DN){
     public LDAPConnector(String DN, String password){

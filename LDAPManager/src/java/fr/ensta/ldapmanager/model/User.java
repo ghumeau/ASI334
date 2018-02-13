@@ -127,14 +127,6 @@ public class User {
         this.userInfoTab = userInfoTab;
     }
 
-    /*public String getDistinguishedName() {
-    return distinguishedName;
-    }
-    
-    public void setDistinguishedName(String distinguishedName) {
-    this.distinguishedName = distinguishedName;
-    }*/
-
     public String getCommonName() {
         return commonName;
     }
