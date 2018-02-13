@@ -26,6 +26,7 @@ public class UIDServlet extends HttpServlet {
     public static final String ATT_QUEST = "securityInfo";
     public static final String ATT_ECHECSQ = "echecsQuestion";
     public static final String ATT_USER = "user";
+    public static final String ATT_UID = "uid";
     public static final int maxEchecs = 5;
     
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -71,9 +72,11 @@ public class UIDServlet extends HttpServlet {
         if (errors.isEmpty()) {
             Services svc = new Services();
             HashMap securityInfo = svc.RetrieveSecurityInfo(uid);
-            if (securityInfo.isEmpty()){errors.put(CHAMP_UID,"UID inconnu");}
+            if (securityInfo.isEmpty()){errors.put(CHAMP_UID,"UID inconnu, tentatives restantes : " + (maxEchecs-echecs));}
             else {
                 session.setAttribute(ATT_QUEST, securityInfo); // stockage de la question/réponse en session
+                session.setAttribute(ATT_UID, uid);            // stockage de l'uid
+                session.setAttribute(ATT_ECHECSQ,0);
                 request.setAttribute(ATT_QUEST, securityInfo.get("SECURITYQUESTION"));
                 this.getServletContext().getRequestDispatcher("/WEB-INF/QuestionView.jsp").forward(request, response);
             }
@@ -81,7 +84,6 @@ public class UIDServlet extends HttpServlet {
         
         echecs++;
         session.setAttribute(ATT_ECHECSQ,echecs);
-        errors.put(CHAMP_UID,"UID inconnu, tentatives restantes : " + (maxEchecs-echecs));
         // Stockage des messages d'erreur dans l'objet request
         request.setAttribute(ATT_ERREURS, errors);
         // Transmission de la paire d'objets request/response à notre JSP
