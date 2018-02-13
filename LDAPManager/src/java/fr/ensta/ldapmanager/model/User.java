@@ -150,7 +150,45 @@ public class User {
     public void setTotpSecret(String totpSecret) {
         this.totpSecret = totpSecret;
     }
-
     
+    /*
+    Retrieve the user info
+    */
+    public HashMap GetInfo() {
+        try {
+            HashMap infoMap = new HashMap();
+            infoMap.put("UID", getUid());
+            infoMap.put("PWD",  getPassword());
+            if (!(getLastName().isEmpty())) {
+                infoMap.put("LASTNAME", getLastName());
+            }
+            if (!(getFirstName().isEmpty())) {
+                infoMap.put("FIRSTNAME", getFirstName());
+            }
+            if (!(getCommonName().isEmpty())) {
+                infoMap.put("COMMONNAME", getCommonName());
+            }
+            if (!(getEmail().isEmpty())) {
+                infoMap.put("EMAIL", getEmail());
+            }
+            if (!(getPhoneNumber().isEmpty())) {
+                infoMap.put("PHONENUMBER", getPhoneNumber());
+            }
+            if (!(getSecureQuestion().isEmpty())) {
+                infoMap.put("SECURITYQUESTION", getSecureQuestion());
+            }
+            if (!(getSecureAnswer().isEmpty())) {
+                infoMap.put("SECURITYANSWER", getSecureAnswer());
+            }
+            if (!(getTotpSecret().isEmpty())) {
+                infoMap.put("TOTPSECRET", getTotpSecret());
+            }
+            return infoMap;
+        }
+        catch (Exception e) {
+            System.out.println("Erreur dans GetInfo");
+            return null;
+        }
+    }
     
 }
