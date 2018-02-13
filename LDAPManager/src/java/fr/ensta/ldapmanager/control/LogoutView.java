@@ -27,7 +27,7 @@ public class LogoutView extends HttpServlet {
         HttpSession session = request.getSession();
         session.invalidate();
 
-        /* Affichage de la page de connexion */
+        // Affichage de la page de déconnexion
         this.getServletContext().getRequestDispatcher( "/WEB-INF/LogoutView.jsp").forward( request, response );
     }
 }

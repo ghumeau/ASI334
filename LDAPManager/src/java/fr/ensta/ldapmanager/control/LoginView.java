@@ -34,12 +34,12 @@ public class LoginView extends HttpServlet {
         String pwd = request.getParameter(CHAMP_PASS);
 
         // Verification de la syntaxe de l'UID.
-        try {testFormatUID(login);}
-        catch (Exception e) {errors.put(CHAMP_LOGIN, e.getMessage());}
+        if (Checks.isEmpty(login)){errors.put(CHAMP_LOGIN,"Veuillez saisir votre UID.");}
+        else if (!Checks.syntaxe(login,Checks.Argument.UID)){errors.put(CHAMP_LOGIN,"Veuillez saisir un UID valide.");}
 
         // Verification de la syntaxe du mot de passe.
-        try {testFormatPWD(pwd);}
-        catch (Exception e) {errors.put(CHAMP_PASS, e.getMessage());}
+        if (Checks.isEmpty(pwd)){errors.put(CHAMP_PASS,"Veuillez saisir votre mot de passe.");}
+        else if (!Checks.syntaxe(login,Checks.Argument.PWD)){errors.put(CHAMP_PASS,"Veuillez saisir un mot de passe valide.");}
 
         // Authentification si le couple UID/password est syntaxiquement valable
         if (errors.isEmpty()) {
@@ -61,41 +61,4 @@ public class LoginView extends HttpServlet {
         this.getServletContext().getRequestDispatcher("/WEB-INF/LoginView.jsp").forward(request, response);
     }
 
-
-    //Validation de la syntaxe des mots de passe saisis.
-    private void testFormatPWD(String pwd) throws Exception {
-        if (pwd.length()==0) {
-            throw new Exception("Veuillez saisir un mot de passe");
-        } 
-        
-        // Création de la liste des caractères valides (chiffres et lettres min/maj)
-        List<String> validChar = new ArrayList<String>();
-        int i;
-        for (i = 48; i<=57; i++){validChar.add(Character.toString((char) i));} // chiffres
-        for (i = 65; i<=90; i++){validChar.add(Character.toString((char) i));} // majuscules
-        for (i = 97; i<=122; i++){validChar.add(Character.toString((char) i));} // minuscules
-        for (i = 0; i<pwd.length(); i++){                  // Verification de la validité des caractères saisis
-            if(!validChar.contains(pwd.substring(i,i+1))){throw new Exception("Veuillez saisir un mot de passe valide.");}
-        }
-        
-
-    }
-
-    //Validation de la syntaxe des UIDs saisis.
-    private void testFormatUID(String uid) throws Exception {
-        if (uid.length()==0) {
-            throw new Exception("Veuillez saisir un UID.");
-         }
-        // Création de la liste des caractères valides (chiffres et lettres min/maj)
-        List<String> validChar = new ArrayList<String>();
-        int i;
-        for (i = 48; i<=57; i++){validChar.add(Character.toString((char) i));} // chiffres
-        for (i = 65; i<=90; i++){validChar.add(Character.toString((char) i));} // majuscules
-        for (i = 97; i<=122; i++){validChar.add(Character.toString((char) i));} // minuscules
-        for (i = 0; i<uid.length(); i++){                  // Verification de la validité des caractères saisis
-                if(!validChar.contains(uid.substring(i,i+1))){throw new Exception("Veuillez saisir un UID valide.");}
-        }
-        
-        
-    }
 }

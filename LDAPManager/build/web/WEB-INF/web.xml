@@ -17,6 +17,7 @@
         <servlet-name>LDAPView</servlet-name>
         <url-pattern>/private/*</url-pattern>
     </servlet-mapping>
+    
     <servlet>
         <servlet-name>LogoutView</servlet-name>
         <servlet-class>fr.ensta.ldapmanager.control.LogoutView</servlet-class>
