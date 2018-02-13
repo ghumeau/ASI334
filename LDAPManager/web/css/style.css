@@ -123,6 +123,7 @@ span{
     transition: all 0.5s;
     cursor: pointer;
     margin: 10px 0 0 0 ;
+    text-decoration: none;
 }
 
 

@@ -82,7 +82,6 @@ public class LoginView extends HttpServlet {
         this.getServletContext().getRequestDispatcher("/WEB-INF/LoginView.jsp").forward(request, response);
     }
 
-<<<<<<< HEAD
 
     //Validation de la syntaxe des mots de passe saisis.
     private void testFormatPWD(String pwd) throws Exception {
@@ -120,6 +119,4 @@ public class LoginView extends HttpServlet {
         
         
     }
-=======
->>>>>>> 7ae895a760cf7c9a2fedcf0a9fcdde1fdb949060
 }

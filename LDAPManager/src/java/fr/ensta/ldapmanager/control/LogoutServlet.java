@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class LogoutView extends HttpServlet {
+public class LogoutServlet extends HttpServlet {
 
 
     @Override

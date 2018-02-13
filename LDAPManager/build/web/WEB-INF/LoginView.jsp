@@ -33,11 +33,9 @@
             <div class="LoginLine">
                 <input type="submit" value="connection" class="bouton" id="valider"><br>
                 <span class="erreur">${resultat}</span>
-                <input type="button" value="Mot de passe perdu" class="bouton"><br>
-                <a href="../private/" > <input type="button" href="../private/" value="accès direct" class="bouton"></a>   
+                <a class="bouton" href="../uid/" >Mot de passe perdu</a>   
+                <a class="bouton" href="../private/" >accès direct</a>   
             </div>
         </form>
-
-
     </body>
 </html>

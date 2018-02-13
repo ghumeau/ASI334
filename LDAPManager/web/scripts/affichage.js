@@ -8,7 +8,7 @@
 function dataLine(id,valeur){
     var contenu =  "<div class='dataLine'><label class='dataLabel' for='proposition'>"+id+"</label>\n\
         <span class='data'>"+valeur+"</span>\n\
-        <input type='text' id='"+id+"' name='"+id+"' class='dataField' placeholder='"+valeur+"'></div><br />";
+        <input type='text' id='"+id+"' name='"+id+"' class='dataField' placeholder='"+id+"'></div><br />";
     document.write(contenu);
 
 }
