@@ -8,6 +8,7 @@ package fr.ensta.ldapmanager.model;
 import java.util.HashMap;
 import java.util.Hashtable;
 import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attributes;
@@ -20,152 +21,239 @@ import javax.naming.directory.ModificationItem;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
+import javax.naming.ldap.LdapContext;
 
 
 public class LDAPConnector {
     
     private Hashtable environnement;
     private DirContext contexte;
-    private Attributes attrs;
+    //IP address of the LDAP server
+    static final String serverIP = "localhost";
+    //Port number of the LDAP server
+    static final String serverPort = "1389";
+    //LDAP domain
+    static final String baseDN = "dc=ensta,dc=fr";
+    
+    
+    /********************
+     * Anonymous connector
+    ********************/
+    public LDAPConnector() {
 
-    public LDAPConnector(String user, String password){
+        environnement = new Hashtable();
+        environnement.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+        environnement.put(Context.PROVIDER_URL, "ldap://"+serverIP+":"+serverPort+"/");
+        environnement.put(Context.SECURITY_AUTHENTICATION, "none");
         
-        //Adresse du serveur sur lequel se trouve l'annuaire LDAP
-        String serverIP = "localhost";
-        //Port du serveur sur lequel se trouve l'annuaire LDAP
-        String serverPort = "1389";
-        //Login de connexion à l'annuaire LDAP : Le login doit être sous forme de "distinguished name"
-        //ce qui signifie qu'il doit être affiché sous la forme de son arborescence LDAP
-        String serverLogin = "uid="+ user.trim() +",OU=Professors,OU=People,DC=ensta,DC=fr";
-        //Mot de passe de connexion à l'annuaire LDAP
+    }
+
+    /********************
+     * Connector with user credentials
+    ********************/
+    //public LDAPConnector(String user, String password, String DN){
+    public LDAPConnector(String DN, String password){
+        
+        //User login
+        String serverLogin = DN;
+        //User password
         String serverPass = password;
 
-        //On remplit un tableau avec les parametres d'environement et de connexion au LDAP
-        this.environnement = new Hashtable();
-        this.environnement.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-        this.environnement.put(Context.PROVIDER_URL, "ldap://"+serverIP+":"+serverPort+"/");
-        this.environnement.put(Context.SECURITY_AUTHENTICATION, "simple");
-        this.environnement.put(Context.SECURITY_PRINCIPAL, serverLogin);
-        this.environnement.put(Context.SECURITY_CREDENTIALS, serverPass);
-        
-        
-    }
-    
-    public DirContext getContexte() {
-        return contexte;
+        environnement = new Hashtable();
+        environnement.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+        environnement.put(Context.PROVIDER_URL, "ldap://"+serverIP+":"+serverPort+"/");
+        environnement.put(Context.SECURITY_AUTHENTICATION, "simple");
+        environnement.put(Context.SECURITY_PRINCIPAL, serverLogin);
+        environnement.put(Context.SECURITY_CREDENTIALS, serverPass);
+          
     }
    
+    /********************
+     * Initialize the connection to the LDAP server
+    ********************/
     public void connect() throws NamingException {
 
-            this.contexte = new InitialDirContext(this.environnement);
+        contexte = new InitialDirContext(environnement);
         
     }
     
-    public void disconnect(){
+    /********************
+     * Disconnect from the LDAP server
+    ********************/
+    public void disconnect() throws NamingException {
         
-        try {
-            this.contexte.close();
-            System.out.println("Deconnexion au serveur : SUCCES");
-        } catch (NamingException e) {
-            System.out.println("Deconnexion au serveur : ECHEC");
-            e.printStackTrace();
-        }
+        contexte.close();
     
     }
     
-    public void UserSearch(String critères){
+    /********************
+     * Search the DN of a specified user
+     * @param uid
+     * @return 
+     * @throws javax.naming.NamingException
+    ********************/
+    public String UserDNSearch(String uid) throws NullPointerException, NamingException {
+       
+        SearchControls controls = new SearchControls();
+        controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+        NamingEnumeration<SearchResult> answer = contexte.search(baseDN, "UID=" + uid.trim(), controls);
+        SearchResult sr = answer.next();
         
-        try {
-            //On recupere l'attribut 
-            this.attrs = this.contexte.getAttributes(critères);
-            System.out.println("Recherche de l'utilisateur : SUCCES");
-            System.out.println(this.attrs.get("uid"));
-        } catch (NamingException e) {
-            System.out.println("Recherche de l'utilisateur : ECHEC");
-            e.printStackTrace();
-        }
+        return sr.getNameInNamespace();
         
     }
     
     public HashMap UserScopeSearch(String uidUser) throws NamingException {
         HashMap infoTab = new HashMap();
-	String baseDN = "dc=ensta,dc=fr";
         SearchControls controls = new SearchControls();
         controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
         NamingEnumeration<SearchResult> answer = this.contexte.search(baseDN, "UID=" + uidUser.trim(), controls);
         
-        if (answer.hasMore()) {             
+        if (answer.hasMore()) {
             Attributes attrs = answer.next().getAttributes();
-            
+        
             NamingEnumeration e;
-            
+        
             e = attrs.getIDs();
-            
-            while (e.hasMoreElements())
+        
+            while (e.hasMoreElements()) {
+                String attr = (String) e.nextElement();
+                String [] value = attrs.get(attr).toString().split(": ");
+        
+                switch (value[0])
                 {
-                    String attr = (String) e.nextElement();
-                    String [] valeur = attrs.get(attr).toString().split(": ");
+                    case "sn":
+                    infoTab.put("LASTNAME", value[1]);
+                    break;
+
+                    case "givenName":
+                    infoTab.put("FIRSTNAME", value[1]);
+                    break;
                     
-                    switch (valeur[0])
-                    {
-                        case "sn":
-                            infoTab.put("LASTNAME", valeur[1]);
-                            break;
-                            
-                        case "givenName":
-                            infoTab.put("FIRSTNAME", valeur[1]);
-                            break;
+                    case "cn":
+                    infoTab.put("COMMONNAME", value[1]);
+                    break;
+
+                    case "mail":
+                    infoTab.put("EMAIL", value[1]);
+                    break;
+
+                    case "phoneNumber":
+                    infoTab.put("PHONENUMBER", value[1]);
+                    break;
+                    
+                    case "description":
+                        infoTab.put("SECURITYQUESTION", value[1]);
+                        break;
                         
-                        case "mail":
-                            infoTab.put("EMAIL", valeur[1]);
-                            break;
-                            
-                        case "phoneNumber":
-                            infoTab.put("PHONENUMBER", valeur[1]);
-                            break;
-                    }
+                    case "street":
+                        infoTab.put("SECURITYANSWER", value[1]);
+                        break;
+                    
+                    case "title":
+                        infoTab.put("TOTPSECRET", value[1]);
+                        break;
+                        
                 }
+            }
         }
-                
         return infoTab;
     }
     
-    public void ModifyLDAPInfo(HashMap newInfo)
-    {
-    String entryDN = "uid="+newInfo.get("UID").toString().trim()+",ou=Professors,ou=People,dc=ensta,dc=fr";
-    try
-    {
+    public void ModifyLDAPInfo(HashMap newInfo, String DN) {
+        
+        try
+        {
+
+        ModificationItem[] mods = new ModificationItem[newInfo.size() - 1];
+        Attribute[] attrMods = new BasicAttribute[newInfo.size() - 1];
+
+        attrMods[0] = new BasicAttribute("userPassword", newInfo.get("PWD"));
+        
+        int i = 1;
+
+        if (newInfo.containsKey("LASTNAME")) {
+            attrMods[i] = new BasicAttribute("sn", newInfo.get("LASTNAME"));
+            i++;
+        }
+        if (newInfo.containsKey("FIRSTNAME")) {
+            attrMods[i] = new BasicAttribute("givenName", newInfo.get("FIRSTNAME"));
+            i++;
+        }
+        if (newInfo.containsKey("COMMONNAME")) {
+            attrMods[i] = new BasicAttribute("cn", newInfo.get("COMMONNAME"));
+            i++;
+        }
+        if (newInfo.containsKey("EMAIL")) {
+            attrMods[i] = new BasicAttribute("mail", newInfo.get("EMAIL"));
+            i++;
+        }
+        if (newInfo.containsKey("PHONENUMBER")) {
+            attrMods[i] = new BasicAttribute("telephoneNumber", newInfo.get("PHONENUMBER"));
+            i++;
+        }
+        if (newInfo.containsKey("SECURITYQUESTION")) {
+            attrMods[i] = new BasicAttribute("description", newInfo.get("SECURITYQUESTION"));
+            i++;
+        }
+        if (newInfo.containsKey("SECURITYANSWER")) {
+            attrMods[i] = new BasicAttribute("street", newInfo.get("SECURITYANSWER"));
+            i++;
+        }
+        if (newInfo.containsKey("TOTPSECRET")) {
+            attrMods[i] = new BasicAttribute("title", newInfo.get("TOTPSECRET"));
+            i++;
+        }
+
+        for (int j=0; j < newInfo.size()-1; j++) {
+            mods[j] = new ModificationItem (DirContext.REPLACE_ATTRIBUTE, attrMods[j]);
+        }
+
+        this.contexte.modifyAttributes(DN, mods);
+        System.out.println("Modification de l'utilisateur : SUCCES");
+        }
+        catch(Exception e)
+        {
+        System.out.println("Modification de l'utilisateur : ECHEC");
+        e.printStackTrace();
+        }
+    }
     
-    ModificationItem[] mods = new ModificationItem[newInfo.size() - 1];
-    Attribute[] attrMods = new BasicAttribute[newInfo.size() - 1];
+    public HashMap UserSecurityInfo(String uid) throws NamingException {
+        
+        HashMap secInfoTab = new HashMap();
+        SearchControls controls = new SearchControls();
+        controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+        NamingEnumeration<SearchResult> answer = this.contexte.search(baseDN, "UID=" + uid.trim(), controls);
+        
+        if (answer.hasMore()) {
+            Attributes attrs = answer.next().getAttributes();
+        
+            NamingEnumeration e;
+        
+            e = attrs.getIDs();
+        
+            while (e.hasMoreElements()) {
+                String attr = (String) e.nextElement();
+                String [] value = attrs.get(attr).toString().split(": ");
+        
+                switch (value[0])
+                {   
+                    case "description":
+                        secInfoTab.put("SECURITYQUESTION", value[1]);
+                        break;
+                        
+                    case "street":
+                        secInfoTab.put("SECURITYANSWER", value[1]);
+                        break;                        
+                }
+            }
+        }
+        return secInfoTab;
+    }
     
-    attrMods[0] = new BasicAttribute("userPassword", newInfo.get("PWD"));
-    
-    if (newInfo.containsKey("LASTNAME")) {
-        attrMods[1] = new BasicAttribute("sn", newInfo.get("LASTNAME"));  
-    }
-    if (newInfo.containsKey("FIRSTNAME")) {
-        attrMods[2] = new BasicAttribute("givenName", newInfo.get("FIRSTNAME"));
-    }
-    if (newInfo.containsKey("EMAIL")) {
-        attrMods[3] = new BasicAttribute("mail", newInfo.get("EMAIL"));
-    }
-    if (newInfo.containsKey("PHONENUMBER")) {
-        attrMods[4] = new BasicAttribute("telephoneNumber", newInfo.get("PHONENUMBER"));
-    }
-    
-    for (int i=0; i < newInfo.size()-1; i++) {
-        mods[i] = new ModificationItem (DirContext.REPLACE_ATTRIBUTE, attrMods[i]);
-    }
-    
-    this.contexte.modifyAttributes(entryDN, mods);
-    System.out.println("Modification de l'utilisateur : SUCCES");
-    }
-    catch(Exception e)
-    {
-    System.out.println("Modification de l'utilisateur : ECHEC");
-    e.printStackTrace();
-    }
+     public DirContext getContexte() {
+        return contexte;
     }
     
     /*public void UserRemove(String uidUser){

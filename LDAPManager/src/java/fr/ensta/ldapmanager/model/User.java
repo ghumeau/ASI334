@@ -19,21 +19,24 @@ public class User {
     private String firstName;
     private String email;
     private String phoneNumber;
+    //private String distinguishedName;
+    private String commonName;
     private String secureQuestion;
     private String secureAnswer;
+    private String totpSecret;
 
     private boolean flagTwoFactorsAuth;
     private int codeTwoFactorsAuth;
     
     private HashMap userInfoTab;
     
+    public User() {
+        
+    }
+    
     public User(String uid, String password) {
         this.uid = uid;
         this.password = password;
-    }
-
-    public User() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     public String getUid() {
@@ -122,6 +125,30 @@ public class User {
 
     public void setUserInfoTab(HashMap userInfoTab) {
         this.userInfoTab = userInfoTab;
+    }
+
+    /*public String getDistinguishedName() {
+    return distinguishedName;
+    }
+    
+    public void setDistinguishedName(String distinguishedName) {
+    this.distinguishedName = distinguishedName;
+    }*/
+
+    public String getCommonName() {
+        return commonName;
+    }
+
+    public void setCommonName(String commonName) {
+        this.commonName = commonName;
+    }
+    
+    public String getTotpSecret() {
+        return totpSecret;
+    }
+
+    public void setTotpSecret(String totpSecret) {
+        this.totpSecret = totpSecret;
     }
 
     

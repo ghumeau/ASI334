@@ -17,17 +17,26 @@ public class Checks {
         UID,
         PWD,
         NAME,
-        MAIL;
+        MAIL,
+        PHONE,
+        QUESTION,
+        ANSWER;
     }
     
     //Validation de la syntaxe des UIDs saisis.
     public static boolean syntaxe(String st, Argument arg) {
         // Création de la liste des caractères valides
-        List<String> validChar = new ArrayList<String>();
+        List<String> validChar = new ArrayList<>();
         int i;
         for (i = 65; i<=90; i++){validChar.add(Character.toString((char) i));}           // majuscules
         for (i = 97; i<=122; i++){validChar.add(Character.toString((char) i));}          // minuscules
         switch (arg){
+            case QUESTION:
+            case ANSWER:
+                validChar.add(Character.toString((char) 44));                            // virgule
+                validChar.add(Character.toString((char) 46));                            // point
+                validChar.add(Character.toString((char) 63));                            // point d'interrogation
+                for (i = 48; i<=57; i++){validChar.add(Character.toString((char) i));}   // chiffres
             case NAME:
                 validChar.add(Character.toString((char) 32));                            // espace
                 validChar.add(Character.toString((char) 45));                            // tiret
@@ -45,6 +54,12 @@ public class Checks {
                 validChar.add(Character.toString((char) 46));                            // point
                 validChar.add(Character.toString((char) 64));                            // @
                 for (i = 48; i<=57; i++){validChar.add(Character.toString((char) i));}   // chiffres
+                break;
+            case PHONE:
+                if (st.length()!=10){return false;}
+                validChar = new ArrayList<>();
+                for (i = 48; i<=57; i++){validChar.add(Character.toString((char) i));}   // chiffres
+                break;
         }
         
         for (i = 0; i<st.length(); i++){                  // Verification de la validité des caractères saisis
