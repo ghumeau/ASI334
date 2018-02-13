@@ -33,7 +33,6 @@ public class Services {
         }
     }
     
-   //DNSearch 
     private String DNSearch(String uid) {
         try {
             connector = new LDAPConnector();
