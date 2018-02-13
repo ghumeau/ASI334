@@ -74,7 +74,7 @@ public class UIDServlet extends HttpServlet {
             if (securityInfo.isEmpty()){errors.put(CHAMP_UID,"UID inconnu");}
             else {
                 session.setAttribute(ATT_QUEST, securityInfo); // stockage de la question/réponse en session
-                request.setAttribute(ATT_QUEST, securityInfo);
+                request.setAttribute(ATT_QUEST, securityInfo.get("SECURITYQUESTION"));
                 this.getServletContext().getRequestDispatcher("/WEB-INF/QuestionView.jsp").forward(request, response);
             }
         }
