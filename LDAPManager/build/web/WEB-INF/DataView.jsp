@@ -1,80 +1,36 @@
 <%-- 
     Document   : Visu
-    Created on : 6 févr. 2018, 20:29:33
+    Created on : 6 fÃ©vr. 2018, 20:29:33
     Author     : arnaudlegrignou
 --%>
 
-
-<%@page import="java.util.LinkedHashMap"%>
-<%@page import="java.util.Set"%>
-<%@page import="java.util.Iterator"%>
-<%@page import="java.util.Map.Entry"%>
-<%@page import="java.util.Map"%>
-<%@page import="java.util.HashMap"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
-
-
-
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Affichage des données</title>
-        <link type="text/css" media="screen" rel="stylesheet" href="../css/style.css" />
-         <script type="text/javascript" src="../scripts/affichage.js"></script>
-    </head>
-    <body>
 
-        <header><h1>LDAP Manager</h1></header>
+    <c:import url="layout/head.jsp"/>
+    <body>
+        <c:import url="layout/header.jsp"/>
         <form method="post" action="private" class="dataForm">
-            <h2>Données personnelles</h2>
-            
-            <div>
-                <span class="dataLabel">UID : </span><span class="data">${user.uid}</span>
-                <input type="text" id="uid" name="uid" class="dataField" placeholder="${user.uid}"/> 
-            </div>
-            <div>
-                <span class="dataLabel">Nom : </span><span class="data">${user.lastName}</span>
-                <input type="text" id="uid" name="uid" class="dataField" placeholder="${user.lastName}"/> 
-            </div>
-            <div>
-                <span class="dataLabel">prénom : </span><span class="data">${user.lastName}</span>
-                <input type="text" id="uid" name="uid" class="dataField" placeholder="${user.lastName}"/> 
-            </div>
-            <div>
-                <span class="dataLabel">Email : </span><span class="data">${user.lastName}</span>
-                <input type="text" id="uid" name="uid" class="dataField" placeholder="${user.lastName}"/> 
-            </div>
-            <div>
-                <span class="dataLabel">Email : </span><span class="data">${user.lastName}</span>
-                <input type="text" id="uid" name="uid" class="dataField" placeholder="${user.lastName}"/> 
-            </div>
-          
-         
+            <h3>DonnÃ©es personnelles</h3>
+            <h3>UID = ${user.uid}</h3>
             
             <script>
-                
-            
-                
-                dataLine("UID","${nom}");
-                dataLine("nom","${nom}");
-                dataLine("prenom","");
-                dataLine("email","");
-                dataLine("téléphone","");                        
+                dataLine("Nom ","nom","${user.lastName}");
+                dataLine("PrÃ©nom","prenom","${user.firstName}");
+                dataLine("Email","mail","${user.email}");
+                dataLine("TÃ©lÃ©phone","tel","${user.phoneNumber}");
             </script>
-
-            <input type="button" class="bouton" id="modifier" class="modify" value ="modifier" onclick="disableTxt()" /> 
-            <input type="button" class="bouton" id="annuler" value="Annuler" hidden="true" onclick="undisableTxt()" />
-            <input type="button" class="bouton" value="Valider"  />
-            <a class="bouton" href="../security/">Modifier les éléments de sécurité</a>
+            <input type="button" class="bouton" id="modifier"value ="tout modifier"  onclick="allModify()" /> 
+            <input type="submit" class="bouton" id="valider" value="Valider" hidden="true" onclick="allvalidate()" />
+            <input type="button" class="bouton" id="annuler" value="Annuler" hidden="true" onclick="allCancel()" />
+            
+            <br><a class="bouton" id='securityButton' href="../security/">Modifier les Ã©lÃ©ments de sÃ©curitÃ©</a>
+            <br><a class="logout" id="logoutButton"   href="../public/">Se deconnecter</a>
             
         </form>
-            
         
-        
-        </br><a href="../public/"> <input type="button" href="../private/" value="Se deconnecter"></a><br /> 
-        
-        <footer><h1>LDAP Manager</h1></footer>
-
     </body>
 </html>

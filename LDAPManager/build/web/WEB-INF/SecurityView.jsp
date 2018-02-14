@@ -5,34 +5,23 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-        <link type="text/css" media="screen" rel="stylesheet" href="../css/style.css" />
-    </head>
-    <script type="text/javascript" src="../scripts/affichage.js"></script>
+    <c:import url="layout/head.jsp"/>
     <body>
-        <header><h1>Données de sécurité</h1></header>
-        
-        </form>
-        
+        <c:import url="layout/header.jsp"/>   
         <form method="post" action="private" ID="securityForm">
-            <h2>Données de sécurité</h2>
-           
+            <h3>Données de sécurité</h3>
             <script>
                 securityLine("pwd","Saisir l'ancien mot de passe");
                 securityLine("newpwd","Saisir le nouveau mot de passe");
-                securityLine("confirm","confirmation du nouveaumot de passe");
+                securityLine("confirm","confirmation du nouveau mot de passe");
                 securityLine("question","question de sécurité");
                 securityLine("answer", "réponse de sécurité");
             </script>
-
-            <input type="button" class="bouton" value="Valider"  />
-
-            
-            
+            <input type="submit" class="bouton" value="Valider"  />
+            <a class="retour" id="returnButton"   href="../private/">retour aux données</a>
         </form>
     </body>
 </html>

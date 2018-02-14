@@ -21,6 +21,7 @@
                 securityLine("answer", "réponse de sécurité");
             </script>
             <input type="submit" class="bouton" value="Valider"  />
+            <a class="retour" id="returnButton"   href="../private/">retour aux données</a>
         </form>
     </body>
 </html>
