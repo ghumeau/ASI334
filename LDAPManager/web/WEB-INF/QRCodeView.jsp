@@ -1,6 +1,6 @@
 <%-- 
-    Document   : LogoutView
-    Created on : 7 févr. 2018, 22:59:36
+    Document   : DoubleLoginView
+    Created on : 12 févr. 2018, 19:42:54
     Author     : arnaudlegrignou
 --%>
 
@@ -8,12 +8,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
+    
     <c:import url="layout/head.jsp"/>
-    <body> 
+    <body>
         <c:import url="layout/header.jsp"/>
-        <form>
-        <h3>Vous avez été deconnecté</h3>
-        <a href="../login/">Se connecter</a>
-        </form>
+        <h1>Hello World!</h1>
     </body>
 </html>

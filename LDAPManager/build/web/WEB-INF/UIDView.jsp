@@ -5,21 +5,17 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-        <link type="text/css" media="screen" rel="stylesheet" href="../css/style.css" />
-    </head>
-    <script type="text/javascript" src="../scripts/affichage.js"></script>
-    <header>LDAP Manager</header>
+    <c:import url="layout/head.jsp"/>
+    <header><h1>LDAP Manager</h1></header>
     <body>
+        <c:import url="layout/header.jsp"/>
         <form>
+            <h3>Saisie de l'identifiant (UID)</h3>
             <script>
-                securityLine("uid","entrez votre identifiant");
-                
-                
+                securityLine("uid","entrez votre identifiant");               
             </script>
             <input type="submit" class="bouton" value="valider"> 
       </form>

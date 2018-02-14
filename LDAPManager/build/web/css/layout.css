@@ -1,0 +1,54 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 13 févr. 2018, 19:30:37
+    Author     : arnaudlegrignou
+*/
+
+.dataLine,.securityLine{
+    height:28px;
+    
+    
+}
+.dataLabel{
+    display : inline-block;
+    width : 80px;}
+
+.deux{
+    display:inline-block;
+    width:20px;  
+}
+.data{
+    display : inline-block;
+    width : 200px;
+    margin-left: 10px;
+}
+
+.dataField{
+    display : none;
+    width : 150px;
+    margin-left: 10px;
+}
+
+.securityLabel{
+    display : inline-block;
+    width : 260px;
+}
+.securityField{
+    display: inline-block;
+    width: 300px;
+    margin-left: 10px;
+}
+
+.cancel{
+    display : none;
+}
+
+.validate{
+    display : none;
+}
+
+.bouton{margin-top:10px;}
