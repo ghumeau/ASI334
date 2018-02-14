@@ -13,7 +13,7 @@
         <c:import url="layout/header.jsp"/>
         <form>
         <h3>Vous avez été deconnecté</h3>
-        <a href="../login/">Se connecter</a>
+        <a href="login">Se connecter</a>
         </form>
     </body>
 </html>

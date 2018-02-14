@@ -22,7 +22,10 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "DataServlet", urlPatterns = {"/DataServlet"})
 public class DataServlet extends HttpServlet {
     
-    public static final String ATT_RESULTAT = "resultat";
+    public static final String CHAMP_NAME = "nom";
+    public static final String CHAMP_FIRSTNAME = "prenom";
+    public static final String CHAMP_MAIL = "mail";
+    public static final String CHAMP_PHONE = "telephone";
     public static final String ATT_ECHECS = "echecs";
     public static final String ATT_USER = "user";
     public static final int maxEchecs = 5;
@@ -33,10 +36,7 @@ public class DataServlet extends HttpServlet {
         User user = (User) session.getAttribute(ATT_USER);
         // A l'appel de la servlet (GET), affichage de la page d'authentification si l'utilisateur n'a pas de session active
         if (user==null){
-            Integer echecs = (Integer) session.getAttribute(ATT_ECHECS);
-            if (echecs==null){session.setAttribute(ATT_ECHECS,0);}
-            else if (echecs>=maxEchecs){session.setAttribute(ATT_RESULTAT, "Trop d'échec, vous avez été bloqué !!!");}
-            this.getServletContext().getRequestDispatcher("/WEB-INF/LoginView.jsp").forward(request, response);
+            this.getServletContext().getRequestDispatcher("/login").forward(request, response);
         }
         else {
             request.setAttribute(ATT_USER, user.GetInfo());

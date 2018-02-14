@@ -27,8 +27,8 @@
             <input type="submit" class="bouton" id="valider" value="Valider" hidden="true" onclick="allvalidate()" />
             <input type="button" class="bouton" id="annuler" value="Annuler" hidden="true" onclick="allCancel()" />
             
-            <br><a class="bouton" id='securityButton' href="../security/">Modifier les éléments de sécurité</a>
-            <br><a class="logout" id="logoutButton"   href="../public/">Se deconnecter</a>
+            <br><a class="bouton" id='securityButton' href="security">Modifier les éléments de sécurité</a>
+            <br><a class="logout" id="logoutButton"   href="public">Se deconnecter</a>
             
         </form>
         
