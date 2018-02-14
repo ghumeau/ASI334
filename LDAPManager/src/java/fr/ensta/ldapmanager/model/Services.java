@@ -122,6 +122,8 @@ public class Services {
         if (user.getTotpSecret()!= null) {
             System.out.println("Le code de sécurité TOTP de l'utilisateur est : " + user.getTotpSecret());
         }
+        String totpbool = (user.isTotpFlag()) ? "TRUE" : "FALSE";
+        System.out.println("Le flag TOTP de l'utilisateur est positionné à : " + totpbool);
     }
     
     public void ModifyInfo(User userToModify) {
