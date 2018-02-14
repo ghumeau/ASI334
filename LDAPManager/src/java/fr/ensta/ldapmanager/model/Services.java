@@ -17,6 +17,9 @@ public class Services {
     private LDAPConnector connector;
     private User user;
     private HashMap userMap;
+    
+    private static final String technicalAccount = "taccount";
+    private static final String techAccPwd = "password";
 
     public Services() {
         
@@ -124,32 +127,33 @@ public class Services {
     public void ModifyInfo(User userToModify) {
         HashMap newUserInfo = new HashMap();
         try {
-            newUserInfo.put("UID", userToModify.getUid());
-            newUserInfo.put("PWD",  userToModify.getPassword());
+            newUserInfo.put("uid", userToModify.getUid());
+            newUserInfo.put("password",  userToModify.getPassword());
             if (!(userToModify.getLastName().isEmpty())) {
-                newUserInfo.put("LASTNAME", userToModify.getLastName());
+                newUserInfo.put("lastName", userToModify.getLastName());
             }
             if (!(userToModify.getFirstName().isEmpty())) {
-                newUserInfo.put("FIRSTNAME", userToModify.getFirstName());
+                newUserInfo.put("firstName", userToModify.getFirstName());
             }
             if (!(userToModify.getCommonName().isEmpty())) {
-                newUserInfo.put("COMMONNAME", userToModify.getCommonName());
+                newUserInfo.put("commonName", userToModify.getCommonName());
             }
             if (!(userToModify.getEmail().isEmpty())) {
-                newUserInfo.put("EMAIL", userToModify.getEmail());
+                newUserInfo.put("eMail", userToModify.getEmail());
             }
             if (!(userToModify.getPhoneNumber().isEmpty())) {
-                newUserInfo.put("PHONENUMBER", userToModify.getPhoneNumber());
+                newUserInfo.put("phoneNumber", userToModify.getPhoneNumber());
             }
             if (!(userToModify.getSecureQuestion().isEmpty())) {
-                newUserInfo.put("SECURITYQUESTION", userToModify.getSecureQuestion());
+                newUserInfo.put("securityQuestion", userToModify.getSecureQuestion());
             }
             if (!(userToModify.getSecureAnswer().isEmpty())) {
-                newUserInfo.put("SECURITYANSWER", userToModify.getSecureAnswer());
+                newUserInfo.put("securityAnswer", userToModify.getSecureAnswer());
             }
             if (!(userToModify.getTotpSecret().isEmpty())) {
-                newUserInfo.put("TOTPSECRET", userToModify.getTotpSecret());
+                newUserInfo.put("totpSecret", userToModify.getTotpSecret());
             }
+            newUserInfo.put("totpFlag", (userToModify.isTotpFlag()) ? "TRUE" : "FALSE");
             String DN = DNSearch(userToModify.getUid());
             connector = new LDAPConnector(DN, userToModify.getPassword());
             connector.connect();
@@ -163,7 +167,8 @@ public class Services {
     
     public HashMap RetrieveSecurityInfo(String uid) {
         try {
-            connector = new LDAPConnector();
+            String DN = DNSearch(technicalAccount);
+            connector = new LDAPConnector(DN,techAccPwd);
             connector.connect();
             HashMap securityInfo = connector.UserSecurityInfo(uid);
             connector.disconnect();
@@ -179,29 +184,37 @@ public class Services {
     }
 
     private void FillUserInfo() {
-        if (userMap.containsKey("LASTNAME")) {
-            user.setLastName(userMap.get("LASTNAME").toString());
+        if (userMap.containsKey("lastName")) {
+            user.setLastName(userMap.get("lastName").toString());
         }
-        if (userMap.containsKey("FIRSTNAME")) {
-            user.setFirstName(userMap.get("FIRSTNAME").toString());
+        if (userMap.containsKey("firstName")) {
+            user.setFirstName(userMap.get("firstName").toString());
         }
-        if (userMap.containsKey("COMMONNAME")) {
-            user.setCommonName(userMap.get("COMMONNAME").toString());
+        if (userMap.containsKey("commonName")) {
+            user.setCommonName(userMap.get("commonName").toString());
         }
-        if (userMap.containsKey("EMAIL")) {
-            user.setEmail(userMap.get("EMAIL").toString());
+        if (userMap.containsKey("eMail")) {
+            user.setEmail(userMap.get("eMail").toString());
         }
-        if (userMap.containsKey("PHONENUMBER")) {
-            user.setPhoneNumber(userMap.get("PHONENUMBER").toString());
+        if (userMap.containsKey("phoneNumber")) {
+            user.setPhoneNumber(userMap.get("phoneNumber").toString());
         }
-        if (userMap.containsKey("SECURITYQUESTION")) {
-            user.setSecureQuestion(userMap.get("SECURITYQUESTION").toString());
+        if (userMap.containsKey("securityQuestion")) {
+            user.setSecureQuestion(userMap.get("securityQuestion").toString());
         }
-        if (userMap.containsKey("SECURITYANSWER")) {
-            user.setSecureAnswer(userMap.get("SECURITYANSWER").toString());
+        if (userMap.containsKey("securityAnswer")) {
+            user.setSecureAnswer(userMap.get("securityAnswer").toString());
         }
-        if (userMap.containsKey("TOTPSECRET")) {
-            user.setTotpSecret(userMap.get("TOTPSECRET").toString());
+        if (userMap.containsKey("totpSecret")) {
+            user.setTotpSecret(userMap.get("totpSecret").toString());
+        }
+        if (userMap.containsKey("totpFlag")) {
+            if ((userMap.get("totpFlag").toString()).equals("TRUE")) {
+               user.setTotpFlag(true);
+            }
+            else {
+                user.setTotpFlag(false);
+            }
         }
     }
     

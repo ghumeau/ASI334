@@ -6,6 +6,7 @@
 package fr.ensta.ldapmanager.model;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  *
@@ -19,14 +20,11 @@ public class User {
     private String firstName;
     private String email;
     private String phoneNumber;
-    //private String distinguishedName;
     private String commonName;
     private String secureQuestion;
     private String secureAnswer;
     private String totpSecret;
-
-    private boolean flagTwoFactorsAuth;
-    private int codeTwoFactorsAuth;
+    private boolean totpFlag = false;
     
     private HashMap userInfoTab;
     
@@ -103,22 +101,14 @@ public class User {
         this.secureAnswer = secureAnswer;
     }
 
-    public boolean isFlagTwoFactorsAuth() {
-        return flagTwoFactorsAuth;
+    public boolean isTotpFlag() {
+        return totpFlag;
     }
 
-    public void setFlagTwoFactorsAuth(boolean flagTwoFactorsAuth) {
-        this.flagTwoFactorsAuth = flagTwoFactorsAuth;
+    public void setTotpFlag(boolean totpFlag) {
+        this.totpFlag = totpFlag;
     }
-
-    public int getCodeTwoFactorsAuth() {
-        return codeTwoFactorsAuth;
-    }
-
-    public void setCodeTwoFactorsAuth(int codeTwoFactorsAuth) {
-        this.codeTwoFactorsAuth = codeTwoFactorsAuth;
-    }
-
+    
     public HashMap getUserInfoTab() {
         return userInfoTab;
     }
@@ -126,14 +116,6 @@ public class User {
     public void setUserInfoTab(HashMap userInfoTab) {
         this.userInfoTab = userInfoTab;
     }
-
-    /*public String getDistinguishedName() {
-    return distinguishedName;
-    }
-    
-    public void setDistinguishedName(String distinguishedName) {
-    this.distinguishedName = distinguishedName;
-    }*/
 
     public String getCommonName() {
         return commonName;
@@ -154,36 +136,38 @@ public class User {
     /*
     Retrieve the user info
     */
-    public HashMap GetInfo() {
+    public LinkedHashMap GetInfo() {
         try {
-            HashMap infoMap = new HashMap();
-            infoMap.put("UID", getUid());
-            infoMap.put("PWD",  getPassword());
-            if (!(getLastName().isEmpty())) {
-                infoMap.put("LASTNAME", getLastName());
+            LinkedHashMap<String,String> infoMap = new LinkedHashMap();
+            infoMap.put("uid", this.getUid());
+            infoMap.put("password",  this.getPassword());
+            
+            if (!(getFirstName().isEmpty())) {
+                infoMap.put("lastName", this.getLastName());
             }
             if (!(getFirstName().isEmpty())) {
-                infoMap.put("FIRSTNAME", getFirstName());
+                infoMap.put("firstName", this.getFirstName());
             }
             if (!(getCommonName().isEmpty())) {
-                infoMap.put("COMMONNAME", getCommonName());
+                infoMap.put("commonName", getCommonName());
             }
             if (!(getEmail().isEmpty())) {
-                infoMap.put("EMAIL", getEmail());
+                infoMap.put("eMail", getEmail());
             }
             if (!(getPhoneNumber().isEmpty())) {
-                infoMap.put("PHONENUMBER", getPhoneNumber());
+                infoMap.put("phoneNumber", getPhoneNumber());
             }
             if (!(getSecureQuestion().isEmpty())) {
-                infoMap.put("SECURITYQUESTION", getSecureQuestion());
+                infoMap.put("securityQuestion", getSecureQuestion());
             }
             if (!(getSecureAnswer().isEmpty())) {
-                infoMap.put("SECURITYANSWER", getSecureAnswer());
+                infoMap.put("securityAnswer", getSecureAnswer());
             }
             if (!(getTotpSecret().isEmpty())) {
-                infoMap.put("TOTPSECRET", getTotpSecret());
+                infoMap.put("totpSecret", getTotpSecret());
             }
-            return infoMap;
+            infoMap.put("totpFlag", isTotpFlag() ? "TRUE" : "FALSE" );
+            return  infoMap;
         }
         catch (Exception e) {
             System.out.println("Erreur dans GetInfo");

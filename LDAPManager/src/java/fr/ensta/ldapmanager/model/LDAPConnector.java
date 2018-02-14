@@ -29,11 +29,12 @@ public class LDAPConnector {
     private Hashtable environnement;
     private DirContext contexte;
     //IP address of the LDAP server
-    static final String serverIP = "localhost";
+    private static final String serverIP = "localhost";
     //Port number of the LDAP server
-    static final String serverPort = "1389";
+    //private static final String serverPort = "1389";
+    private static final String serverPort = "389";
     //LDAP domain
-    static final String baseDN = "dc=ensta,dc=fr";
+    private static final String baseDN = "dc=ensta,dc=fr";
     
     
     /********************
@@ -50,8 +51,9 @@ public class LDAPConnector {
 
     /********************
      * Connector with user credentials
+     * @param DN Distinguished Name of the user who tries to connect
+     * @param password password of the user who tries to connect
     ********************/
-    //public LDAPConnector(String user, String password, String DN){
     public LDAPConnector(String DN, String password){
         
         //User login
@@ -70,6 +72,7 @@ public class LDAPConnector {
    
     /********************
      * Initialize the connection to the LDAP server
+     * @throws javax.naming.NamingException
     ********************/
     public void connect() throws NamingException {
 
@@ -79,6 +82,7 @@ public class LDAPConnector {
     
     /********************
      * Disconnect from the LDAP server
+     * @throws javax.naming.NamingException
     ********************/
     public void disconnect() throws NamingException {
         
@@ -88,8 +92,8 @@ public class LDAPConnector {
     
     /********************
      * Search the DN of a specified user
-     * @param uid
-     * @return 
+     * @param uid id of the user
+     * @return the DN of the user
      * @throws javax.naming.NamingException
     ********************/
     public String UserDNSearch(String uid) throws NullPointerException, NamingException {
@@ -103,6 +107,12 @@ public class LDAPConnector {
         
     }
     
+    /********************
+     * Retrieve the info of a specified user in the LDAP
+     * @param uidUser id of the user
+     * @return a HashMap containing the user info retrieved from the LDAP server
+     * @throws javax.naming.NamingException
+    ********************/
     public HashMap UserScopeSearch(String uidUser) throws NamingException {
         HashMap infoTab = new HashMap();
         SearchControls controls = new SearchControls();
@@ -123,35 +133,39 @@ public class LDAPConnector {
                 switch (value[0])
                 {
                     case "sn":
-                    infoTab.put("LASTNAME", value[1]);
-                    break;
+                        infoTab.put("lastName", value[1]);
+                        break;
 
                     case "givenName":
-                    infoTab.put("FIRSTNAME", value[1]);
-                    break;
+                        infoTab.put("firstName", value[1]);
+                        break;
                     
                     case "cn":
-                    infoTab.put("COMMONNAME", value[1]);
-                    break;
+                        infoTab.put("commonName", value[1]);
+                        break;
 
                     case "mail":
-                    infoTab.put("EMAIL", value[1]);
-                    break;
+                        infoTab.put("eMail", value[1]);
+                        break;
 
                     case "phoneNumber":
-                    infoTab.put("PHONENUMBER", value[1]);
-                    break;
+                        infoTab.put("phoneNumber", value[1]);
+                        break;
                     
-                    case "description":
-                        infoTab.put("SECURITYQUESTION", value[1]);
+                    case "securityquestion":
+                        infoTab.put("securityQuestion", value[1]);
                         break;
                         
-                    case "street":
-                        infoTab.put("SECURITYANSWER", value[1]);
+                    case "securityanswer":
+                        infoTab.put("securityAnswer", value[1]);
                         break;
                     
-                    case "title":
-                        infoTab.put("TOTPSECRET", value[1]);
+                    case "totpsecret":
+                        infoTab.put("totpSecret", value[1]);
+                        break;
+                        
+                    case "totpflag":
+                        infoTab.put("totpFlag", value[1]);
                         break;
                         
                 }
@@ -160,6 +174,11 @@ public class LDAPConnector {
         return infoTab;
     }
     
+    /********************
+     * Store the new info of a specified user in the LDAP
+     * @param newInfo HashMap containing the new info to store in the LDAP server
+     * @param DN Distinguished Name of the user to modify
+    ********************/
     public void ModifyLDAPInfo(HashMap newInfo, String DN) {
         
         try
@@ -172,36 +191,40 @@ public class LDAPConnector {
         
         int i = 1;
 
-        if (newInfo.containsKey("LASTNAME")) {
-            attrMods[i] = new BasicAttribute("sn", newInfo.get("LASTNAME"));
+        if (newInfo.containsKey("lastName")) {
+            attrMods[i] = new BasicAttribute("sn", newInfo.get("lastName"));
             i++;
         }
-        if (newInfo.containsKey("FIRSTNAME")) {
-            attrMods[i] = new BasicAttribute("givenName", newInfo.get("FIRSTNAME"));
+        if (newInfo.containsKey("firstName")) {
+            attrMods[i] = new BasicAttribute("givenName", newInfo.get("firstName"));
             i++;
         }
-        if (newInfo.containsKey("COMMONNAME")) {
-            attrMods[i] = new BasicAttribute("cn", newInfo.get("COMMONNAME"));
+        if (newInfo.containsKey("commonName")) {
+            attrMods[i] = new BasicAttribute("cn", newInfo.get("commonName"));
             i++;
         }
-        if (newInfo.containsKey("EMAIL")) {
-            attrMods[i] = new BasicAttribute("mail", newInfo.get("EMAIL"));
+        if (newInfo.containsKey("eMail")) {
+            attrMods[i] = new BasicAttribute("mail", newInfo.get("eMail"));
             i++;
         }
-        if (newInfo.containsKey("PHONENUMBER")) {
-            attrMods[i] = new BasicAttribute("telephoneNumber", newInfo.get("PHONENUMBER"));
+        if (newInfo.containsKey("phoneNumber")) {
+            attrMods[i] = new BasicAttribute("telephoneNumber", newInfo.get("phoneNumber"));
             i++;
         }
-        if (newInfo.containsKey("SECURITYQUESTION")) {
-            attrMods[i] = new BasicAttribute("description", newInfo.get("SECURITYQUESTION"));
+        if (newInfo.containsKey("securityQuestion")) {
+            attrMods[i] = new BasicAttribute("securityquestion", newInfo.get("securityQuestion"));
             i++;
         }
-        if (newInfo.containsKey("SECURITYANSWER")) {
-            attrMods[i] = new BasicAttribute("street", newInfo.get("SECURITYANSWER"));
+        if (newInfo.containsKey("securityAnswer")) {
+            attrMods[i] = new BasicAttribute("securityanswer", newInfo.get("securityAnswer"));
             i++;
         }
-        if (newInfo.containsKey("TOTPSECRET")) {
-            attrMods[i] = new BasicAttribute("title", newInfo.get("TOTPSECRET"));
+        if (newInfo.containsKey("totpSecret")) {
+            attrMods[i] = new BasicAttribute("totpsecret", newInfo.get("totpSecret"));
+            i++;
+        }
+        if (newInfo.containsKey("totpFlag")) {
+            attrMods[i] = new BasicAttribute("totpflag", newInfo.get("totpFlag"));
             i++;
         }
 
@@ -219,6 +242,12 @@ public class LDAPConnector {
         }
     }
     
+    /********************
+     * Retrieve the security info of a specified user
+     * @param uid id of the user
+     * @return a HashMap containing the security info of a user
+     * @throws javax.naming.NamingException
+    ********************/
     public HashMap UserSecurityInfo(String uid) throws NamingException {
         
         HashMap secInfoTab = new HashMap();
@@ -239,12 +268,12 @@ public class LDAPConnector {
         
                 switch (value[0])
                 {   
-                    case "description":
-                        secInfoTab.put("SECURITYQUESTION", value[1]);
+                    case "securityquestion":
+                        secInfoTab.put("securityQuestion", value[1]);
                         break;
                         
-                    case "street":
-                        secInfoTab.put("SECURITYANSWER", value[1]);
+                    case "securityanswer":
+                        secInfoTab.put("securityAnswer", value[1]);
                         break;                        
                 }
             }
@@ -252,55 +281,13 @@ public class LDAPConnector {
         return secInfoTab;
     }
     
+    /********************
+     * Context Getter
+     * @return the LDAPConnector context
+    ********************/
      public DirContext getContexte() {
         return contexte;
     }
-    
-    /*public void UserRemove(String uidUser){
-        String entryDN = "uid="+uidUser.trim()+",ou=Professors,ou=People,dc=ensta,dc=fr"; 
-        try {
-            this.contexte.destroySubcontext(entryDN);
-            System.out.println("Suppression de l'utilisateur : SUCCES");
-        } catch (Exception e) {
-            System.out.println("Suppression de l'utilisateur : ECHEC");
-            e.printStackTrace();
-        }
-    }*/
-    
-    /*public void UserAdd(String uidUser)
-    {
-	try
-	{ 
-            Attributes add = new BasicAttributes();
-            Attribute add0 = new BasicAttribute("givenName", "First Name");
-            Attribute add1 = new BasicAttribute("sn", "Last Name");
-            Attribute add2 = new BasicAttribute("cn", "Common Name");
-            Attribute add3 = new BasicAttribute("telephoneNumber", "phone");
-            Attribute add4 = new BasicAttribute("mail", "e-mail");
-            Attribute add5 = new BasicAttribute("userPassword", "password");
-            Attribute add6 = new BasicAttribute("facsimileTelephoneNumber", "fax");	
-            Attribute add7 = new BasicAttribute("objectclass", "inetOrgPerson");	
-            Attribute add8 = new BasicAttribute("uid", uidUser.trim());	
-
-            add.put(add0);
-            add.put(add1);
-            add.put(add2);
-            add.put(add3);
-            add.put(add4);
-            add.put(add5);
-            add.put(add6);
-            add.put(add7);
-            add.put(add8);
-
-            this.contexte.createSubcontext("uid="+uidUser.trim()+",ou=Students,ou=People,dc=ensta,dc=fr", add); 
-            System.out.println("Ajout de l'utilisateur : SUCCES");
-	}
-	catch(Exception e)
-	{
-            System.out.println("Ajout de l'utilisateur : ECHEC");
-            e.printStackTrace();	
-	}
-    }*/
     
 }
 

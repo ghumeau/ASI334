@@ -29,9 +29,9 @@ public class LoginServlet extends HttpServlet {
             this.getServletContext().getRequestDispatcher("/WEB-INF/LoginView.jsp").forward(request, response);
         }
         else {
-            request.setAttribute(ATT_USER, user);
+            request.setAttribute(ATT_USER, user.GetInfo());
             // Transmission de la MAP contenant les infos utilisateur à la JSP d'affichage des données
-            this.getServletContext().getRequestDispatcher("/WEB-INF/LDAPView.jsp").forward(request, response);
+            this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
         }
     }
 
@@ -68,7 +68,7 @@ public class LoginServlet extends HttpServlet {
             usr = svc.AuthenticationSequence(login,pwd);
             if (usr!=null){                                  // authentification réussie
                 session.setAttribute(ATT_USER, usr);
-                request.setAttribute(ATT_USER, usr);
+                request.setAttribute(ATT_USER, usr.GetInfo());
                 // Transmission de la MAP contenant les infos utilisateur à la JSP d'affichage des données
                 this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
             }
@@ -83,45 +83,4 @@ public class LoginServlet extends HttpServlet {
         // Transmission de la paire d'objets request/response à notre JSP
         this.getServletContext().getRequestDispatcher("/WEB-INF/LoginView.jsp").forward(request, response);
     }
-<<<<<<< HEAD:LDAPManager/src/java/fr/ensta/ldapmanager/control/LoginView.java
-
-
-    //Validation de la syntaxe des mots de passe saisis.
-    private void testFormatPWD(String pwd) throws Exception {
-        if (pwd.length()==0) {
-            throw new Exception("Veuillez saisir un mot de passe");
-        } 
-        
-        // Création de la liste des caractères valides (chiffres et lettres min/maj)
-        List<String> validChar = new ArrayList<>();
-        int i;
-        for (i = 48; i<=57; i++){validChar.add(Character.toString((char) i));} // chiffres
-        for (i = 65; i<=90; i++){validChar.add(Character.toString((char) i));} // majuscules
-        for (i = 97; i<=122; i++){validChar.add(Character.toString((char) i));} // minuscules
-        for (i = 0; i<pwd.length(); i++){                  // Verification de la validité des caractères saisis
-            if(!validChar.contains(pwd.substring(i,i+1))){throw new Exception("Veuillez saisir un mot de passe valide.");}
-        }
-        
-
-    }
-
-    //Validation de la syntaxe des UIDs saisis.
-    private void testFormatUID(String uid) throws Exception {
-        if (uid.length()==0) {
-            throw new Exception("Veuillez saisir un UID.");
-         }
-        // Création de la liste des caractères valides (chiffres et lettres min/maj)
-        List<String> validChar = new ArrayList<>();
-        int i;
-        for (i = 48; i<=57; i++){validChar.add(Character.toString((char) i));} // chiffres
-        for (i = 65; i<=90; i++){validChar.add(Character.toString((char) i));} // majuscules
-        for (i = 97; i<=122; i++){validChar.add(Character.toString((char) i));} // minuscules
-        for (i = 0; i<uid.length(); i++){                  // Verification de la validité des caractères saisis
-                if(!validChar.contains(uid.substring(i,i+1))){throw new Exception("Veuillez saisir un UID valide.");}
-        }
-        
-        
-    }
-=======
->>>>>>> 7f372d18c600eec2a87b213083cb0447eabd4b19:LDAPManager/src/java/fr/ensta/ldapmanager/control/LoginServlet.java
 }

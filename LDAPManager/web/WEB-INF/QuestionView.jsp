@@ -21,7 +21,8 @@
             <script>
                 securityLine("Answer","entrez la réponse de sécurité");
             </script>
-            <a class="bouton" href="../new/" >Valider</a>  
+            <input type="submit" class="bouton" value="valider">
+        
       </form>
     </body>
 </html>
