@@ -19,8 +19,6 @@ import javax.servlet.http.*;
 @WebServlet(name = "DataServlet", urlPatterns = {"/DataServlet"})
 public class DataServlet extends HttpServlet {
     
-    public static final String CHAMP_NAME = "nom";
-    public static final String CHAMP_FIRSTNAME = "prenom";
     public static final String CHAMP_MAIL = "mail";
     public static final String CHAMP_PHONE = "tel";
     public static final String ATT_USER = "user";
@@ -47,16 +45,10 @@ public class DataServlet extends HttpServlet {
         User user = (User) session.getAttribute(ATT_USER);
         Services svc = new Services();
         Map<String, String> errors = new HashMap<>();
-        String name = request.getParameter(CHAMP_NAME);
-        String firstname = request.getParameter(CHAMP_FIRSTNAME);
         String mail = request.getParameter(CHAMP_MAIL);
         String phone = request.getParameter(CHAMP_PHONE);
         
         // tests de la validité des champs et modification en l'absence d'erreurs
-        if(!Checks.syntaxe(name,Checks.Argument.NAME)){errors.put(CHAMP_NAME,"Erreur de syntaxe!");}
-        else{user.setLastName(name);}
-        if(!Checks.syntaxe(firstname,Checks.Argument.NAME)){errors.put(CHAMP_FIRSTNAME,"Erreur de syntaxe!");}
-        else{user.setFirstName(firstname);}
         if(!Checks.syntaxe(mail,Checks.Argument.MAIL)){errors.put(CHAMP_MAIL,"Erreur de syntaxe!");}
         else{user.setEmail(mail);}
         if(!Checks.syntaxe(phone,Checks.Argument.PHONE)){errors.put(CHAMP_PHONE,"Erreur de syntaxe!");}
