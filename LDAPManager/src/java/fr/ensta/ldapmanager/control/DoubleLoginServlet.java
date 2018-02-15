@@ -6,13 +6,12 @@ package fr.ensta.ldapmanager.control;
  * and open the template in the editor.
  */
 
+import fr.ensta.ldapmanager.model.*;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 
 /**
  *
@@ -21,70 +20,60 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "DoubleLoginServlet", urlPatterns = {"/DoubleLoginServlet"})
 public class DoubleLoginServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet DoubeLoginServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet DoubeLoginServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+    public static final String CHAMP_CODE = "code";
+    public static final String ATT_ERREURS = "erreurs";
+    public static final String ATT_ECHECS = "echecs";
+    public static final String ATT_USER = "user";
+    public static final String ATT_AUTH = "authentified";
+    public static final int maxEchecs = 5;
+    
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute(ATT_USER);
+        Boolean auth = (Boolean) session.getAttribute(ATT_AUTH);
+        // A l'appel de la servlet (GET), affichage de la page UID si l'utilisateur n'a pas de session active
+        if (auth==null){
+            Integer echecs = (Integer) session.getAttribute(ATT_ECHECS);
+            if (echecs==null){session.setAttribute(ATT_ECHECS,0);}
+            else if (echecs>=maxEchecs){
+                Map<String, String> errors = new HashMap<>();
+                errors.put(CHAMP_CODE, "Trop d'échec, vous avez été bloqué !!!");
+                request.setAttribute(ATT_ERREURS, errors);
+            }
+            this.getServletContext().getRequestDispatcher("/WEB-INF/DoubleLoginView.jsp").forward(request, response);
+        }
+        else {this.getServletContext().getRequestDispatcher("/private").forward(request, response);} // si déjà authentifié, transfert sur la page data
+    }
+    
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Services svc = new Services();
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute(ATT_USER);
+        Integer echecs = (Integer) session.getAttribute(ATT_ECHECS);
+        String result = null;
+        Map<String, String> errors = new HashMap<>();
+        //Récupération des champs du formulaire.
+        String code = request.getParameter(CHAMP_CODE);
+        
+        if (Checks.isEmpty(code)) {errors.put(CHAMP_CODE,"Veuillez saisir un code.");}
+        else if (!Checks.syntaxe(code, Checks.Argument.CODE)) {errors.put(CHAMP_CODE,"Syntaxe invalide");}
+        else if (!svc.CheckTotpCode(user, code)) {errors.put(CHAMP_CODE,"Code incorrect.");}
+        
+        if (errors.isEmpty()) {
+            session.setAttribute(ATT_AUTH, true);
+            request.setAttribute(ATT_USER, user.GetInfo());
+            // Transmission de la MAP contenant les infos utilisateur à la JSP d'affichage des données
+            this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
+        }
+        else {
+            echecs++;
+            session.setAttribute(ATT_ECHECS,echecs);
+            // Stockage du résultat et des messages d'erreur dans la requête
+            request.setAttribute(ATT_ERREURS, errors);
+            this.getServletContext().getRequestDispatcher("/WEB-INF/DoubleLoginView.jsp").forward(request, response);
         }
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    public void doGet( HttpServletRequest request, HttpServletResponse response )   throws ServletException, IOException {
-        this.getServletContext().getRequestDispatcher( "/WEB-INF/DoubleLoginView.jsp" ).forward( request, response );
-        //processRequest(request, response);
-
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+    
 }

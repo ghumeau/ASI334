@@ -25,6 +25,7 @@ public class SecurityServlet extends HttpServlet {
     public static final String CHAMP_ANS = "answer";
     public static final String CHAMP_AUTH = "auth";
     public static final String ATT_USER = "user";
+    public static final String ATT_AUTH = "authentified";
     public static final String ATT_ERREURS = "erreurs";
     public static final String ATT_RESULTAT = "resultat";
     public static final String ATT_URLQRC = "urlQRcode";
@@ -33,8 +34,9 @@ public class SecurityServlet extends HttpServlet {
     public void doGet( HttpServletRequest request, HttpServletResponse response )   throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(ATT_USER);
+        Boolean auth = (Boolean) session.getAttribute(ATT_AUTH);
         // A l'appel de la servlet (GET), affichage de la page d'authentification si l'utilisateur n'a pas de session active
-        if (user==null){
+        if (auth==null){
             this.getServletContext().getRequestDispatcher("/login").forward(request, response);
         }
         else {

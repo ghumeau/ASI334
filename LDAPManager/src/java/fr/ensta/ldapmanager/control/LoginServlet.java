@@ -15,14 +15,16 @@ public class LoginServlet extends HttpServlet {
     public static final String ATT_RESULTAT = "resultat";
     public static final String ATT_ECHECS = "echecs";
     public static final String ATT_USER = "user";
+    public static final String ATT_AUTH = "authentified";
     public static final int maxEchecs = 5;
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(ATT_USER);
+        Boolean auth = (Boolean) session.getAttribute(ATT_AUTH);
         // A l'appel de la servlet (GET), affichage de la page d'authentification si l'utilisateur n'a pas de session active
-        if (user==null){
+        if (auth==null){
             Integer echecs = (Integer) session.getAttribute(ATT_ECHECS);
             if (echecs==null){session.setAttribute(ATT_ECHECS,0);}
             else if (echecs>=maxEchecs){session.setAttribute(ATT_RESULTAT, "Trop d'échec, vous avez été bloqué !!!");}
@@ -65,9 +67,16 @@ public class LoginServlet extends HttpServlet {
         
         if (usr!=null){                                  // authentification réussie
             session.setAttribute(ATT_USER, usr);
-            request.setAttribute(ATT_USER, usr.GetInfo());
-            // Transmission de la MAP contenant les infos utilisateur à la JSP d'affichage des données
-            this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
+            if (usr.isTotpFlag()) {
+                this.getServletContext().getRequestDispatcher("/WEB-INF/DoubleLoginView.jsp").forward(request, response);
+            }
+            else {
+                session.setAttribute(ATT_AUTH, true);
+                request.setAttribute(ATT_USER, usr.GetInfo());
+                session.setAttribute(ATT_ECHECS,0);
+                // Transmission de la MAP contenant les infos utilisateur à la JSP d'affichage des données
+                this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
+            }
         }
         else{                                            // échec
             echecs++;

@@ -27,13 +27,15 @@ public class UIDServlet extends HttpServlet {
     public static final String ATT_ECHECSQ = "echecsQuestion";
     public static final String ATT_USER = "user";
     public static final String ATT_UID = "uid";
+    public static final String ATT_AUTH = "authentified";
     public static final int maxEchecs = 5;
     
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(ATT_USER);
+        Boolean auth = (Boolean) session.getAttribute(ATT_AUTH);
         // A l'appel de la servlet (GET), affichage de la page UID si l'utilisateur n'a pas de session active
-        if (user==null){
+        if (auth==null){
             Integer echecs = (Integer) session.getAttribute(ATT_ECHECSQ);
             if (echecs==null){session.setAttribute(ATT_ECHECSQ,0);}
             else if (echecs>=maxEchecs){
