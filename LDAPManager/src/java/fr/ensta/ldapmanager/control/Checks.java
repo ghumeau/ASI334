@@ -16,7 +16,6 @@ public class Checks {
     public enum Argument{
         UID,
         PWD,
-        NAME,
         MAIL,
         PHONE,
         QUESTION,
@@ -33,15 +32,12 @@ public class Checks {
         switch (arg){
             case QUESTION:
             case ANSWER:
+                validChar.add(Character.toString((char) 32));                            // espace
                 validChar.add(Character.toString((char) 44));                            // virgule
+                validChar.add(Character.toString((char) 45));                            // tiret
                 validChar.add(Character.toString((char) 46));                            // point
                 validChar.add(Character.toString((char) 63));                            // point d'interrogation
-                for (i = 48; i<=57; i++){validChar.add(Character.toString((char) i));}   // chiffres
-            case NAME:
-                validChar.add(Character.toString((char) 32));                            // espace
-                validChar.add(Character.toString((char) 45));                            // tiret
                 for (i = 192; i<=255; i++){validChar.add(Character.toString((char) i));} // accents
-                break;
             case PWD:
             case UID:
                 for (i = 48; i<=57; i++){validChar.add(Character.toString((char) i));}   // chiffres
