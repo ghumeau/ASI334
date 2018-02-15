@@ -8,20 +8,16 @@ package fr.ensta.ldapmanager.model;
 import java.util.HashMap;
 import java.util.Hashtable;
 import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.BasicAttribute;
-import javax.naming.directory.BasicAttributes;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
 import javax.naming.directory.ModificationItem;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
-import javax.naming.ldap.InitialLdapContext;
-import javax.naming.ldap.LdapContext;
 
 
 public class LDAPConnector {
@@ -71,7 +67,7 @@ public class LDAPConnector {
     }
    
     /********************
-     * Initialize the connection to the LDAP server
+     * Initializes the connection to the LDAP server
      * @throws javax.naming.NamingException
     ********************/
     public void connect() throws NamingException {
@@ -81,7 +77,7 @@ public class LDAPConnector {
     }
     
     /********************
-     * Disconnect from the LDAP server
+     * Disconnects from the LDAP server
      * @throws javax.naming.NamingException
     ********************/
     public void disconnect() throws NamingException {
@@ -91,7 +87,7 @@ public class LDAPConnector {
     }
     
     /********************
-     * Search the DN of a specified user
+     * Searches the DN of a specified user
      * @param uid id of the user
      * @return the DN of the user
      * @throws javax.naming.NamingException
@@ -108,7 +104,7 @@ public class LDAPConnector {
     }
     
     /********************
-     * Retrieve the info of a specified user in the LDAP
+     * Retrieves the info of a specified user in the LDAP
      * @param uidUser id of the user
      * @return a HashMap containing the user info retrieved from the LDAP server
      * @throws javax.naming.NamingException
@@ -175,7 +171,7 @@ public class LDAPConnector {
     }
     
     /********************
-     * Store the new info of a specified user in the LDAP
+     * Stores the new info of a specified user in the LDAP
      * @param newInfo HashMap containing the new info to store in the LDAP server
      * @param DN Distinguished Name of the user to modify
     ********************/
@@ -227,16 +223,16 @@ public class LDAPConnector {
         }
 
         contexte.modifyAttributes(DN, mods);
-        System.out.println("Modification des attributs de l'utilisateur : SUCCES");
+            System.out.println("Modification des attributs de l'utilisateur : SUCCES");
         }
         catch(Exception e)
         {
-        System.out.println("Modification des attributs de l'utilisateur : ECHEC");
+            System.out.println("Modification des attributs de l'utilisateur : ECHEC");
         }
     }
     
      /********************
-     * Store the new info of a specified user in the LDAP
+     * Adds info of a specified user in the LDAP
      * @param newInfo HashMap containing the new info to store in the LDAP server
      * @param DN Distinguished Name of the user to modify
     ********************/
@@ -276,16 +272,16 @@ public class LDAPConnector {
 
         contexte.modifyAttributes(DN, mods);
         
-        System.out.println("Ajout d'attributs à l'utilisateur : SUCCES");
+            System.out.println("Ajout d'attributs à l'utilisateur : SUCCES");
         }
         catch(Exception e)
         {
-        System.out.println("Ajout d'attributs à l'utilisateur : ECHEC");
+            System.out.println("Ajout d'attributs à l'utilisateur : ECHEC");
         }
     }
     
     /********************
-     * Store the new info of a specified user in the LDAP
+     * Deletes info of a specified user in the LDAP
      * @param newInfo HashMap containing the new info to store in the LDAP server
      * @param DN Distinguished Name of the user to modify
     ********************/
@@ -318,22 +314,27 @@ public class LDAPConnector {
             attrMods[i] = new BasicAttribute("securityanswer");
             i++;
         }
+        
+        if (newInfo.containsKey("totpSecret")) {
+            attrMods[i] = new BasicAttribute("totpsecret");
+            i++;
+        }
 
         for (int j=0; j < newInfo.size(); j++) {
             mods[j] = new ModificationItem (DirContext.REMOVE_ATTRIBUTE, attrMods[j]);
         }
 
         contexte.modifyAttributes(DN, mods);
-        System.out.println("Suppression des attributs de l'utilisateur : SUCCES");
+            System.out.println("Suppression des attributs de l'utilisateur : SUCCES");
         }
         catch(Exception e)
         {
-        System.out.println("Suppression des attributs de l'utilisateur : ECHEC");
+            System.out.println("Suppression des attributs de l'utilisateur : ECHEC");
         }
     }
     
     /********************
-     * Retrieve the security info of a specified user
+     * Retrieves the security info of a specified user
      * @param uid id of the user
      * @return a HashMap containing the security info of a user
      * @throws javax.naming.NamingException
@@ -372,7 +373,7 @@ public class LDAPConnector {
     }
  
     /********************
-     * Save the new password in case of reset
+     * Saves the new password in case of reset
      * @param DN Distinguished Name of the user to modify
      * @param newPassword new password to store in the LDAP server
     ********************/
@@ -394,13 +395,18 @@ public class LDAPConnector {
         }
     }
     
+    /********************
+     * Saves the TOTP key of a specified user
+     * @param DN Distinguished Name of the user to modify
+     * @param totpSecret TOTP secret to store in the LDAP server
+    ********************/
     public void SaveTotpKey(String DN, String totpSecret) {
         
         try {
             ModificationItem[] mods = new ModificationItem[1];
             Attribute[] attrMods = new BasicAttribute[1];
 
-            attrMods[0] = new BasicAttribute("totpSecret", totpSecret);
+            attrMods[0] = new BasicAttribute("totpsecret", totpSecret);
 
             mods[0] = new ModificationItem (DirContext.REPLACE_ATTRIBUTE, attrMods[0]);
 
