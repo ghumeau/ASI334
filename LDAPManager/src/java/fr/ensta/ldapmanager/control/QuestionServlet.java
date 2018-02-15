@@ -61,7 +61,7 @@ public class QuestionServlet extends HttpServlet {
             this.getServletContext().getRequestDispatcher("/WEB-INF/QuestionView.jsp").forward(request, response);
         }
         
-        // Verification de la syntaxe de l'UID.
+        // Verification de la syntaxe de la réponse.
         if (Checks.isEmpty(answer)){errors.put(CHAMP_ANSWER,"Veuillez saisir une réponse.");}
         else if (!Checks.syntaxe(answer,Checks.Argument.ANSWER)){errors.put(CHAMP_ANSWER,"Veuillez saisir une réponse valide.");}
         
