@@ -31,8 +31,8 @@ public class LDAPConnector {
     //IP address of the LDAP server
     private static final String serverIP = "localhost";
     //Port number of the LDAP server
-    private static final String serverPort = "1389";
-    //private static final String serverPort = "389";
+    //private static final String serverPort = "1389";
+    private static final String serverPort = "389";
     //LDAP domain
     private static final String baseDN = "dc=ensta,dc=fr";
     
