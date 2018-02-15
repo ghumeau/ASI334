@@ -19,7 +19,8 @@ public class Checks {
         MAIL,
         PHONE,
         QUESTION,
-        ANSWER;
+        ANSWER,
+        CODE;
     }
     
     //Validation de la syntaxe des UIDs saisis.
@@ -53,6 +54,11 @@ public class Checks {
                 break;
             case PHONE:
                 if (st.length()!=10){return false;}
+                validChar = new ArrayList<>();
+                for (i = 48; i<=57; i++){validChar.add(Character.toString((char) i));}   // chiffres
+                break;
+            case CODE:
+                if (st.length()!=6){return false;}
                 validChar = new ArrayList<>();
                 for (i = 48; i<=57; i++){validChar.add(Character.toString((char) i));}   // chiffres
                 break;

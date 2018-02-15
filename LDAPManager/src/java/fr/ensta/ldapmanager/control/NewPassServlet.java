@@ -23,6 +23,7 @@ public class NewPassServlet extends HttpServlet {
     public static final String CHAMP_NEWPWD1 = "pass";
     public static final String CHAMP_NEWPWD2 = "confirm";
     public static final String ATT_USER = "user";
+    public static final String ATT_AUTH = "authentified";
     public static final String ATT_ERREURS = "erreurs";
     public static final String ATT_UID = "uid";
 
@@ -30,8 +31,9 @@ public class NewPassServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(ATT_USER);
+        Boolean auth = (Boolean) session.getAttribute(ATT_AUTH);
         // A l'appel de la servlet (GET), affichage de la page UID si l'utilisateur n'a pas de session active
-        if (user==null){
+        if (auth==null){
             this.getServletContext().getRequestDispatcher("/WEB-INF/NewPassView.jsp").forward(request, response);
         }
         else {this.getServletContext().getRequestDispatcher("/private").forward(request, response);} // si déjà authentifié, transfert sur la page data
@@ -58,6 +60,7 @@ public class NewPassServlet extends HttpServlet {
             User user = new User((String) session.getAttribute(ATT_UID),newpwd1);
             svc.ModifyPassword(user);
             session.setAttribute(ATT_USER, user);
+            session.setAttribute(ATT_AUTH, true);
             request.setAttribute(ATT_USER, user.GetInfo());
             this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
         }
