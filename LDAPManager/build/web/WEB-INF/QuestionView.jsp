@@ -5,19 +5,15 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-        <link type="text/css" media="screen" rel="stylesheet" href="../css/style.css" />
-    </head>
-    <script type="text/javascript" src="../scripts/affichage.js"></script>
-    <header>LDAP Manager</header>
+    <c:import url="layout/head.jsp"/>
     <body>
-        <form>
-            <h2>Question / réponse de sécurité</h2>
-            <p>Question de sécurité</p>
+        <c:import url="layout/header.jsp"/>
+        <form method="post" action="question">
+            <h3>Question / réponse de sécurité</h3>
+            <span>Question de sécurité</span>
             <script>
                 securityLine("Answer","entrez la réponse de sécurité");
             </script>

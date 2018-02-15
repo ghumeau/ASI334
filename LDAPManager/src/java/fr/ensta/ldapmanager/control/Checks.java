@@ -70,7 +70,8 @@ public class Checks {
     }
     
     public static boolean isEmpty(String st){
-        return st.length()==0;
+        if (st==null){return true;}
+        else{return st.length()==0;}
     }
     
 }

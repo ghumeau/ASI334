@@ -29,9 +29,7 @@ public class LoginServlet extends HttpServlet {
             this.getServletContext().getRequestDispatcher("/WEB-INF/LoginView.jsp").forward(request, response);
         }
         else {
-            request.setAttribute(ATT_USER, user.GetInfo());
-            // Transmission de la MAP contenant les infos utilisateur à la JSP d'affichage des données
-            this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
+            this.getServletContext().getRequestDispatcher("/private").forward(request, response);
         }
     }
 
@@ -64,23 +62,23 @@ public class LoginServlet extends HttpServlet {
         else if (!Checks.syntaxe(login,Checks.Argument.PWD)){errors.put(CHAMP_PASS,"Veuillez saisir un mot de passe valide.");}
 
         // Authentification si le couple UID/password est syntaxiquement valable
-        if (errors.isEmpty()) {
-            usr = svc.AuthenticationSequence(login,pwd);
-            if (usr!=null){                                  // authentification réussie
-                session.setAttribute(ATT_USER, usr);
-                request.setAttribute(ATT_USER, usr.GetInfo());
-                // Transmission de la MAP contenant les infos utilisateur à la JSP d'affichage des données
-                this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
-            }
+        if (errors.isEmpty()) {usr = svc.AuthenticationSequence(login,pwd);}
+        
+        if (usr!=null){                                  // authentification réussie
+            session.setAttribute(ATT_USER, usr);
+            request.setAttribute(ATT_USER, usr.GetInfo());
+            // Transmission de la MAP contenant les infos utilisateur à la JSP d'affichage des données
+            this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
         }
-     
-        echecs++;
-        session.setAttribute(ATT_ECHECS,echecs);
-        result = "Echec de l'authentification, tentatives restantes : " + (maxEchecs-echecs);
-        // Stockage du résultat et des messages d'erreur dans l'objet request
-        request.setAttribute(ATT_ERREURS, errors);
-        request.setAttribute(ATT_RESULTAT, result);
-        // Transmission de la paire d'objets request/response à notre JSP
-        this.getServletContext().getRequestDispatcher("/WEB-INF/LoginView.jsp").forward(request, response);
+        else{
+            echecs++;
+            session.setAttribute(ATT_ECHECS,echecs);
+            result = "Echec de l'authentification, tentatives restantes : " + (maxEchecs-echecs);
+            // Stockage du résultat et des messages d'erreur dans l'objet request
+            request.setAttribute(ATT_ERREURS, errors);
+            request.setAttribute(ATT_RESULTAT, result);
+            // Transmission de la paire d'objets request/response à notre JSP
+            this.getServletContext().getRequestDispatcher("/WEB-INF/LoginView.jsp").forward(request, response);
+        }
     }
 }

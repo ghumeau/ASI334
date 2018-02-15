@@ -15,7 +15,7 @@ and open the template in the editor.
 }
 .dataLabel{
     display : inline-block;
-    width : 80px;}
+    width : 100px;}
 
 .deux{
     display:inline-block;
@@ -23,7 +23,7 @@ and open the template in the editor.
 }
 .data{
     display : inline-block;
-    width : 200px;
+    width : 220px;
     margin-left: 10px;
 }
 

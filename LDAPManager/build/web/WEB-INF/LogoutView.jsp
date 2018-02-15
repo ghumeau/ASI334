@@ -5,19 +5,15 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-        <link type="text/css" media="screen" rel="stylesheet" href="../css/style.css" />
-    </head>
-    <header><h1>LDAP Manager</h1></header>
+    <c:import url="layout/head.jsp"/>
     <body> 
+        <c:import url="layout/header.jsp"/>
         <form>
-        <h2>Vous avez été deconnecté</h2>
-        <a href="../login/"> <input type="button" href="../login/" value="Se connecter"></a>
-        
+        <h3>Vous avez été deconnecté</h3>
+        <a href="login">Se connecter</a>
         </form>
     </body>
 </html>

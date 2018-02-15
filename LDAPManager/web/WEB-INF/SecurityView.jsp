@@ -11,7 +11,7 @@
     <c:import url="layout/head.jsp"/>
     <body>
         <c:import url="layout/header.jsp"/>   
-        <form method="post" action="private" ID="securityForm">
+        <form method="post" action="security" ID="securityForm">
             <h3>Données de sécurité</h3>
             <script>
                 securityLine("pwd","Saisir l'ancien mot de passe");
@@ -21,6 +21,7 @@
                 securityLine("answer", "réponse de sécurité");
             </script>
             <input type="submit" class="bouton" value="Valider"  />
+            <a class="retour" id="returnButton"   href="private">retour aux données</a>
         </form>
     </body>
 </html>

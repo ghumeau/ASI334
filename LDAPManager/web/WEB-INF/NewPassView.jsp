@@ -13,12 +13,12 @@
     <header>LDAP Manager</header>
     <body>
         <c:import url="layout/header.jsp"/>
-        <form>
+        <form method="post" action="new">
             <script>
                 securityLine("pass","entrez votre nouveau mot de passe");
                 securityLine("pass","confirmez votre mot de passe");    
             </script>
-            <a class="bouton" href="../login/" >Valider</a>  
+            <a class="bouton" href="login" >Valider</a>  
       </form>
     </body>
 </html>
