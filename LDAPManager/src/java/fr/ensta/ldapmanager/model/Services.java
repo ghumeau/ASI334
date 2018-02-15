@@ -5,7 +5,13 @@
  */
 package fr.ensta.ldapmanager.model;
 
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.NamingException;
 
 /**
@@ -167,6 +173,21 @@ public class Services {
         }
     }
     
+    public void ModifyPassword(User userToModify) {
+        try {
+            String DN = DNSearch(userToModify.getUid());
+            String newPwd = userToModify.getPassword();
+            String techAccountDN = DNSearch(technicalAccount);
+            connector = new LDAPConnector(techAccountDN,techAccPwd);
+            connector.connect();
+            connector.SavePassword(DN, newPwd);
+            connector.disconnect();
+        }
+        catch (Exception e) {
+            System.out.println("Erreur dans ModifyPassword");
+        }
+    }
+    
     public HashMap RetrieveSecurityInfo(String uid) {
         try {
             String DN = DNSearch(technicalAccount);
@@ -217,6 +238,51 @@ public class Services {
             else {
                 user.setTotpFlag(false);
             }
+        }
+    }
+    
+    public String GenerateTotpKey(User userToModify) {
+        GoogleAuth ga = new GoogleAuth();
+        String totpKey = ga.generateKey();
+        userToModify.setTotpSecret(totpKey);
+        ModifyTotpKey(userToModify);
+        return ga.getQRBarcodeURL(userToModify.getUid(), "LDAPManager", totpKey);
+    }
+    
+    private void ModifyTotpKey(User userToModify) {
+        try {
+            String DN = DNSearch(userToModify.getUid());
+            String totpSecret = userToModify.getTotpSecret();
+            String techAccountDN = DNSearch(technicalAccount);
+            connector = new LDAPConnector(techAccountDN,techAccPwd);
+            connector.connect();
+            connector.SaveTotpKey(DN, totpSecret);
+            connector.disconnect();
+        }
+        catch (Exception e) {
+            System.out.println("Erreur dans ModifyTotpKey");
+        }
+    }
+    
+    public void DeleteTotpKey(User userToModify) {
+        
+    }
+    
+    public boolean CheckTotpCode(User user, String inputCode) {
+        try {
+            long t = new Date().getTime() / TimeUnit.SECONDS.toMillis(30);
+            GoogleAuth ga = new GoogleAuth();
+            if (ga.check_code(user.getTotpSecret(),Long.parseLong(inputCode), t)) {
+                System.out.println("totpCode OK");
+                return true;
+            }
+            else {
+                System.out.println("totpCode NOK");
+                return false;
+            }
+        } catch (NoSuchAlgorithmException | InvalidKeyException ex) {
+            System.out.println("Erreur dans CheckTotpCode : " + ex.toString());
+            return false;
         }
     }
     

@@ -5,12 +5,12 @@
  */
 package fr.ensta.ldapmanager.control;
 
+import fr.ensta.ldapmanager.model.Services;
+import fr.ensta.ldapmanager.model.User;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.*;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 
 /**
  *
@@ -18,69 +18,79 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class SecurityServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SecurityView</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SecurityView at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+    public static final String CHAMP_PWD = "pwd";
+    public static final String CHAMP_NEWPWD1 = "newpwd";
+    public static final String CHAMP_NEWPWD2 = "confirm";
+    public static final String CHAMP_QUEST = "question";
+    public static final String CHAMP_ANS = "answer";
+    public static final String ATT_USER = "user";
+    public static final String ATT_ERREURS = "erreurs";
+    public static final String ATT_RESULTAT = "resultat";
+    
+    @Override
+    public void doGet( HttpServletRequest request, HttpServletResponse response )   throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute(ATT_USER);
+        // A l'appel de la servlet (GET), affichage de la page d'authentification si l'utilisateur n'a pas de session active
+        if (user==null){
+            this.getServletContext().getRequestDispatcher("/login").forward(request, response);
+        }
+        else {
+            request.setAttribute(ATT_USER, user.GetInfo());
+            // Transmission de la MAP contenant les infos utilisateur à la JSP d'affichage des données
+            this.getServletContext().getRequestDispatcher("/WEB-INF/SecurityView.jsp").forward(request, response);
         }
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // A l'appel de la servlet (GET), affichage de la page d'authentification
-        this.getServletContext().getRequestDispatcher("/WEB-INF/SecurityView.jsp").forward(request, response);
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute(ATT_USER);
+        Services svc = new Services();
+        Map<String, String> errors = new HashMap<>();
+        String result = null;
+        String pwd = request.getParameter(CHAMP_PWD);
+        String newpwd1 = request.getParameter(CHAMP_NEWPWD1);
+        String newpwd2 = request.getParameter(CHAMP_NEWPWD2);
+        String question = request.getParameter(CHAMP_QUEST);
+        String answer = request.getParameter(CHAMP_ANS);
+        
+        if (!user.getPassword().equals(pwd)){ // vérification du mot de passe
+            errors.put(CHAMP_PWD,"Veuillez saisir votre mot de passe");
+        }
+        else{
+            // changement de mot de passe
+            if (!Checks.isEmpty(newpwd1)){
+                if (!Checks.syntaxe(newpwd1,Checks.Argument.PWD)) {errors.put(CHAMP_NEWPWD1,"Erreur de syntaxe!");}
+                else if (!Checks.syntaxe(newpwd2,Checks.Argument.PWD)) {errors.put(CHAMP_NEWPWD2,"Erreur de syntaxe!");}
+                else if (!newpwd1.equals(newpwd2)) {errors.put(CHAMP_NEWPWD2,"Mots de passe différents!");}
+                else {
+                    user.setPassword(newpwd1);
+                    result = "Modification prise en compte";
+                }
+            }
+            // changement de question/réponse
+            if (!Checks.isEmpty(question)){
+                if (!Checks.syntaxe(question,Checks.Argument.QUESTION)) {errors.put(CHAMP_QUEST,"Erreur de syntaxe!");}
+                else if (Checks.isEmpty(answer)) {errors.put(CHAMP_ANS,"Veuillez saisir une réponse");}
+                else if (!Checks.syntaxe(answer,Checks.Argument.PWD)) {errors.put(CHAMP_ANS,"Erreur de syntaxe!");}
+                else {
+                    user.setSecureQuestion(question);
+                    user.setSecureAnswer(answer);
+                    result = "Modification prise en compte";
+                }
+            }
+            
+            // enregistrement des modifications
+            svc.ModifyInfo(user);
+            
+            // retour à SecurityView avec les éventuelles erreurs
+            session.setAttribute(ATT_USER, user);
+            request.setAttribute(ATT_USER, user.GetInfo());
+            request.setAttribute(ATT_ERREURS, errors);
+            request.setAttribute(ATT_RESULTAT, result);
+            this.getServletContext().getRequestDispatcher("/WEB-INF/SecurityView.jsp").forward(request, response);
+        }
     }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }

@@ -35,23 +35,22 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String result = null;
-        Map<String, String> errors = new HashMap<>();
         Services svc = new Services();
         User usr = null;
         HttpSession session = request.getSession();
         Integer echecs = (Integer) session.getAttribute(ATT_ECHECS);
+        String result = null;
+        Map<String, String> errors = new HashMap<>();
+        //Récupération des champs du formulaire.
+        String login = request.getParameter(CHAMP_LOGIN);
+        String pwd = request.getParameter(CHAMP_PASS);
         
         // Vérification du nombre d'échecs d'authentification
         if (echecs==null){echecs=0;}
         if (echecs>=maxEchecs){
             request.setAttribute(ATT_RESULTAT, "Trop d'échec, vous avez été bloqué !!!");
             this.getServletContext().getRequestDispatcher("/WEB-INF/LoginView.jsp").forward(request, response);
-        }
-        
-        //Récupération des champs du formulaire.
-        String login = request.getParameter(CHAMP_LOGIN);
-        String pwd = request.getParameter(CHAMP_PASS);
+        }        
 
         // Verification de la syntaxe de l'UID.
         if (Checks.isEmpty(login)){errors.put(CHAMP_LOGIN,"Veuillez saisir votre UID.");}
@@ -61,7 +60,7 @@ public class LoginServlet extends HttpServlet {
         if (Checks.isEmpty(pwd)){errors.put(CHAMP_PASS,"Veuillez saisir votre mot de passe.");}
         else if (!Checks.syntaxe(login,Checks.Argument.PWD)){errors.put(CHAMP_PASS,"Veuillez saisir un mot de passe valide.");}
 
-        // Authentification si le couple UID/password est syntaxiquement valable
+        // Tentative d'authentification si le couple UID/password est syntaxiquement valable
         if (errors.isEmpty()) {usr = svc.AuthenticationSequence(login,pwd);}
         
         if (usr!=null){                                  // authentification réussie
@@ -70,14 +69,13 @@ public class LoginServlet extends HttpServlet {
             // Transmission de la MAP contenant les infos utilisateur à la JSP d'affichage des données
             this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
         }
-        else{
+        else{                                            // échec
             echecs++;
             session.setAttribute(ATT_ECHECS,echecs);
             result = "Echec de l'authentification, tentatives restantes : " + (maxEchecs-echecs);
-            // Stockage du résultat et des messages d'erreur dans l'objet request
+            // Stockage du résultat et des messages d'erreur dans la requête
             request.setAttribute(ATT_ERREURS, errors);
             request.setAttribute(ATT_RESULTAT, result);
-            // Transmission de la paire d'objets request/response à notre JSP
             this.getServletContext().getRequestDispatcher("/WEB-INF/LoginView.jsp").forward(request, response);
         }
     }

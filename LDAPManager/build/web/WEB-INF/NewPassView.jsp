@@ -16,7 +16,7 @@
         <form method="post" action="new">
             <script>
                 securityLine("pass","entrez votre nouveau mot de passe");
-                securityLine("pass","confirmez votre mot de passe");    
+                securityLine("confirm","confirmez votre mot de passe");    
             </script>
             <a class="bouton" href="login" >Valider</a>  
       </form>

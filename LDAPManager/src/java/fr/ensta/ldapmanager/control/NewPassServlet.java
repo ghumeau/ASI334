@@ -5,13 +5,13 @@
  */
 package fr.ensta.ldapmanager.control;
 
+import fr.ensta.ldapmanager.model.Services;
+import fr.ensta.ldapmanager.model.User;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 
 /**
  *
@@ -19,71 +19,53 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "NewPassServlet", urlPatterns = {"/NewPassServlet"})
 public class NewPassServlet extends HttpServlet {
+    
+    public static final String CHAMP_NEWPWD1 = "pass";
+    public static final String CHAMP_NEWPWD2 = "confirm";
+    public static final String ATT_USER = "user";
+    public static final String ATT_ERREURS = "erreurs";
+    public static final String ATT_UID = "uid";
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet NewPassServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet NewPassServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute(ATT_USER);
+        // A l'appel de la servlet (GET), affichage de la page UID si l'utilisateur n'a pas de session active
+        if (user==null){
+            this.getServletContext().getRequestDispatcher("/WEB-INF/NewPassView.jsp").forward(request, response);
+        }
+        else {this.getServletContext().getRequestDispatcher("/private").forward(request, response);} // si déjà authentifié, transfert sur la page data
+    }
+    
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Services svc = new Services();
+        Map<String, String> errors = new HashMap<>();
+        String newpwd1 = request.getParameter(CHAMP_NEWPWD1);
+        String newpwd2 = request.getParameter(CHAMP_NEWPWD2);
+        
+        // changement de mot de passe
+        if (Checks.isEmpty(newpwd1)) {errors.put(CHAMP_NEWPWD1,"Veuillez saisir un nouveau mot de passe.");}
+        else {
+            if (!Checks.syntaxe(newpwd1,Checks.Argument.PWD)) {errors.put(CHAMP_NEWPWD1,"Erreur de syntaxe!");}
+            else if (!Checks.syntaxe(newpwd2,Checks.Argument.PWD)) {errors.put(CHAMP_NEWPWD2,"Erreur de syntaxe!");}
+            else if (!newpwd1.equals(newpwd2)) {errors.put(CHAMP_NEWPWD2,"Mots de passe différents!");}
+        }
+            
+        if (errors.isEmpty()) {
+            // enregistrement du nouveau mot de passe
+            User user = new User((String) session.getAttribute(ATT_UID),newpwd1);
+            svc.ModifyPassword(user);
+            session.setAttribute(ATT_USER, user);
+            request.setAttribute(ATT_USER, user.GetInfo());
+            this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
+        }
+        else {
+            // retour avec les erreurs
+            request.setAttribute(ATT_ERREURS, errors);
+            this.getServletContext().getRequestDispatcher("/WEB-INF/NewPassView.jsp").forward(request, response);
         }
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-       @Override
-    public void doGet( HttpServletRequest request, HttpServletResponse response )   throws ServletException, IOException {
-        this.getServletContext().getRequestDispatcher( "/WEB-INF/NewPassView.jsp" ).forward( request, response );
-        //processRequest(request, response);
-
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }
