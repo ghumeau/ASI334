@@ -8,6 +8,18 @@ and open the template in the editor.
     Author     : arnaudlegrignou
 */
 
+body{
+    padding:0;
+    margin:0;
+    
+}
+
+form{
+    display:inline-block;
+    width : 40%;
+    margin: auto;
+}
+
 .dataLine,.securityLine{
     height:28px;
     
@@ -29,7 +41,7 @@ and open the template in the editor.
 
 .dataField{
     display : none;
-    width : 150px;
+    width : 200px;
     margin-left: 10px;
 }
 
@@ -39,7 +51,7 @@ and open the template in the editor.
 }
 .securityField{
     display: inline-block;
-    width: 300px;
+    width: 400px;
     margin-left: 10px;
 }
 
