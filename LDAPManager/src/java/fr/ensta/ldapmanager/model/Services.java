@@ -9,9 +9,8 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.NamingException;
 
 /**
@@ -46,9 +45,6 @@ public class Services {
         try {
             connector = new LDAPConnector();
             connector.connect();
-            //connector.UserSearch(uid);
-            //user = new User();
-            //user.setUid(uid);
             String DN = RetrieveDNInfo(uid);
             connector.disconnect();
             return DN;
@@ -104,28 +100,28 @@ public class Services {
     public void PrintInfo() {
         System.out.println("Le login de l'utilisateur est : " + user.getUid());
         System.out.println("Le mot de passe de l'utilisateur est : " + user.getPassword());
-        if (user.getLastName() != null) {
+        if (!user.getLastName().isEmpty()) {
             System.out.println("Le nom de l'utilisateur est : " + user.getLastName());
         }
-        if (user.getFirstName() != null) {
+        if (!user.getFirstName().isEmpty()) {
             System.out.println("Le prénom de l'utilisateur est : " + user.getFirstName());
         }
-        if (user.getCommonName() != null) {
+        if (!user.getCommonName().isEmpty()) {
             System.out.println("Le nom complet de l'utilisateur est : " + user.getCommonName());
         }
-        if (user.getEmail() != null) {
+        if (!user.getEmail().isEmpty()) {
             System.out.println("L'e-mail de l'utiliateur est : " + user.getEmail());
         }
-        if (user.getPhoneNumber() != null) {
+        if (!user.getPhoneNumber().isEmpty()) {
             System.out.println("Le numéro de téléphone de l'utilisateur est : " + user.getPhoneNumber());
         }
-        if (user.getSecureQuestion()!= null) {
+        if (!user.getSecureQuestion().isEmpty()) {
             System.out.println("La question de sécurité de l'utilisateur est : " + user.getSecureQuestion());
         }
-        if (user.getSecureAnswer()!= null) {
+        if (!user.getSecureAnswer().isEmpty()) {
             System.out.println("La réponse de sécurité de l'utilisateur est : " + user.getSecureAnswer());
         }
-        if (user.getTotpSecret()!= null) {
+        if (!user.getTotpSecret().isEmpty()) {
             System.out.println("Le code de sécurité TOTP de l'utilisateur est : " + user.getTotpSecret());
         }
         String totpbool = (user.isTotpFlag()) ? "TRUE" : "FALSE";
@@ -133,39 +129,71 @@ public class Services {
     }
     
     public void ModifyInfo(User userToModify) {
+        
+        HashMap oldUserInfo = new HashMap();
         HashMap newUserInfo = new HashMap();
+        HashMap attributeToModify = new HashMap();
+        HashMap attributeToAdd = new HashMap();
+        HashMap attributeToDelete = new HashMap();
+        
         try {
-            newUserInfo.put("uid", userToModify.getUid());
-            newUserInfo.put("password",  userToModify.getPassword());
-            if (!(userToModify.getLastName().isEmpty())) {
-                newUserInfo.put("lastName", userToModify.getLastName());
-            }
-            if (!(userToModify.getFirstName().isEmpty())) {
-                newUserInfo.put("firstName", userToModify.getFirstName());
-            }
-            if (!(userToModify.getCommonName().isEmpty())) {
-                newUserInfo.put("commonName", userToModify.getCommonName());
-            }
-            if (!(userToModify.getEmail().isEmpty())) {
-                newUserInfo.put("eMail", userToModify.getEmail());
-            }
-            if (!(userToModify.getPhoneNumber().isEmpty())) {
-                newUserInfo.put("phoneNumber", userToModify.getPhoneNumber());
-            }
-            if (!(userToModify.getSecureQuestion().isEmpty())) {
-                newUserInfo.put("securityQuestion", userToModify.getSecureQuestion());
-            }
-            if (!(userToModify.getSecureAnswer().isEmpty())) {
-                newUserInfo.put("securityAnswer", userToModify.getSecureAnswer());
-            }
-            if (!(userToModify.getTotpSecret().isEmpty())) {
-                newUserInfo.put("totpSecret", userToModify.getTotpSecret());
-            }
-            newUserInfo.put("totpFlag", (userToModify.isTotpFlag()) ? "TRUE" : "FALSE");
+            //on récupère la map contenant les anciennes infos de l'utilisateur
             String DN = DNSearch(userToModify.getUid());
-            connector = new LDAPConnector(DN, userToModify.getPassword());
+            String password = userToModify.getPassword();
+            connector = new LDAPConnector(DN, password);
             connector.connect();
-            connector.ModifyLDAPInfo(newUserInfo, DN);
+            
+            oldUserInfo = RetrieveInfo();
+            oldUserInfo.put("uid",userToModify.getUid());
+            oldUserInfo.put("password", password);
+            
+            newUserInfo.put("uid",  userToModify.getUid());
+            
+            newUserInfo.put("password",  userToModify.getPassword());
+            
+            newUserInfo.put("lastName", userToModify.getLastName());
+            
+            newUserInfo.put("firstName", userToModify.getFirstName());
+            
+            newUserInfo.put("commonName", userToModify.getCommonName());
+            
+            newUserInfo.put("eMail", userToModify.getEmail());
+            
+            newUserInfo.put("phoneNumber", userToModify.getPhoneNumber());
+            
+            newUserInfo.put("securityQuestion", userToModify.getSecureQuestion());
+           
+            newUserInfo.put("securityAnswer", userToModify.getSecureAnswer());
+
+            newUserInfo.put("totpSecret", userToModify.getTotpSecret());
+                
+            newUserInfo.put("totpFlag", (userToModify.isTotpFlag()) ? "TRUE" : "FALSE");
+            
+            Iterator iter = newUserInfo.keySet().iterator();
+            
+            String value;
+            
+            while(iter.hasNext()) {
+                value = iter.next().toString();
+                
+                if (oldUserInfo.containsKey(value)) {
+                    if (!newUserInfo.get(value).toString().isEmpty()) {
+                        attributeToModify.put(value, newUserInfo.get(value));
+                    }
+                    else {
+                        attributeToDelete.put(value, newUserInfo.get(value));
+                    }
+                }
+                else {
+                    if (!newUserInfo.get(value).toString().isEmpty()) {
+                        attributeToAdd.put(value, newUserInfo.get(value));
+                    }
+                } 
+            }
+            
+            connector.ModifyLDAPInfo(attributeToModify, DN);
+            connector.AddLDAPInfo(attributeToAdd, DN);
+            connector.DeleteLDAPInfo(attributeToDelete, DN);
             connector.disconnect();
         }
         catch (Exception e) {
@@ -207,6 +235,7 @@ public class Services {
     }
 
     private void FillUserInfo() {
+
         if (userMap.containsKey("lastName")) {
             user.setLastName(userMap.get("lastName").toString());
         }

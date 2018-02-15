@@ -148,7 +148,7 @@ public class LDAPConnector {
                         infoTab.put("eMail", value[1]);
                         break;
 
-                    case "phoneNumber":
+                    case "telephoneNumber":
                         infoTab.put("phoneNumber", value[1]);
                         break;
                     
@@ -183,65 +183,152 @@ public class LDAPConnector {
         
         try
         {
-
-        ModificationItem[] mods = new ModificationItem[newInfo.size() - 1];
-        Attribute[] attrMods = new BasicAttribute[newInfo.size() - 1];
-
-        attrMods[0] = new BasicAttribute("userPassword", newInfo.get("PWD"));
         
-        int i = 1;
+        //Info that cannot be modified are removed from the map
+        newInfo.remove("uid");
+        newInfo.remove("lastName");
+        newInfo.remove("firstName");
+        newInfo.remove("commonName");
+        newInfo.remove("totpSecret");
+                
 
-        if (newInfo.containsKey("lastName")) {
-            attrMods[i] = new BasicAttribute("sn", newInfo.get("lastName"));
-            i++;
-        }
-        if (newInfo.containsKey("firstName")) {
-            attrMods[i] = new BasicAttribute("givenName", newInfo.get("firstName"));
-            i++;
-        }
-        if (newInfo.containsKey("commonName")) {
-            attrMods[i] = new BasicAttribute("cn", newInfo.get("commonName"));
-            i++;
-        }
+        ModificationItem[] mods = new ModificationItem[newInfo.size()];
+        Attribute[] attrMods = new BasicAttribute[newInfo.size()];
+
+        int i = 0;
+        
+        attrMods[i] = new BasicAttribute("userPassword", newInfo.get("password"));
+        i++;
+
         if (newInfo.containsKey("eMail")) {
             attrMods[i] = new BasicAttribute("mail", newInfo.get("eMail"));
             i++;
         }
+        
         if (newInfo.containsKey("phoneNumber")) {
             attrMods[i] = new BasicAttribute("telephoneNumber", newInfo.get("phoneNumber"));
             i++;
         }
+
         if (newInfo.containsKey("securityQuestion")) {
             attrMods[i] = new BasicAttribute("securityquestion", newInfo.get("securityQuestion"));
             i++;
         }
+
         if (newInfo.containsKey("securityAnswer")) {
             attrMods[i] = new BasicAttribute("securityanswer", newInfo.get("securityAnswer"));
             i++;
         }
-        if (newInfo.containsKey("totpSecret")) {
-            attrMods[i] = new BasicAttribute("totpsecret", newInfo.get("totpSecret"));
-            i++;
-        }
-        if (newInfo.containsKey("totpFlag")) {
-            attrMods[i] = new BasicAttribute("totpflag", newInfo.get("totpFlag"));
-            i++;
-            /*if (newInfo.get("totpFlag").toString().equals("FALSE") && !(newInfo.get("totpSecret").toString().isEmpty())) {
-            attrMods[i] = new BasicAttribute("totpsecret", "");
-            i++;
-            }*/
-        }
 
-        for (int j=0; j < newInfo.size()-1; j++) {
+        attrMods[i] = new BasicAttribute("totpflag", newInfo.get("totpFlag"));
+
+        for (int j=0; j < newInfo.size(); j++) {
             mods[j] = new ModificationItem (DirContext.REPLACE_ATTRIBUTE, attrMods[j]);
         }
 
         contexte.modifyAttributes(DN, mods);
-        System.out.println("Modification de l'utilisateur : SUCCES");
+        System.out.println("Modification des attributs de l'utilisateur : SUCCES");
         }
         catch(Exception e)
         {
-        System.out.println("Modification de l'utilisateur : ECHEC");
+        System.out.println("Modification des attributs de l'utilisateur : ECHEC");
+        }
+    }
+    
+     /********************
+     * Store the new info of a specified user in the LDAP
+     * @param newInfo HashMap containing the new info to store in the LDAP server
+     * @param DN Distinguished Name of the user to modify
+    ********************/
+    public void AddLDAPInfo(HashMap newInfo, String DN) {
+        
+        try
+        {
+
+        ModificationItem[] mods = new ModificationItem[newInfo.size()];
+        Attribute[] attrMods = new BasicAttribute[newInfo.size()];
+
+        int i = 0;
+
+        if (newInfo.containsKey("eMail")) {
+            attrMods[i] = new BasicAttribute("mail", newInfo.get("eMail"));
+            i++;
+        }
+        
+        if (newInfo.containsKey("phoneNumber")) {
+            attrMods[i] = new BasicAttribute("telephoneNumber", newInfo.get("phoneNumber"));
+            i++;
+        }
+
+        if (newInfo.containsKey("securityQuestion")) {
+            attrMods[i] = new BasicAttribute("securityquestion", newInfo.get("securityQuestion"));
+            i++;
+        }
+
+        if (newInfo.containsKey("securityAnswer")) {
+            attrMods[i] = new BasicAttribute("securityanswer", newInfo.get("securityAnswer"));
+            i++;
+        }
+
+        for (int j=0; j < newInfo.size(); j++) {
+            mods[j] = new ModificationItem (DirContext.ADD_ATTRIBUTE, attrMods[j]);
+        }
+
+        contexte.modifyAttributes(DN, mods);
+        
+        System.out.println("Ajout d'attributs à l'utilisateur : SUCCES");
+        }
+        catch(Exception e)
+        {
+        System.out.println("Ajout d'attributs à l'utilisateur : ECHEC");
+        }
+    }
+    
+    /********************
+     * Store the new info of a specified user in the LDAP
+     * @param newInfo HashMap containing the new info to store in the LDAP server
+     * @param DN Distinguished Name of the user to modify
+    ********************/
+    public void DeleteLDAPInfo(HashMap newInfo, String DN) {
+        
+        try
+        {
+
+        ModificationItem[] mods = new ModificationItem[newInfo.size()];
+        Attribute[] attrMods = new BasicAttribute[newInfo.size()];
+
+        int i = 0;
+        
+        if (newInfo.containsKey("eMail")) {
+            attrMods[i] = new BasicAttribute("mail");
+            i++;
+        }
+        
+        if (newInfo.containsKey("phoneNumber")) {
+            attrMods[i] = new BasicAttribute("telephoneNumber");
+            i++;
+        }
+
+        if (newInfo.containsKey("securityQuestion")) {
+            attrMods[i] = new BasicAttribute("securityquestion");
+            i++;
+        }
+
+        if (newInfo.containsKey("securityAnswer")) {
+            attrMods[i] = new BasicAttribute("securityanswer");
+            i++;
+        }
+
+        for (int j=0; j < newInfo.size(); j++) {
+            mods[j] = new ModificationItem (DirContext.REMOVE_ATTRIBUTE, attrMods[j]);
+        }
+
+        contexte.modifyAttributes(DN, mods);
+        System.out.println("Suppression des attributs de l'utilisateur : SUCCES");
+        }
+        catch(Exception e)
+        {
+        System.out.println("Suppression des attributs de l'utilisateur : ECHEC");
         }
     }
     

@@ -14,16 +14,16 @@ import java.util.LinkedHashMap;
  */
 public class User {
 
-    private String uid;
-    private String password;
-    private String lastName;
-    private String firstName;
-    private String email;
-    private String phoneNumber;
-    private String commonName;
-    private String secureQuestion;
-    private String secureAnswer;
-    private String totpSecret;
+    private String uid = "";
+    private String password = "";
+    private String lastName = "";
+    private String firstName = "";
+    private String email = "";
+    private String phoneNumber = "";
+    private String commonName = "";
+    private String secureQuestion = "";
+    private String secureAnswer = "";
+    private String totpSecret = "";
     private boolean totpFlag = false;
     
     private HashMap userInfoTab;
