@@ -13,15 +13,11 @@ import static fr.ensta.ldapmanager.control.UIDServlet.maxEchecs;
 import fr.ensta.ldapmanager.model.Services;
 import fr.ensta.ldapmanager.model.User;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 
 /**
  *
@@ -47,11 +43,7 @@ public class QuestionServlet extends HttpServlet {
             }
             this.getServletContext().getRequestDispatcher("/WEB-INF/QuestionView.jsp").forward(request, response);
         }
-        else {
-            request.setAttribute(ATT_USER, user.GetInfo());
-            // Transmission de la MAP contenant les infos utilisateur à la JSP d'affichage des données
-            this.getServletContext().getRequestDispatcher("/WEB-INF/DATAView.jsp").forward(request, response);
-        }
+        else {this.getServletContext().getRequestDispatcher("/private").forward(request, response);} // si déjà authentifié, transfert sur la page data
     }
     
     @Override
@@ -59,6 +51,7 @@ public class QuestionServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String answer = request.getParameter(CHAMP_ANSWER);
         Map<String, String> errors = new HashMap<>();
+        HashMap<String, String> securityInfo = new HashMap<>();
         Integer echecs = (Integer) session.getAttribute(ATT_ECHECSQ);
         
         if (echecs==null){echecs=0;}
@@ -74,9 +67,9 @@ public class QuestionServlet extends HttpServlet {
         
         // Récupération de la question / réponse
         if (errors.isEmpty()) {
-            HashMap securityInfo = (HashMap) session.getAttribute(ATT_QUEST);
+            securityInfo = (HashMap) session.getAttribute(ATT_QUEST);
             if (!securityInfo.get("SECURITYQUESTION").equals(answer)){errors.put(CHAMP_ANSWER,"Réponse erronée, tentatives restantes : " + (maxEchecs-echecs));}
-            else {
+            else { // réponse correcte
                 session.removeAttribute(ATT_QUEST);
                 this.getServletContext().getRequestDispatcher("/WEB-INF/NewPassView.jsp").forward(request, response);
             }
@@ -86,7 +79,6 @@ public class QuestionServlet extends HttpServlet {
         session.setAttribute(ATT_ECHECSQ,echecs);
         // Stockage des messages d'erreur dans l'objet request
         request.setAttribute(ATT_ERREURS, errors);
-        // Transmission de la paire d'objets request/response à notre JSP
         this.getServletContext().getRequestDispatcher("/WEB-INF/QuestionView.jsp").forward(request, response);
     }
 

@@ -5,12 +5,10 @@
  */
 package fr.ensta.ldapmanager.control;
 
+import fr.ensta.ldapmanager.model.User;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 
 /**
  *
@@ -18,69 +16,26 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class SecurityServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SecurityView</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SecurityView at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+    public static final String ATT_USER = "user";
+    
+    @Override
+    public void doGet( HttpServletRequest request, HttpServletResponse response )   throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute(ATT_USER);
+        // A l'appel de la servlet (GET), affichage de la page d'authentification si l'utilisateur n'a pas de session active
+        if (user==null){
+            this.getServletContext().getRequestDispatcher("/login").forward(request, response);
+        }
+        else {
+            request.setAttribute(ATT_USER, user.GetInfo());
+            // Transmission de la MAP contenant les infos utilisateur à la JSP d'affichage des données
+            this.getServletContext().getRequestDispatcher("/WEB-INF/SecurityView.jsp").forward(request, response);
         }
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // A l'appel de la servlet (GET), affichage de la page d'authentification
-        this.getServletContext().getRequestDispatcher("/WEB-INF/SecurityView.jsp").forward(request, response);
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
     }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }

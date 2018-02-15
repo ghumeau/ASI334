@@ -7,13 +7,10 @@ package fr.ensta.ldapmanager.control;
 
 import fr.ensta.ldapmanager.model.*;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 
 /**
  *
@@ -25,10 +22,9 @@ public class DataServlet extends HttpServlet {
     public static final String CHAMP_NAME = "nom";
     public static final String CHAMP_FIRSTNAME = "prenom";
     public static final String CHAMP_MAIL = "mail";
-    public static final String CHAMP_PHONE = "telephone";
-    public static final String ATT_ECHECS = "echecs";
+    public static final String CHAMP_PHONE = "tel";
     public static final String ATT_USER = "user";
-    public static final int maxEchecs = 5;
+    public static final String ATT_ERREURS = "erreurs";
 
     @Override
     public void doGet( HttpServletRequest request, HttpServletResponse response )   throws ServletException, IOException {
@@ -47,7 +43,33 @@ public class DataServlet extends HttpServlet {
     
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute(ATT_USER);
+        Services svc = new Services();
+        Map<String, String> errors = new HashMap<>();
+        String name = request.getParameter(CHAMP_NAME);
+        String firstname = request.getParameter(CHAMP_FIRSTNAME);
+        String mail = request.getParameter(CHAMP_MAIL);
+        String phone = request.getParameter(CHAMP_PHONE);
         
+        // tests de la validité des champs et modification en l'absence d'erreurs
+        if(!Checks.syntaxe(name,Checks.Argument.NAME)){errors.put(CHAMP_NAME,"Erreur de syntaxe!");}
+        else{user.setLastName(name);}
+        if(!Checks.syntaxe(firstname,Checks.Argument.NAME)){errors.put(CHAMP_FIRSTNAME,"Erreur de syntaxe!");}
+        else{user.setFirstName(firstname);}
+        if(!Checks.syntaxe(mail,Checks.Argument.MAIL)){errors.put(CHAMP_MAIL,"Erreur de syntaxe!");}
+        else{user.setEmail(mail);}
+        if(!Checks.syntaxe(phone,Checks.Argument.PHONE)){errors.put(CHAMP_PHONE,"Erreur de syntaxe!");}
+        else{user.setPhoneNumber(phone);}
+        
+        // enregistrement des modifications
+        svc.ModifyInfo(user);
+        
+        // retour à DataView avec les éventuelles erreurs
+        session.setAttribute(ATT_USER, user);
+        request.setAttribute(ATT_USER, user.GetInfo());
+        request.setAttribute(ATT_ERREURS, errors);
+        this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
     }
 
 }
