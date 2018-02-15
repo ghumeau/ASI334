@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author arnaudlegrignou
  */
-@WebServlet(urlPatterns = {"/DoubeLoginServlet"})
-public class DoubeLoginServlet extends HttpServlet {
+@WebServlet(name = "DoubleLoginServlet", urlPatterns = {"/DoubleLoginServlet"})
+public class DoubleLoginServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

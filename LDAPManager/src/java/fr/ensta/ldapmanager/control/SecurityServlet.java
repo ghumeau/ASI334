@@ -23,9 +23,11 @@ public class SecurityServlet extends HttpServlet {
     public static final String CHAMP_NEWPWD2 = "confirm";
     public static final String CHAMP_QUEST = "question";
     public static final String CHAMP_ANS = "answer";
+    public static final String CHAMP_AUTH = "auth";
     public static final String ATT_USER = "user";
     public static final String ATT_ERREURS = "erreurs";
     public static final String ATT_RESULTAT = "resultat";
+    public static final String ATT_URLQRC = "urlQRcode";
     
     @Override
     public void doGet( HttpServletRequest request, HttpServletResponse response )   throws ServletException, IOException {
@@ -54,6 +56,7 @@ public class SecurityServlet extends HttpServlet {
         String newpwd2 = request.getParameter(CHAMP_NEWPWD2);
         String question = request.getParameter(CHAMP_QUEST);
         String answer = request.getParameter(CHAMP_ANS);
+        boolean auth2 = "oui".equals(request.getParameter(CHAMP_AUTH));
         
         if (!user.getPassword().equals(pwd)){ // vérification du mot de passe
             errors.put(CHAMP_PWD,"Veuillez saisir votre mot de passe");
@@ -69,6 +72,7 @@ public class SecurityServlet extends HttpServlet {
                     result = "Modification prise en compte";
                 }
             }
+            
             // changement de question/réponse
             if (!Checks.isEmpty(question)){
                 if (!Checks.syntaxe(question,Checks.Argument.QUESTION)) {errors.put(CHAMP_QUEST,"Erreur de syntaxe!");}
@@ -79,6 +83,20 @@ public class SecurityServlet extends HttpServlet {
                     user.setSecureAnswer(answer);
                     result = "Modification prise en compte";
                 }
+            }
+            
+            // changement du mode d'authentification
+            if (user.isTotpFlag()!=auth2) {
+                if (!auth2) {
+                    user.setTotpFlag(auth2);
+                    user.setTotpSecret("");
+                }
+                else {
+                    user.setTotpFlag(auth2);
+                    String url = svc.GenerateTotpKey(user);
+                    request.setAttribute(ATT_URLQRC, url);
+                }
+                result = "Modification prise en compte";
             }
             
             // enregistrement des modifications
