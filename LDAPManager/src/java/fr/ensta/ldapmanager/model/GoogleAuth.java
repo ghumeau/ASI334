@@ -38,12 +38,11 @@ public class GoogleAuth {
         return encodedKey;
     }
     
-    public String getQRBarcodeURL(
-        String user,
-        String host,
-        String secret) {
+    public String getQRBarcodeURL(String user, String host, String secret) {
+        
         String format = "https://www.google.com/chart?chs=200x200&chld=M%%7C0&cht=qr&chl=otpauth://totp/%s@%s%%3Fsecret%%3D%s";
         return String.format(format, user, host, secret);
+        
       }
     
     public boolean check_code(String secret,long code,long t) throws NoSuchAlgorithmException, InvalidKeyException {

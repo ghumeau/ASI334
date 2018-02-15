@@ -31,8 +31,8 @@ public class LDAPConnector {
     //IP address of the LDAP server
     private static final String serverIP = "localhost";
     //Port number of the LDAP server
-    //private static final String serverPort = "1389";
-    private static final String serverPort = "389";
+    private static final String serverPort = "1389";
+    //private static final String serverPort = "389";
     //LDAP domain
     private static final String baseDN = "dc=ensta,dc=fr";
     
@@ -226,19 +226,22 @@ public class LDAPConnector {
         if (newInfo.containsKey("totpFlag")) {
             attrMods[i] = new BasicAttribute("totpflag", newInfo.get("totpFlag"));
             i++;
+            /*if (newInfo.get("totpFlag").toString().equals("FALSE") && !(newInfo.get("totpSecret").toString().isEmpty())) {
+            attrMods[i] = new BasicAttribute("totpsecret", "");
+            i++;
+            }*/
         }
 
         for (int j=0; j < newInfo.size()-1; j++) {
             mods[j] = new ModificationItem (DirContext.REPLACE_ATTRIBUTE, attrMods[j]);
         }
 
-        this.contexte.modifyAttributes(DN, mods);
+        contexte.modifyAttributes(DN, mods);
         System.out.println("Modification de l'utilisateur : SUCCES");
         }
         catch(Exception e)
         {
         System.out.println("Modification de l'utilisateur : ECHEC");
-        e.printStackTrace();
         }
     }
     
@@ -279,6 +282,47 @@ public class LDAPConnector {
             }
         }
         return secInfoTab;
+    }
+ 
+    /********************
+     * Save the new password in case of reset
+     * @param DN Distinguished Name of the user to modify
+     * @param newPassword new password to store in the LDAP server
+    ********************/
+    public void SavePassword(String DN, String newPassword) {
+        
+        try {
+            ModificationItem[] mods = new ModificationItem[1];
+            Attribute[] attrMods = new BasicAttribute[1];
+
+            attrMods[0] = new BasicAttribute("userPassword", newPassword);
+
+            mods[0] = new ModificationItem (DirContext.REPLACE_ATTRIBUTE, attrMods[0]);
+
+            contexte.modifyAttributes(DN, mods);
+            System.out.println("Modification du mot de passe de l'utilisateur : SUCCES");
+        }
+        catch(Exception e) {
+            System.out.println("Modification du mot de passe de l'utilisateur : ECHEC");
+        }
+    }
+    
+    public void SaveTotpKey(String DN, String totpSecret) {
+        
+        try {
+            ModificationItem[] mods = new ModificationItem[1];
+            Attribute[] attrMods = new BasicAttribute[1];
+
+            attrMods[0] = new BasicAttribute("totpSecret", totpSecret);
+
+            mods[0] = new ModificationItem (DirContext.REPLACE_ATTRIBUTE, attrMods[0]);
+
+            contexte.modifyAttributes(DN, mods);
+            System.out.println("Enregistrement du secret TOTP de l'utilisateur : SUCCES");
+        }
+        catch(Exception e) {
+            System.out.println("Enregistrement du secret TOTP de l'utilisateur : ECHEC");
+        }
     }
     
     /********************
