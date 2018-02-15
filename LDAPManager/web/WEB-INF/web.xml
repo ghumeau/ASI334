@@ -87,7 +87,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>CheatServlet</servlet-name>
-        <url-pattern>/cheat/*</url-pattern>
+        <url-pattern>/cheat</url-pattern>
     </servlet-mapping>
     
     <session-config>

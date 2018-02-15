@@ -12,6 +12,7 @@
     <c:import url="layout/head.jsp"/>
     <body>
         <c:import url="layout/header.jsp"/>
-        <h1>Hello World!</h1>
+        <div id="QRcode"><div>
+        <input type="submit" class="bouton" value="valider">
     </body>
 </html>

@@ -13,12 +13,11 @@
         <c:import url="layout/header.jsp"/>
         <form method="post" action="question">
             <h3>Question / réponse de sécurité</h3>
-            <span>Question de sécurité</span>
             <script>
-                securityLine("Answer","entrez la réponse de sécurité");
+                standardine("Question de sécurité","Question","${securityInfo}");
+                securityLine("text","entrez la réponse de sécurité","Answer",${errors.answer});
             </script>
             <input type="submit" class="bouton" value="valider">
-        
       </form>
     </body>
 </html>

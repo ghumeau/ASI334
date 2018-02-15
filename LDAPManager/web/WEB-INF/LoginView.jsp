@@ -15,17 +15,17 @@
             <h3>Authentification</h3>
             <div class="LoginLine">
                 <input type="text" id="login" name="login" class="loginField" placeholder="login (uid)"/>
-                <span class="erreur">${erreurs['login']}</span>
+                <span class="erreur">${erreurs.login}</span>
             </div>
             <div class="loginLine">
                 <input type="password" id="password" name="password" class="loginField" placeholder="password" />
-                <span class="erreur">${erreurs['password']}</span>
+                <span class="erreur">${erreurs.password}</span>
             </div>
             <div class="LoginLine">
                 <input type="submit" value="connection" class="bouton" id="valider">
                 <span class="erreur">${resultat}</span><br>
                 <a class="bouton" href="uid" >Mot de passe perdu</a><br>   
-                <a class="bouton" href="cheat/" >accès direct</a>   
+                <a class="bouton" href="../cheat" >accès direct</a>   
             </div>
         </form>
     </body>

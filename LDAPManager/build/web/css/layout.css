@@ -16,11 +16,10 @@ body{
 
 form{
     display:inline-block;
-    width : 40%;
     margin: auto;
 }
 
-.dataLine,.securityLine{
+.dataLine,.securityLine,.standardLine{
     height:28px;
     
     
@@ -33,7 +32,9 @@ form{
     display:inline-block;
     width:20px;  
 }
-.data{
+
+
+.data,.dataID{
     display : inline-block;
     width : 220px;
     margin-left: 10px;

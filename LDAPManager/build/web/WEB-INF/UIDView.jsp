@@ -14,7 +14,7 @@
         <form method="post" action="uid">
             <h3>Saisie de l'identifiant (UID)</h3>
             <script>
-                securityLine("uid","entrez votre identifiant");               
+                securityLine("text","entrez votre identifiant","uid","${errors.uid}");               
             </script>
             <input type="submit" class="bouton" value="valider"> 
       </form>

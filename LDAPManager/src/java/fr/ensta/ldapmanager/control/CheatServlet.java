@@ -67,7 +67,7 @@ public class CheatServlet extends HttpServlet {
         
         
         usr.setFirstName("Arnaud");
-        usr.setLastName("LeGrignou");
+        usr.setLastName("Le Grignou");
         usr.setEmail("arnaudlegrignou@yahoo.fr");
         usr.setPhoneNumber("0768256292");
 
@@ -75,10 +75,10 @@ public class CheatServlet extends HttpServlet {
         
         Map<String, String> user = new LinkedHashMap<>();
         user.put("uid",usr.getUid());
-        user.put("FirstName", usr.getFirstName());
-        user.put("LastName", usr.getLastName());
-        user.put("Email", usr.getEmail());
-        user.put("PhoneNumber", usr.getPhoneNumber());
+        user.put("firstName", usr.getFirstName());
+        user.put("lastName", usr.getLastName());
+        user.put("email", usr.getEmail());
+        user.put("phoneNumber", usr.getPhoneNumber());
 
         session.setAttribute("user", usr);
         request.setAttribute("user", usr.GetInfo());

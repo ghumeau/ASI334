@@ -15,8 +15,8 @@
         <c:import url="layout/header.jsp"/>
         <form method="post" action="new">
             <script>
-                securityLine("pass","entrez votre nouveau mot de passe");
-                securityLine("confirm","confirmez votre mot de passe");    
+                securityLine("password","entrez votre nouveau mot de passe","pass","${errors.pass}");
+                securityLine("password","confirmez votre mot de passe","confirm","${rerrors.confirm}");    
             </script>
             <a class="bouton" href="login" >Valider</a>  
       </form>

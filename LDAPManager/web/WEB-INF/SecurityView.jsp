@@ -14,11 +14,12 @@
         <form method="post" action="security" ID="securityForm">
             <h3>Données de sécurité</h3>
             <script>
-                securityLine("pwd","Saisir l'ancien mot de passe");
-                securityLine("newpwd","Saisir le nouveau mot de passe");
-                securityLine("confirm","confirmation du nouveau mot de passe");
-                securityLine("question","question de sécurité");
-                securityLine("answer", "réponse de sécurité");
+                securityLine("password","Saisir l'ancien mot de passe","pwd","${errors.pwd}");
+                securityLine("password","Saisir le nouveau mot de passe","newpwd","${errors.newpwd}");
+                securityLine("password","Confirmation du nouveau mot de passe","confirm","${errors.confirm}");
+                securityLine("text","Question de sécurité","question","${errors.question}");
+                securityLine("text","réponse de sécurité","answer","${errors.answer}");
+                securityLine("checkbox","Double Authentification","double","");
             </script>
             <input type="submit" class="bouton" value="Valider"  />
             <a class="retour" id="returnButton"   href="private">retour aux données</a>
