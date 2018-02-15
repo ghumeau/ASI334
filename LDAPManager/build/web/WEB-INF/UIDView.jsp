@@ -11,7 +11,7 @@
     <c:import url="layout/head.jsp"/>
     <body>
         <c:import url="layout/header.jsp"/>
-        <form>
+        <form method="post" action="uid">
             <h3>Saisie de l'identifiant (UID)</h3>
             <script>
                 securityLine("uid","entrez votre identifiant");               

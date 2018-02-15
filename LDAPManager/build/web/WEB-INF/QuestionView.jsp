@@ -11,7 +11,7 @@
     <c:import url="layout/head.jsp"/>
     <body>
         <c:import url="layout/header.jsp"/>
-        <form>
+        <form method="post" action="question">
             <h3>Question / réponse de sécurité</h3>
             <span>Question de sécurité</span>
             <script>

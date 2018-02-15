@@ -12,5 +12,5 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Index</title>
     </head>
-    <c:redirect url="login/"/>
+    <c:redirect url="login"/>
 </html>

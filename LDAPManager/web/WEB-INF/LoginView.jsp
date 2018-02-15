@@ -11,7 +11,7 @@
     <c:import url="layout/head.jsp"/>
     <body>
         <c:import url="layout/header.jsp"/>
-        <form method="post" class="loginForm" action="">
+        <form method="post" class="loginForm" action="login">
             <h3>Authentification</h3>
             <div class="LoginLine">
                 <input type="text" id="login" name="login" class="loginField" placeholder="login (uid)"/>
@@ -24,7 +24,7 @@
             <div class="LoginLine">
                 <input type="submit" value="connection" class="bouton" id="valider">
                 <span class="erreur">${resultat}</span><br>
-                <a class="bouton" href="../uid/" >Mot de passe perdu</a><br>   
+                <a class="bouton" href="uid" >Mot de passe perdu</a><br>   
                 <a class="bouton" href="../cheat/" >accès direct</a>   
             </div>
         </form>

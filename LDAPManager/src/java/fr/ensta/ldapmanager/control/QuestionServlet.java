@@ -32,6 +32,7 @@ public class QuestionServlet extends HttpServlet {
     
     public static final String CHAMP_ANSWER = "answer";
 
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(ATT_USER);
