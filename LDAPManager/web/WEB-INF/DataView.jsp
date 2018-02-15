@@ -23,6 +23,7 @@
                 dataLine("Email","mail","${user.email}");
                 dataLine("Téléphone","tel","${user.phoneNumber}");
             </script>
+            
             <input type="button" class="bouton" id="modifier"value ="tout modifier"  onclick="allModify()" /> 
             <input type="submit" class="bouton" id="valider" value="Valider" hidden="true" onclick="allvalidate()" />
             <input type="button" class="bouton" id="annuler" value="Annuler" hidden="true" onclick="allCancel()" />

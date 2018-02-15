@@ -25,7 +25,7 @@
                 <input type="submit" value="connection" class="bouton" id="valider">
                 <span class="erreur">${resultat}</span><br>
                 <a class="bouton" href="uid" >Mot de passe perdu</a><br>   
-                <a class="bouton" href="../cheat/" >accès direct</a>   
+                <a class="bouton" href="cheat/" >accès direct</a>   
             </div>
         </form>
     </body>
