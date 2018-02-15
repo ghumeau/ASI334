@@ -68,7 +68,7 @@ public class QuestionServlet extends HttpServlet {
         // Récupération de la question / réponse
         if (errors.isEmpty()) {
             securityInfo = (HashMap) session.getAttribute(ATT_QUEST);
-            if (!securityInfo.get("SECURITYQUESTION").equals(answer)){errors.put(CHAMP_ANSWER,"Réponse erronée, tentatives restantes : " + (maxEchecs-echecs));}
+            if (!securityInfo.get("securityAnswer").equals(answer)){errors.put(CHAMP_ANSWER,"Réponse erronée, tentatives restantes : " + (maxEchecs-echecs));}
             else { // réponse correcte
                 session.removeAttribute(ATT_QUEST);
                 this.getServletContext().getRequestDispatcher("/WEB-INF/NewPassView.jsp").forward(request, response);

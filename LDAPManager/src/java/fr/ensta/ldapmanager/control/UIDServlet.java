@@ -69,12 +69,15 @@ public class UIDServlet extends HttpServlet {
         if (errors.isEmpty()) {
             Services svc = new Services();
             securityInfo = svc.RetrieveSecurityInfo(uid);
+            if (securityInfo.isEmpty()) {
+                echecs++;
+                session.setAttribute(ATT_ECHECSQ,echecs);
+                errors.put(CHAMP_UID,"UID inconnu, tentatives restantes : " + (maxEchecs-echecs));
+            }
+            else if (securityInfo.get("securityQuestion")=="") {errors.put(CHAMP_UID,"Récupération impossible : pas de question secrète");}
         }
         
-        if (securityInfo.isEmpty()) {
-            echecs++;
-            errors.put(CHAMP_UID,"UID inconnu, tentatives restantes : " + (maxEchecs-echecs));
-            session.setAttribute(ATT_ECHECSQ,echecs);
+        if (!errors.isEmpty()) {
             // Stockage des messages d'erreur dans l'objet request
             request.setAttribute(ATT_ERREURS, errors);
             this.getServletContext().getRequestDispatcher("/WEB-INF/UIDView.jsp").forward(request, response);
@@ -82,8 +85,8 @@ public class UIDServlet extends HttpServlet {
         else {
                 session.setAttribute(ATT_QUEST, securityInfo); // stockage de la question/réponse en session
                 session.setAttribute(ATT_UID, uid);            // stockage de l'uid
-                session.setAttribute(ATT_ECHECSQ,0);
-                request.setAttribute(ATT_QUEST, securityInfo.get("SECURITYQUESTION"));
+                session.setAttribute(ATT_ECHECSQ, 0);
+                request.setAttribute(ATT_QUEST, securityInfo.get("securityQuestion"));
                 this.getServletContext().getRequestDispatcher("/WEB-INF/QuestionView.jsp").forward(request, response);
             }
         
