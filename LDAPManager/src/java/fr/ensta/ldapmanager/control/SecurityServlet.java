@@ -58,7 +58,7 @@ public class SecurityServlet extends HttpServlet {
         String newpwd2 = request.getParameter(CHAMP_NEWPWD2);
         String question = request.getParameter(CHAMP_QUEST);
         String answer = request.getParameter(CHAMP_ANS);
-        boolean auth2 = "oui".equals(request.getParameter(CHAMP_AUTH));
+        boolean auth2 = "on".equals(request.getParameter(CHAMP_AUTH));
         
         if (!user.getPassword().equals(pwd)){ // vérification du mot de passe
             errors.put(CHAMP_PWD,"Veuillez saisir votre mot de passe");
