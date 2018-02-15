@@ -15,7 +15,7 @@
             <h3>Question / réponse de sécurité</h3>
             <script>
                 standardine("Question de sécurité","Question","${securityInfo}");
-                securityLine("text","entrez la réponse de sécurité","Answer",${errors.answer});
+                securityLine("text","entrez la réponse de sécurité","Answer","${erreurs.answer}");
             </script>
             <input type="submit" class="bouton" value="valider">
       </form>

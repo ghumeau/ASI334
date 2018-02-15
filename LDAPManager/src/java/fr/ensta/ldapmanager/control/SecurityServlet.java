@@ -23,7 +23,7 @@ public class SecurityServlet extends HttpServlet {
     public static final String CHAMP_NEWPWD2 = "confirm";
     public static final String CHAMP_QUEST = "question";
     public static final String CHAMP_ANS = "answer";
-    public static final String CHAMP_AUTH = "auth";
+    public static final String CHAMP_AUTH = "double";
     public static final String ATT_USER = "user";
     public static final String ATT_AUTH = "authentified";
     public static final String ATT_ERREURS = "erreurs";

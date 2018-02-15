@@ -24,8 +24,8 @@
 
             <div class="Alterabledata">
                 <script>
-                    dataLine("Email", "mail", "${user.email}", "${errors.mail}");
-                    dataLine("Téléphone", "tel", "${user.phoneNumber}", "${errors.tel}");
+                    dataLine("Email", "mail", "${user.eMail}", "${erreurs.mail}");
+                    dataLine("Téléphone", "tel", "${user.phoneNumber}", "${erreurs.tel}");
                 </script>
             </div>
 
@@ -33,7 +33,7 @@
             <input type="submit" class="bouton" id="valider" value="Valider" hidden="true" onclick="allvalidate()" />
             <input type="button" class="bouton" id="annuler" value="Annuler" hidden="true" onclick="allCancel()" />
 
-            <br><a class="bouton" id='securityButton' href="../security">Modifier les éléments de sécurité</a>
+            <br><a class="bouton" id='securityButton' href="security">Modifier les éléments de sécurité</a>
             <br><a class="logout" id="logoutButton"   href="public">Se deconnecter</a>
 
         </form>

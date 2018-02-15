@@ -76,7 +76,7 @@ public class UIDServlet extends HttpServlet {
                 session.setAttribute(ATT_ECHECSQ,echecs);
                 errors.put(CHAMP_UID,"UID inconnu, tentatives restantes : " + (maxEchecs-echecs));
             }
-            else if (securityInfo.get("securityQuestion")=="") {errors.put(CHAMP_UID,"Récupération impossible : pas de question secrète");}
+            else if (securityInfo.get("securityQuestion")==null) {errors.put(CHAMP_UID,"Récupération impossible : pas de question secrète");}
         }
         
         if (!errors.isEmpty()) {

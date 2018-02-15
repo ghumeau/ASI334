@@ -51,16 +51,16 @@ public class DataServlet extends HttpServlet {
         String phone = request.getParameter(CHAMP_PHONE);
         
         // tests de la validité des champs et modification en l'absence d'erreurs
-        if(!Checks.syntaxe(mail,Checks.Argument.MAIL)){errors.put(CHAMP_MAIL,"Erreur de syntaxe!");}
+        if (!Checks.syntaxe(mail,Checks.Argument.MAIL) && !Checks.isEmpty(mail)) {errors.put(CHAMP_MAIL,"Erreur de syntaxe!");}
         else{user.setEmail(mail);}
-        if(!Checks.syntaxe(phone,Checks.Argument.PHONE)){errors.put(CHAMP_PHONE,"Erreur de syntaxe!");}
+        if (!Checks.syntaxe(phone,Checks.Argument.PHONE)  && !Checks.isEmpty(phone)) {errors.put(CHAMP_PHONE,"Erreur de syntaxe!");}
         else{user.setPhoneNumber(phone);}
         
         // enregistrement des modifications
         svc.ModifyInfo(user);
         
         // retour à DataView avec les éventuelles erreurs
-        session.setAttribute(ATT_USER, user);
+        //session.setAttribute(ATT_USER, user);
         request.setAttribute(ATT_USER, user.GetInfo());
         request.setAttribute(ATT_ERREURS, errors);
         this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
