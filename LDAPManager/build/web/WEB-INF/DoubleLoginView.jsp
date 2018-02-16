@@ -12,7 +12,13 @@
     <c:import url="layout/head.jsp"/>
     <body>
         <c:import url="layout/header.jsp"/>
-        <div id="QRcode"><div>
-        <input type="submit" class="bouton" value="valider">
+        <form method="post" action="question">
+            <h3>Doube authentification - code Authenticator</h3>
+            <script>
+                securityLine("text","entrez le code Authenticator","Authenticator","${erreurs.code}");
+            </script>
+            <input type="submit" class="bouton" value="valider">
+            <a class="bouton" href="uid" >Mot de passe perdu</a><br>  
+      </form>
     </body>
 </html>
