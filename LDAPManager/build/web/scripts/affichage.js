@@ -25,7 +25,7 @@ function dataLine(label, id, data, erreur) {
                     <span class='dataLabel' id='" + id + "Label'>" + label + "</span>\n\
                     <span class='dataColon' id='" + id + "Colon'>:</span>\n\
                     <span class='data' id='" + id + "'>" + data + "</span>\n\
-                    <input type='text' id='" + id + "Field' name='" + id + "' class='dataField' placeholder='" + data + "'/>\n\
+                    <input type='text' value='" + data +"' id='" + id + "Field' name='" + id + "' class='dataField' placeholder='" + data + "'/>\n\
                     <input type='button' value='Modifier' class='modify' id='" + id + "Modify' onclick='modify(\"" + id + "\")'/>\n\
                     <input type='submit' value='Valider' class='validate' id='" + id + "Validate' onclick='validate(\"" + id + "\")'/>\n\
                     <input type='button' value='Annuler' class='cancel' id='" + id + "Cancel' onclick='cancel(\"" + id + "\")'/>\n\
