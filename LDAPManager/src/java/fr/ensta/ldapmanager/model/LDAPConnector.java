@@ -28,7 +28,8 @@ public class LDAPConnector {
     private static final String serverIP = "localhost";
     //Port number of the LDAP server
     //private static final String serverPort = "1389";
-    private static final String serverPort = "389";
+    //private static final String serverPort = "389";
+    private static final String serverPort = "636";
     //LDAP domain
     private static final String baseDN = "dc=ensta,dc=fr";
     
@@ -42,6 +43,9 @@ public class LDAPConnector {
         environnement.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
         environnement.put(Context.PROVIDER_URL, "ldap://"+serverIP+":"+serverPort+"/");
         environnement.put(Context.SECURITY_AUTHENTICATION, "none");
+        environnement.put(Context.SECURITY_PROTOCOL, "ssl");
+        System.setProperty("javax.net.ssl.trustStore","/etc/pki/tls/TrustStore.jks");  
+        System.setProperty("javax.net.ssl.trustStorePassword","password"); 
         
     }
 
@@ -63,6 +67,9 @@ public class LDAPConnector {
         environnement.put(Context.SECURITY_AUTHENTICATION, "simple");
         environnement.put(Context.SECURITY_PRINCIPAL, serverLogin);
         environnement.put(Context.SECURITY_CREDENTIALS, serverPass);
+        environnement.put(Context.SECURITY_PROTOCOL, "ssl");
+        System.setProperty("javax.net.ssl.trustStore","/etc/pki/tls/TrustStore.jks");  
+        System.setProperty("javax.net.ssl.trustStorePassword","password"); 
           
     }
    
