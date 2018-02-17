@@ -11,16 +11,30 @@ and open the template in the editor.
 body{
     padding:0;
     margin:0;
-    
+}
+
+header{
+    margin: 0px auto;
+    width : 60%;
+    padding: 5px 20px 5px 20px;
+}
+
+
+
+h1{
+
 }
 
 form{
-    display:inline-block;
-    margin: auto;
+    display:block;
+    padding : 20px;
+    width : 60%;
+    height : 1000px;
+    margin: 10px auto;
 }
 
-.dataLine,.securityLine,.standardLine{
-    height:28px;
+.dataLine,.securityLine,.standardLine, .loginLine{
+    height:50px;
     
     
 }
@@ -33,6 +47,15 @@ form{
     width:20px;  
 }
 
+.dataField,.securityField,.loginField{
+    height : 28px;
+
+    
+}
+
+.loginField{
+    width:300px;
+}
 
 .data,.dataID{
     display : inline-block;
@@ -42,7 +65,7 @@ form{
 
 .dataField{
     display : none;
-    width : 200px;
+    width : 300px;
     margin-left: 10px;
 }
 
@@ -52,8 +75,9 @@ form{
 }
 .securityField{
     display: inline-block;
-    width: 400px;
+    width: 500px;
     margin-left: 10px;
+    margin-top : 10px;
 }
 
 .cancel{

@@ -10,9 +10,14 @@
 <!DOCTYPE html>
 <html>
 
-    <c:import url="layout/head.jsp"/>
+    <c:import url="layout/head.jsp">
+        <c:param name="page" value="Données personnelles"/>
+    </c:import>
     <body>
-        <c:import url="layout/header.jsp"/>
+        <c:import url="layout/header.jsp">
+            <c:param name="title" value="Données personnelles"/>
+        </c:import>
+
         <form method="post" action="private" class="dataForm">
             <h3>Données personnelles</h3>
             <div class="IDdata">
