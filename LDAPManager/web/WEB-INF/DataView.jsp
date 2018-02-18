@@ -19,7 +19,6 @@
         </c:import>
 
         <form method="post" action="private" class="dataForm">
-            <h3>Données personnelles</h3>
             <div class="IDdata">
                 <script>
                     standardLine("UID", "uid", "${user.uid}");

@@ -8,7 +8,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-    <c:import url="layout/head.jsp"/>
+    <c:import url="layout/head.jsp">
+        <c:param name="page" value="Authentidfication"/>
+    </c:import>
     <body>
         <c:import url="layout/header.jsp">
             <c:param name="title" value="Authentification"/>
@@ -24,7 +26,7 @@
             </div>
             <div class="LoginLine">
                 <input type="submit" value="connection" class="bouton" id="valider">
-                <span class="erreur">${resultat}</span><br>
+                <span class="erreur">${resultat}</span><br><br>
                 <a class="link" href="uid" >Mot de passe perdu</a><br>   
                 <a class="link" href="../cheat" >accès direct</a>   
             </div>

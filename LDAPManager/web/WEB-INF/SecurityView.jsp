@@ -8,11 +8,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-    <c:import url="layout/head.jsp"/>
+    <c:import url="layout/head.jsp">
+        <c:param name="page" value="Données de sécurité"/>
+    </c:import>
     <body>
-        <c:import url="layout/header.jsp"/>   
+        <c:import url="layout/header.jsp">
+            <c:param name="title" value="Sécurité"/>
+        </c:import>
         <form method="post" action="security" ID="securityForm">
-            <h3>Données de sécurité</h3>
             <script>
                 securityLine("password","Saisir l'ancien mot de passe","pwd","${erreurs.pwd}");
                 securityLine("password","Saisir le nouveau mot de passe","newpwd","${erreurs.newpwd}");
@@ -21,7 +24,7 @@
                 securityLine("text","réponse de sécurité","answer","${erreurs.answer}");
                 securityLine("checkbox","Double Authentification","double","");
             </script>
-            <input type="submit" class="bouton" value="Valider"  />
+            <input type="submit" class="bouton" value="Valider"  /><br><br>
             <a class="retour" id="returnButton"   href="private">retour aux données</a>
         </form>
                 <div id="QRCode">
