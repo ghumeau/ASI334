@@ -34,10 +34,12 @@ public class Checks {
             case QUESTION:
             case ANSWER:
                 validChar.add(Character.toString((char) 32));                            // espace
+                validChar.add(Character.toString((char) 39));                            // 
                 validChar.add(Character.toString((char) 44));                            // virgule
                 validChar.add(Character.toString((char) 45));                            // tiret
                 validChar.add(Character.toString((char) 46));                            // point
                 validChar.add(Character.toString((char) 63));                            // point d'interrogation
+                validChar.add(Character.toString((char) 160));                            // espace
                 for (i = 192; i<=255; i++){validChar.add(Character.toString((char) i));} // accents
             case PWD:
             case UID:
