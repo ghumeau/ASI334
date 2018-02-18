@@ -4,21 +4,25 @@
     Author     : arnaudlegrignou
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     
-    <c:import url="layout/head.jsp"/>
+    <c:import url="layout/head.jsp">
+        <c:param name="page" value="Nouveau mot de passe"/>
+    </c:import>
     <header>LDAP Manager</header>
     <body>
-        <c:import url="layout/header.jsp"/>
+        <c:import url="layout/header.jsp">
+            <c:param name="title" value="Nouveau mot de passe"/>
+        </c:import>
         <form method="post" action="new">
             <script>
                 securityLine("password","entrez votre nouveau mot de passe","pass","${erreurs.pass}");
                 securityLine("password","confirmez votre mot de passe","confirm","${erreurs.confirm}");    
             </script>
-            <a class="bouton" href="login" >Valider</a>  
+            <input type="submit" class="bouton" id="Valider"  value="Valider"</a>  
       </form>
     </body>
 </html>

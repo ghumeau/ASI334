@@ -4,16 +4,20 @@
     Author     : arnaudlegrignou
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-    <c:import url="layout/head.jsp"/>
+    <c:import url="layout/head.jsp">
+        <c:param name="page" value="Deconnection"/>
+    </c:import>
     <body> 
-        <c:import url="layout/header.jsp"/>
+        <c:import url="layout/header.jsp">
+            <c:param name="title" value="Deconnection"/>
+        </c:import>
         <form>
-        <h3>Vous avez été deconnecté</h3>
-        <a href="login">Se connecter</a>
+        <p>Vous avez été deconnecté</p>
+        <a href="login" class="link">Se connecter</a>
         </form>
     </body>
 </html>

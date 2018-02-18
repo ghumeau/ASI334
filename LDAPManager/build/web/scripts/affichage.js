@@ -25,10 +25,10 @@ function dataLine(label, id, data, erreur) {
                     <span class='dataLabel' id='" + id + "Label'>" + label + "</span>\n\
                     <span class='dataColon' id='" + id + "Colon'>:</span>\n\
                     <span class='data' id='" + id + "'>" + data + "</span>\n\
-                    <input type='text' value='" + data +"' id='" + id + "Field' name='" + id + "' class='dataField' placeholder='" + data + "'/>\n\
-                    <input type='button' value='Modifier' class='modify' id='" + id + "Modify' onclick='modify(\"" + id + "\")'/>\n\
-                    <input type='submit' value='Valider' class='validate' id='" + id + "Validate' onclick='validate(\"" + id + "\")'/>\n\
-                    <input type='button' value='Annuler' class='cancel' id='" + id + "Cancel' onclick='cancel(\"" + id + "\")'/>\n\
+                    <input type='text' value='" + data + "' id='" + id + "Field' name='" + id + "' class='dataField' placeholder='" + data + "'/>\n\
+                    <input type='button' value='Modifier' class='modify bouton' id='" + id + "Modify' onclick='modify(\"" + id + "\")'/>\n\
+                    <input type='submit' value='Valider' class='validate bouton' id='" + id + "Validate' onclick='validate(\"" + id + "\")'/>\n\
+                    <input type='button' value='Annuler' class='cancel bouton' id='" + id + "Cancel' onclick='cancel(\"" + id + "\")'/>\n\
                     <span class='error'>" + erreur + "</span>\n\
                     </div>";
     document.write(contenu);
@@ -76,12 +76,9 @@ function cancel(id) {
 
 function validate(id) {
     cancel(id);
-    if (confirm("Confirmez vous ce changement ?")) {
-        alert("oui");
-    } else {
-        alert("non");
-    }
+
 }
+
 
 function allModify() {
     document.getElementById("modifier").hidden = true;
@@ -116,5 +113,7 @@ function allCancel() {
         DataField[i].style.display = "none";
         Modify[i].style.display = "inline-block";
     }
+
 }
+
 

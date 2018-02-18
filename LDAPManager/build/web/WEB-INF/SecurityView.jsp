@@ -4,7 +4,7 @@
     Author     : arnaudlegrignou
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -25,11 +25,11 @@
                 securityLine("checkbox","Double Authentification","double","");
             </script>
             <input type="submit" class="bouton" value="Valider"  /><br><br>
-            <a class="retour" id="returnButton"   href="private">retour aux données</a>
+            <a class="link" id="returnButton"   href="private">retour aux données</a>
+            
+            <div id="QRCode">
+                    <c:import  url="${urlQRcode}"  />
+            </div>
         </form>
-                <div id="QRCode">
-                    <c:import  url="https://www.google.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://totp/Example%3Aalice%40google.com%3Fsecret%3DJBSWY3DPEHPK3PXP%26issuer%3DExample
-"  />
-                </div>
     </body>
 </html>

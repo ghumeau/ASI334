@@ -13,34 +13,35 @@ and open the template in the editor.
     --dark2 : #838D8F;
     --pale1 : #13617B;
     --pale2 : #9AB5CA;
-    --yellow1 : #FDD095;
-    --yellow2 : #F9DDC2;
+    --yellow1 : #ED9645;
+    --yellow2 : #F1B074;
     --pale2-rgba : 151,178,197,0.8;
     
 }
     
-
+html{
+    background-image: url(../images/wall.jpg);
+    background-size: 100% 100%; 
+    
+}
 
 body{
-    background-image: url(../images/wall.jpg);
-    background-size: cover; 
+    background: rgba(var(--pale2-rgba));
 }
 
 header{
-    background: rgba(var(--pale2-rgba));
     color: var(--dark1);
-    box-shadow: 1px 1px 12px var(--pale2);
 }
+
 
 
 h1{
     display: relative;
-    font-size: 44px;
+    font-size: 40px;
 }
 
 form{
-    background: rgba(var(--pale2-rgba));
-    box-shadow: 1px 1px 12px var(--pale2);
+    
 }
 h3{
     color: var(--pale1);
@@ -48,9 +49,12 @@ h3{
 
 .bouton{
     font-size : 16px;
-    border-radius: 5px;
-    background : var(--yellow1);
+    background : var(--yellow2);
     cursor : pointer;
+}
+
+.bouton:hover{
+    background : var(--yellow1);
 }
 
 .link{
@@ -59,13 +63,22 @@ h3{
 }
 
 .dataField,.loginField,.securityField{
-    border-radius :5px;
     border:none;
     font-size: 14px;
 }
 
-
 .erreur{
     color:red;
+    
 }
 
+.link{
+    text-decoration: none;
+}
+
+.link:hover{
+    text-shadow : 1px 1px 4px white ;
+    cursor : pointer;
+    text-decoration: underline;
+    
+}

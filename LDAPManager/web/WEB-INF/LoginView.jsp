@@ -4,12 +4,12 @@
     Author     : arnaudlegrignou
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <c:import url="layout/head.jsp">
-        <c:param name="page" value="Authentidfication"/>
+        <c:param name="page" value="Authentification"/>
     </c:import>
     <body>
         <c:import url="layout/header.jsp">
@@ -25,11 +25,12 @@
                 <span class="erreur">${erreurs.password}</span>
             </div>
             <div class="LoginLine">
-                <input type="submit" value="connection" class="bouton" id="valider">
-                <span class="erreur">${resultat}</span><br><br>
-                <a class="link" href="uid" >Mot de passe perdu</a><br>   
-                <a class="link" href="../cheat" >accès direct</a>   
+                <input type="submit" value="connection" class="bouton" id="validerLogin"/>
+                <span class="erreur">${resultat}</span><br> 
             </div>
+                <a class="link" id ="lostLink" href="uid" >Mot de passe perdu</a><br>   
+                <a class="link" href="../cheat" >accès direct</a>   
         </form>
+        
     </body>
 </html>
