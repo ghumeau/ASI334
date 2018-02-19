@@ -44,7 +44,7 @@ public class LDAPConnector {
         environnement.put(Context.PROVIDER_URL, "ldap://"+serverIP+":"+serverPort+"/");
         environnement.put(Context.SECURITY_AUTHENTICATION, "none");
         environnement.put(Context.SECURITY_PROTOCOL, "ssl");
-        System.setProperty("javax.net.ssl.trustStore","/etc/pki/tls/TrustStore.jks");  
+        System.setProperty("javax.net.ssl.trustStore","/home/eleve/ssl/TrustStore.jks");  
         System.setProperty("javax.net.ssl.trustStorePassword","password"); 
         
     }
@@ -68,7 +68,7 @@ public class LDAPConnector {
         environnement.put(Context.SECURITY_PRINCIPAL, serverLogin);
         environnement.put(Context.SECURITY_CREDENTIALS, serverPass);
         environnement.put(Context.SECURITY_PROTOCOL, "ssl");
-        System.setProperty("javax.net.ssl.trustStore","/etc/pki/tls/TrustStore.jks");  
+        System.setProperty("javax.net.ssl.trustStore","/home/eleve/ssl/TrustStore.jks");  
         System.setProperty("javax.net.ssl.trustStorePassword","password"); 
           
     }

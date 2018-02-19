@@ -30,6 +30,10 @@ public class Services {
         
     }
     
+    public Services(User user) {
+        this.user =user;
+    }
+    
     public User AuthenticationSequence(String uid, String password) {
         //On vérifie en premier lieu si l'utilisateur est présent dans l'annuaire
         String DN = DNSearch(uid);
