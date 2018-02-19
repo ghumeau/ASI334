@@ -66,6 +66,8 @@ public class SecurityServlet extends HttpServlet {
         
         if (!user.getPassword().equals(pwd)){ // vérification du mot de passe
             errors.put(CHAMP_PWD,"Veuillez saisir votre mot de passe");
+            request.setAttribute(ATT_ERREURS, errors);
+            this.getServletContext().getRequestDispatcher("/WEB-INF/SecurityView.jsp").forward(request, response);
         }
         else{
             // changement de mot de passe
