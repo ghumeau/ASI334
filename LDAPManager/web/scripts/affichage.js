@@ -26,9 +26,9 @@ function dataLine(label, id, data, erreur) {
                     <span class='dataColon' id='" + id + "Colon'>:</span>\n\
                     <span class='data' id='" + id + "'>" + data + "</span>\n\
                     <input type='text' value='" + data + "' id='" + id + "Field' name='" + id + "' class='dataField' placeholder='" + data + "'/>\n\
-                    <input type='button' value='Modifier' class='modify bouton' id='" + id + "Modify' onclick='modify(\"" + id + "\")'/>\n\
-                    <input type='submit' value='Valider' class='validate bouton' id='" + id + "Validate' onclick='validate(\"" + id + "\")'/>\n\
-                    <input type='button' value='Annuler' class='cancel bouton' id='" + id + "Cancel' onclick='cancel(\"" + id + "\")'/>\n\
+                    <input type='button' value='' class='modify' id='" + id + "Modify' onclick='modify(\"" + id + "\")'/>\n\
+                    <input type='submit' value='' class='validate' id='" + id + "Validate' onclick='validate(\"" + id + "\")'/>\n\
+                    <input type='button' value='' class='cancel' id='" + id + "Cancel' onclick='cancel(\"" + id + "\")'/>\n\
                     <span class='error'>" + erreur + "</span>\n\
                     </div>";
     document.write(contenu);
@@ -46,11 +46,11 @@ function securityLine(type, label, id, erreur) {
 
 function modify(id) {
     document.getElementById(id).style.display = "none";
-    document.getElementById(id + "Field").style.display = "inline-block";
-    document.getElementById(id + "Validate").style.display = "inline-block";
-    document.getElementById(id + "Cancel").style.display = "inline-block";
+    document.getElementById(id + "Field").style.display = "inline";
+    document.getElementById(id + "Validate").style.display = "inline";
+    document.getElementById(id + "Cancel").style.display = "inline";
 
-    document.getElementById("modifier").hidden = true;
+    document.getElementById("modifier").style.display = "none";
 
     var Modify = document.getElementsByClassName("modify");
     for (var i = 0, len = Modify.length; i < len; i++)
@@ -65,7 +65,7 @@ function cancel(id) {
     document.getElementById(id + "Validate").style.display = "none";
     document.getElementById(id + "Cancel").style.display = "none";
 
-    document.getElementById("modifier").hidden = false;
+    document.getElementById("modifier").style.display = "inline-block";
 
     var Modify = document.getElementsByClassName("modify");
     for (var i = 0, len = Modify.length; i < len; i++)
@@ -81,9 +81,6 @@ function validate(id) {
 
 
 function allModify() {
-    document.getElementById("modifier").hidden = true;
-    document.getElementById("annuler").hidden = false;
-    document.getElementById("valider").style.display = "inline-block";
     var Data = document.getElementsByClassName("data");
     var DataField = document.getElementsByClassName("dataField");
     var Modify = document.getElementsByClassName("modify");
@@ -97,22 +94,24 @@ function allModify() {
         Cancel[i].style.display = "none";
         Validate[i].style.display = "none";
     }
+    document.getElementById("annuler").style.display = "inline-block";
+    document.getElementById("modifier").style.display = "none";
+    document.getElementById("valider").style.display = "inline-block";
 
 }
 function allCancel() {
-    document.getElementById("modifier").hidden = false;
-    document.getElementById("annuler").hidden = true;
-    document.getElementById("valider").style.display = "none";
     var Data = document.getElementsByClassName("data");
     var DataField = document.getElementsByClassName("dataField");
     var Modify = document.getElementsByClassName("modify");
     for (var i = 0, len = Data.length; i < len; i++)
     {
         Data[i].style.display = "inline-block";
-
         DataField[i].style.display = "none";
         Modify[i].style.display = "inline-block";
     }
+        document.getElementById("modifier").style.display = "inline-block";
+    document.getElementById("annuler").style.display = "none";
+    document.getElementById("valider").style.display = "none";
 
 }
 

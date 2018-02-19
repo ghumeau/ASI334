@@ -28,7 +28,7 @@
             <a class="link" id="returnButton"   href="private">retour aux données</a>
             
             <div id="QRCode">
-                    <c:import  url="${urlQRcode}"  />
+                    ${urlQRcode}
             </div>
         </form>
     </body>

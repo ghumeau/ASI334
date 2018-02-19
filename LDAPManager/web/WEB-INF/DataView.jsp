@@ -31,15 +31,18 @@
                     dataLine("Email", "mail", "${user.eMail}", "${erreurs.mail}");
                     dataLine("Téléphone", "tel", "${user.phoneNumber}", "${erreurs.tel}");
                 </script>
+            </div><br>
+            <div class="buttonLine">
+                <input type="button" class="allModify" id="modifier"value ="Tout modifier"  onclick="allModify()" /> 
+                <input type="submit" class="validate" id="valider" value="" hidden="true" onclick="allvalidate()" />
+                <input type="button" class="cancel" id="annuler" value="" hidden="true" onclick="allCancel()" />
             </div>
-
-            <input type="button" class="bouton" id="modifier"value ="tout modifier"  onclick="allModify()" /> 
-            <input type="submit" class="bouton" id="valider" value="Valider" hidden="true" onclick="allvalidate()" />
-            <input type="button" class="bouton" id="annuler" value="Annuler" hidden="true" onclick="allCancel()" />
-
-            <br><a class="link" id='securityButton' href="security">Modifier les éléments de sécurité</a>
-            <br><a class="link" id="logoutButton"   href="public">Se deconnecter</a>
-
+            <div class="buttonLine">
+                <a href="security" ><input type="button" value="Informations de sécurité" class="security" id="securiteButton"/></a>
+            </div>
+            <div class="buttonLine">
+                <a href="public" ><input type="button" value="Se deconnecter" class="logout" id="logoutButton"/></a>
+            </div>
         </form>
 
     </body>

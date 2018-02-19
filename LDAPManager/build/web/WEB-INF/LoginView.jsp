@@ -25,10 +25,11 @@
                 <span class="erreur">${erreurs.password}</span>
             </div>
             <div class="LoginLine">
-                <input type="submit" value="connection" class="bouton" id="validerLogin"/>
+                <input type="submit" value="" class="log" id="validerLogin"/>
+                <a href="uid" ><input type="button" value="" class="forget" id="forgetPassword"/></a><br>
                 <span class="erreur">${resultat}</span><br> 
             </div>
-                <a class="link" id ="lostLink" href="uid" >Mot de passe perdu</a><br>   
+                 
                 <a class="link" href="../cheat" >accès direct</a>   
         </form>
         

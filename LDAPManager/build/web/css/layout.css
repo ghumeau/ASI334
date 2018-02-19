@@ -8,18 +8,38 @@ and open the template in the editor.
     Author     : arnaudlegrignou
 */
 
+/*Définition des variables ------------------------------------------*/
+
+
+:root{
+    --dark1 : #1E4952;
+    --dark2 : #838D8F;
+    --pale1 : #13617B;
+    --pale2 : #9AB5CA;
+    --yellow1 : #ED9645;
+    --yellow2 : #F1B074;
+    --pale2-rgba : 151,178,197,0.7;   
+}
+
+/*Gestion de la forme générale ----------------------------------------*/
+
 html {
-  height: 100%;
+    height: 100%;
+    background-image: url(../images/wall.jpg);
+    background-size: 100% 100%; 
 }
 
 body{
     height: 100%;
-    width : 1000px;
+    width : 1200px;
     padding:0;
     margin : auto;
+    background: rgba(var(--pale2-rgba));
 }
 
 header{
+    color: var(--dark1);
+    text-align: center;
     margin: auto;
     height : 10%;
     width : auto;
@@ -27,7 +47,8 @@ header{
     padding: 2%;
 }
 h1{
-    display : inline-block;   
+    display: relative;
+    font-size: 38px;  
     width : auto;
     margin:auto;
 }
@@ -44,39 +65,59 @@ form{
     padding : 4%;
     width : auto;
     height : auto;
-    margin: 5% auto;
+    margin: 2% auto;
 }
 
-.dataLine,.securityLine,.standardLine, .loginLine{
+/*Gestion de lignes-------------------------------------------------------*/
+
+.dataLine,.securityLine,.standardLine,.loginLine{
     height:54px; 
 }
 
 .loginLine{
     width: auto;
+    
+}
+
+.dataLine{
+    
+}
+
+.buttonLine{
+    height : 44px;
+    
 }
 
 
+/*Gestion des etiquettes------------------------------------------------------*/
+
+.dataLabel,.securityLabel{
+    display: inline-block;
+    height : 40px;
+    vertical-align: top;
+    margin-top : 10px;
+}
+
 .dataLabel{
-    display : inline-block;
     width : 100px;}
 
+.securityLabel{
+    display : inline-block;
+    width : 260px;
+}
+
+/*Gestion des champs de saisie------------------------------------------------*/
 
 .dataField,.securityField,.loginField{
-
-    height : 30px;
-
-    
+    display : inline-block;
+    vertical-align: top;
+    border:none;
+    font-size: 14px;
+    height : 40px;
 }
 
 .loginField{
     width:250px;
-}
-
-.data,.dataID{
-    display : inline-block;
-    width : 220px;
-    height : 30px;
-    margin-left: 10px;
 }
 
 .dataField{
@@ -85,38 +126,135 @@ form{
     margin-left: 10px;
 }
 
-.securityLabel{
-    display : inline-block;
-    width : 260px;
-}
 .securityField{
     display: inline-block;
     width: 500px;
     margin-left: 10px;
-    vertical-align: middle;
+    vertical-align: top;
 }
 
+/*Gestion de l'affichage des données------------------------------------------*/
 
+.dataColon{
+    display : inline-block;
+    vertical-align: top;
+    margin-top : 10px;
+    width : 20px;
+    
+}
 
-.bouton{
-    width: 250px;
+.data,.dataID{
+    display : inline-block;
+    vertical-align: top;
+    margin-top : 10px;
+    width : 300px;
     height : 30px;
+    margin-left: 10px;
 }
 
-.erreur{
-    width: 200px;
-    height : 20px;
+/*Gestion des boutons---------------------------------------------------------*/
+
+input[submit],input[button]{
+    cursor:pointer;
+    
 }
+
+
+.log{
+    width: 40px;
+    height : 40px;
+    background: url(../images/validate.png);
+    background-size : 100% 100%;
+}
+
+.forget{
+    width: 40px;
+    height : 40px;
+    background: url(../images/forget.png);
+    background-size : 100% 100%;
+}
+
 
 .link{
     margin-top : 10px;
+    text-decoration: none;
+}
+
+.link:hover{
+    text-shadow : 1px 1px 4px white ;
+    cursor : pointer;
+    text-decoration: underline;
+    
 }
 
 .cancel{
     display : none;
+    width: 40px;
+    height : 40px;
+    background: url(../images/cancel.png);
+    background-color: red;
+    background-size : 100% 100%;
 }
 
 .validate{
     display : none;
+    width: 40px;
+    height : 40px;
+    background: url(../images/validate.png);
+    background-size : 100% 100%;
+}
+
+.modify{
+    width: 40px;
+    height : 40px;
+    background: url(../images/modify.png);
+    background-size : 100% 100%;
+}
+
+.allModify{
+    display : inline-block;
+    vertical-align: top;
+    width: 480px;
+    height : 40px;
+    padding-left : 40px;
+    background-image: url(../images/modify.png);
+    background-repeat: no-repeat;
+    background-color : #60ADDA;
+    background-size : 36px 36px;
+    
+}
+
+.security{
+    display : inline-block;
+    vertical-align: top;
+    width: 200px;
+    height : 40px;
+    padding-left : 40px;
+    text-decoration: none;
+    background-image: url(../images/security.png);
+    background-repeat: no-repeat;
+    background-color : #FEC057;
+    background-size : 36px 36px;   
+}
+
+.logout{
+    display : inline-block;
+    vertical-align: top;
+    width: 200px;
+    height : 40px;
+    padding-left : 40px;
+    text-decoration: none;
+    background-image: url(../images/logout.png);
+    background-repeat: no-repeat;
+    background-color : #A9E370;
+    background-size : 36px 36px;   
+}
+
+/*Gestion des boutons---------------------------------------------------------*/
+
+.erreur{
+    width: 200px;
+    height : 20px;
+    color:red;
 }
 

@@ -17,7 +17,7 @@
         </c:import>
         <form method="post" action="question">
             <script>
-                standardine("Question de sécurité","Question","${securityInfo}");
+                standardLine("Question de sécurité","Question","${securityInfo}");
                 securityLine("text","entrez la réponse de sécurité","Answer","${erreurs.answer}");
             </script>
             <input type="submit" class="bouton" value="valider">

@@ -12,6 +12,5 @@
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <title><c:out value="${param.page}"/></title>
         <link type="text/css" media="screen" rel="stylesheet" href="css/layout.css" />
-        <link type="text/css" media="screen" rel="stylesheet" href="css/style.css" />
         <script type="text/javascript" src="scripts/affichage.js"></script>
     </head>

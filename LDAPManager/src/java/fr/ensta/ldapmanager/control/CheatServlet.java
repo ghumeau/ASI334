@@ -82,7 +82,7 @@ public class CheatServlet extends HttpServlet {
 
         session.setAttribute("user", usr);
         request.setAttribute("user", usr.GetInfo());
-        this.getServletContext().getRequestDispatcher("/WEB-INF/SecurityView.jsp").forward(request, response);
+        this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
     }
 
     /**
