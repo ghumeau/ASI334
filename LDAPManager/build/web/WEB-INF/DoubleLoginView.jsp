@@ -20,7 +20,7 @@
             <script>
                 securityLine("text","entrez le code Authenticator","Authenticator","${erreurs.Authenticator}");
             </script>
-            <input type="submit" class="log" value="valider">
+            <input type="submit" class="log" value="">
             <a href="uid" ><input type="button" value="Mot de passe perdu" class="forget" id="forgetdoublePassword"/>
       </form>
     </body>
