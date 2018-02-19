@@ -53,13 +53,12 @@
             <a href="private" ><input type="button" value="" class="back" id="backData"/></a>
             <span class="erreur">${resultat}</span><br> 
         </form>
-
-        <div class="QRcontainer">
-            <img src="${urlQRcode}" class="QRframe"/>
-        </div>
-
-
-
-
+        
+        
+        <c:if test="${not empty urlQRcode}">
+            <div class="QRcontainer">
+                <img src="${urlQRcode}" class="QRframe"/>
+            </div>
+        </c:if>
     </body>
 </html>
