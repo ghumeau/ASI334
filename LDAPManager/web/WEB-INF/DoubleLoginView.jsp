@@ -18,7 +18,7 @@
         </c:import>
         <form method="post" action="login2">
             <script>
-                securityLine("text","entrez le code Authenticator","Authenticator","${erreurs.code}");
+                securityLine("text","entrez le code Authenticator","Authenticator","${erreurs.Authenticator}");
             </script>
             <input type="submit" class="bouton" value="valider">
             <a class="bouton" href="uid" >Mot de passe perdu</a><br>  

@@ -15,6 +15,7 @@
         <c:import url="layout/header.jsp">
             <c:param name="title" value="Sécurité"/>
         </c:import>
+        <p>${urlQRcode}</p>
         <form method="post" action="security" ID="securityForm">
             <script>
                 securityLine("password", "Ancien mot de passe (obligatoire)", "pwd", "${erreurs.pwd}");
