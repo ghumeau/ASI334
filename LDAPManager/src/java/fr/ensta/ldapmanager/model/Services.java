@@ -30,10 +30,20 @@ public class Services {
         
     }
     
+    /********************
+     * Constructor with user
+     * @param user User to set
+    ********************/
     public Services(User user) {
         this.user =user;
     }
     
+    /********************
+     * Authentication sequence with user credentials
+     * @param uid id of the user who tries to connect
+     * @param password password of the user who tries to connect
+     * @return the authentified user / return null if the authentication fails
+    ********************/
     public User AuthenticationSequence(String uid, String password) {
         //On vérifie en premier lieu si l'utilisateur est présent dans l'annuaire
         String DN = DNSearch(uid);
@@ -45,6 +55,11 @@ public class Services {
         }
     }
     
+    /********************
+     * Searches the DN of the specified user ID
+     * @param uid id of the user
+     * @return the distinguished name
+    ********************/
     private String DNSearch(String uid) {
         try {
             connector = new LDAPConnector();
@@ -64,6 +79,13 @@ public class Services {
         
     }
     
+    /********************
+     * Authentifies the specified user against the LDAP server
+     * @param uid id of the user who tries to connect
+     * @param password password of the user who tries to connect
+     * @param DN distinguished name of the user who tries to connect
+     * @return the user if the authentication succeed else returns null
+    ********************/
     private User Authentify(String uid, String password, String DN) {
         try {
             connector = new LDAPConnector(DN, password);
@@ -81,6 +103,10 @@ public class Services {
         }
     }
     
+    /********************
+     * Retrieves info of a user in the LDAP server
+     * @return a HashMap containing the user info retrieved in the LDAP server
+    ********************/
     private HashMap RetrieveInfo() {
         try {
             return connector.UserScopeSearch(user.getUid());
@@ -91,6 +117,11 @@ public class Services {
         
     }
     
+    /********************
+     * Retrieves the DN of a user in the LDAP server
+     * @param uid id of the user
+     * @return the DN of a user retrieved in the LDAP server / if the user does not exist returns null
+    ********************/
     private String RetrieveDNInfo(String uid) {
         try {
             return connector.UserDNSearch(uid);
@@ -101,6 +132,9 @@ public class Services {
         
     }
     
+    /********************
+     * Prints the user info
+    ********************/
     public void PrintInfo() {
         System.out.println("Le login de l'utilisateur est : " + user.getUid());
         System.out.println("Le mot de passe de l'utilisateur est : " + user.getPassword());
@@ -132,16 +166,20 @@ public class Services {
         System.out.println("Le flag TOTP de l'utilisateur est positionné à : " + totpbool);
     }
     
+    /********************
+     * Modifies the info of a user in the LDAP server
+     * @param userToModify user to modify
+    ********************/
     public void ModifyInfo(User userToModify) {
         
-        HashMap oldUserInfo = new HashMap();
+        HashMap oldUserInfo;
         HashMap newUserInfo = new HashMap();
         HashMap attributeToModify = new HashMap();
         HashMap attributeToAdd = new HashMap();
         HashMap attributeToDelete = new HashMap();
         
         try {
-            //on récupère la map contenant les anciennes infos de l'utilisateur
+            //first, the old info of the user are retrieved in a map from the LDAP server
             String DN = DNSearch(userToModify.getUid());
             String password = userToModify.getPassword();
             connector = new LDAPConnector(DN, password);
@@ -151,6 +189,7 @@ public class Services {
             oldUserInfo.put("uid",userToModify.getUid());
             oldUserInfo.put("password", password);
             
+            //then, the new info of the user are stored in a map
             newUserInfo.put("uid",  userToModify.getUid());
             
             newUserInfo.put("password",  userToModify.getPassword());
@@ -173,6 +212,8 @@ public class Services {
                 
             newUserInfo.put("totpFlag", (userToModify.isTotpFlag()) ? "TRUE" : "FALSE");
             
+            
+            //finally the old map and the new map are compared to determine wether the attribute is replaced, added or deleted in the LDAP server
             Iterator iter = newUserInfo.keySet().iterator();
             
             String value;
@@ -205,6 +246,10 @@ public class Services {
         }
     }
     
+    /********************
+     * Modifies the password of a user in the LDAP server
+     * @param userToModify user whom password will be modified 
+    ********************/
     public void ModifyPassword(User userToModify) {
         try {
             String DN = DNSearch(userToModify.getUid());
@@ -220,6 +265,11 @@ public class Services {
         }
     }
     
+    /********************
+     * Retrieves the security info of a user (security question and answer) in the LDAP server
+     * @param uid id of the user
+     * @return a HashMap containing the user security info retrieved in the LDAP server
+    ********************/
     public HashMap RetrieveSecurityInfo(String uid) {
         try {
             String DN = DNSearch(technicalAccount);
@@ -238,6 +288,9 @@ public class Services {
         }
     }
 
+    /********************
+     * Fills the user attributes with the info retrieved from the LDAP server
+    ********************/
     private void FillUserInfo() {
 
         if (userMap.containsKey("lastName")) {
@@ -274,38 +327,69 @@ public class Services {
         }
     }
     
+    /********************
+     * Generates the TOTP key in case of double authentication
+     * @param userToModify the user whom TOTP key needs to be generated
+     * @return the QR code URL
+    ********************/
     public String GenerateTotpKey(User userToModify) {
         GoogleAuth ga = new GoogleAuth();
         String totpKey = ga.generateKey();
         userToModify.setTotpSecret(totpKey);
-        ModifyTotpKey(userToModify);
+        //ModifyTotpKey(userToModify);
         return ga.getQRBarcodeURL(userToModify.getUid(), "LDAPManager", totpKey);
     }
     
-    private void ModifyTotpKey(User userToModify) {
+    /********************
+    * Modifies the TOTP key of a user in the LDAP server
+    ********************/
+    /*private void ModifyTotpKey(User userToModify) {
         try {
+            HashMap oldUserInfo;
             String DN = DNSearch(userToModify.getUid());
             String totpSecret = userToModify.getTotpSecret();
             String techAccountDN = DNSearch(technicalAccount);
             connector = new LDAPConnector(techAccountDN,techAccPwd);
             connector.connect();
-            connector.SaveTotpKey(DN, totpSecret);
+            
+            oldUserInfo = RetrieveInfo();
+            
+            if (oldUserInfo.containsKey("totpSecret")) {
+                if (!totpSecret.isEmpty()) {
+                    connector.ModifyTotpKey(DN, totpSecret);
+                }
+                else {
+                    connector.DeleteTotpKey(DN);
+                }
+            }
+            else {
+                if (!totpSecret.isEmpty()) {
+                    connector.AddTotpKey(DN, totpSecret);
+                }
+            }
+            
             connector.disconnect();
         }
         catch (Exception e) {
             System.out.println("Erreur dans ModifyTotpKey");
         }
-    }
+    }*/
     
-    public void DeleteTotpKey(User userToModify) {
+    /*public void DeleteTotpKey(User userToModify) {
         
-    }
+    }*/
     
-    public boolean CheckTotpCode(User user, String inputCode) {
+    /********************
+     * Verifies the TOTP key of a user
+     * @param userToCheck user whom TOTP key needs to be checked
+     * @param inputCode the code filled by the user
+     * @return a boolean
+    ********************/
+    public boolean CheckTotpCode(User userToCheck, String inputCode) {
         try {
             long t = new Date().getTime() / TimeUnit.SECONDS.toMillis(30);
             GoogleAuth ga = new GoogleAuth();
-            if (ga.check_code(user.getTotpSecret(),Long.parseLong(inputCode), t)) {
+            if (ga.check_code(userToCheck.getTotpSecret(),Long.parseLong(inputCode), t)) {
                 System.out.println("totpCode OK");
                 return true;
             }

@@ -272,6 +272,11 @@ public class LDAPConnector {
             attrMods[i] = new BasicAttribute("securityanswer", newInfo.get("securityAnswer"));
             i++;
         }
+        
+        if (newInfo.containsKey("totpSecret")) {
+            attrMods[i] = new BasicAttribute("totpsecret", newInfo.get("totpSecret"));
+            i++;
+        }
 
         for (int j=0; j < newInfo.size(); j++) {
             mods[j] = new ModificationItem (DirContext.ADD_ATTRIBUTE, attrMods[j]);
@@ -403,11 +408,11 @@ public class LDAPConnector {
     }
     
     /********************
-     * Saves the TOTP key of a specified user
+     * Modifies the TOTP key of a specified user
      * @param DN Distinguished Name of the user to modify
      * @param totpSecret TOTP secret to store in the LDAP server
     ********************/
-    public void SaveTotpKey(String DN, String totpSecret) {
+    /*public void ModifyTotpKey(String DN, String totpSecret) {
         
         try {
             ModificationItem[] mods = new ModificationItem[1];
@@ -418,12 +423,57 @@ public class LDAPConnector {
             mods[0] = new ModificationItem (DirContext.REPLACE_ATTRIBUTE, attrMods[0]);
 
             contexte.modifyAttributes(DN, mods);
-            System.out.println("Enregistrement du secret TOTP de l'utilisateur : SUCCES");
+            System.out.println("Modification du secret TOTP de l'utilisateur : SUCCES");
         }
         catch(Exception e) {
-            System.out.println("Enregistrement du secret TOTP de l'utilisateur : ECHEC");
+            System.out.println("Modification du secret TOTP de l'utilisateur : ECHEC");
         }
-    }
+    }*/
+    
+    /********************
+     * Deletes the TOTP key of a specified user
+     * @param DN Distinguished Name of the user to modify
+     ********************/
+    /*public void DeleteTotpKey(String DN) {
+        
+        try {
+            ModificationItem[] mods = new ModificationItem[1];
+            Attribute[] attrMods = new BasicAttribute[1];
+
+            attrMods[0] = new BasicAttribute("totpsecret");
+
+            mods[0] = new ModificationItem (DirContext.REMOVE_ATTRIBUTE, attrMods[0]);
+
+            contexte.modifyAttributes(DN, mods);
+            System.out.println("Suppression du secret TOTP de l'utilisateur : SUCCES");
+        }
+        catch(Exception e) {
+            System.out.println("Suppression du secret TOTP de l'utilisateur : ECHEC");
+        }
+    }*/
+    
+     /********************
+     * Adds the TOTP key of a specified user
+     * @param DN Distinguished Name of the user to modify
+     * @param totpSecret TOTP secret to store in the LDAP server
+     ********************/
+    /*public void AddTotpKey(String DN, String totpSecret) {
+        
+        try {
+            ModificationItem[] mods = new ModificationItem[1];
+            Attribute[] attrMods = new BasicAttribute[1];
+
+            attrMods[0] = new BasicAttribute("totpsecret", totpSecret);
+
+            mods[0] = new ModificationItem (DirContext.ADD_ATTRIBUTE, attrMods[0]);
+
+            contexte.modifyAttributes(DN, mods);
+            System.out.println("Ajout du secret TOTP de l'utilisateur : SUCCES");
+        }
+        catch(Exception e) {
+            System.out.println("Ajout du secret TOTP de l'utilisateur : ECHEC");
+        }
+    }*/
     
     /********************
      * Context Getter
