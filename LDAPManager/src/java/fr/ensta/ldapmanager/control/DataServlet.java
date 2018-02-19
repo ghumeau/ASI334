@@ -67,7 +67,7 @@ public class DataServlet extends HttpServlet {
         if (!Checks.syntaxe(phone,Checks.Argument.PHONE)  && !Checks.isEmpty(phone)) {errors.put(CHAMP_PHONE,"Erreur de syntaxe!");}
         else if (!phone.equals(user.getPhoneNumber())) {
             user.setPhoneNumber(phone);
-            errors.put(CHAMP_MAIL,"Numéro de téléphone modifié");
+            errors.put(CHAMP_PHONE,"Numéro de téléphone modifié");
             modified = true;
         }
         
