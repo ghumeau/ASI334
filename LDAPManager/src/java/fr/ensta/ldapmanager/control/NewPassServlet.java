@@ -69,6 +69,12 @@ public class NewPassServlet extends HttpServlet {
             User authUser = svc.AuthenticationSequence(uid, newpwd1);
             session.setAttribute(ATT_USER, authUser);
             session.setAttribute(ATT_AUTH, true);
+            // désactivation de la double authentification le cas échéant
+            if (authUser.isTotpFlag()) {
+                authUser.setTotpFlag(false);
+                authUser.setTotpSecret("");
+                svc.ModifyInfo(user);
+            }
             request.setAttribute(ATT_USER, authUser.GetInfo());
             this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
         }

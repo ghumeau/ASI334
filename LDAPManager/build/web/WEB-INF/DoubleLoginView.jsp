@@ -16,7 +16,7 @@
         <c:import url="layout/header.jsp">
             <c:param name="title" value="Code Authenticator"/>
         </c:import>
-        <form method="post" action="question">
+        <form method="post" action="login2">
             <script>
                 securityLine("text","entrez le code Authenticator","Authenticator","${erreurs.code}");
             </script>
