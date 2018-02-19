@@ -23,7 +23,6 @@ public class SecurityServlet extends HttpServlet {
     public static final String CHAMP_NEWPWD2 = "confirm";
     public static final String CHAMP_QUEST = "question";
     public static final String CHAMP_ANS = "answer";
-    public static final String CHAMP_AUTH = "double";
     public static final String ATT_USER = "user";
     public static final String ATT_AUTH = "authentified";
     public static final String ATT_ERREURS = "erreurs";
@@ -58,7 +57,6 @@ public class SecurityServlet extends HttpServlet {
         String newpwd2 = request.getParameter(CHAMP_NEWPWD2);
         String question = request.getParameter(CHAMP_QUEST);
         String answer = request.getParameter(CHAMP_ANS);
-        boolean auth2 = "on".equals(request.getParameter(CHAMP_AUTH));
         
         Boolean auth = (Boolean) session.getAttribute(ATT_AUTH);
         // A l'appel de la servlet, affichage de la page d'authentification si l'utilisateur n'a pas de session active
@@ -96,17 +94,14 @@ public class SecurityServlet extends HttpServlet {
             }
             
             // changement du mode d'authentification
-            if (user.isTotpFlag()!=auth2) {
-                if (!auth2) {
-                    user.setTotpFlag(auth2);
-                    user.setTotpSecret("");
-                }
-                else {
-                    user.setTotpFlag(auth2);
-                    String url = svc.GenerateTotpKey(user);
-                    request.setAttribute(ATT_URLQRC, url);
-                }
-                result = "Modification prise en compte";
+            if (request.getParameter("Qcode")!=null) {
+                user.setTotpFlag(true);
+                String url = svc.GenerateTotpKey(user);
+                request.setAttribute(ATT_URLQRC, url);
+            }
+            else if (request.getParameter("Qcode2")!=null) {
+                user.setTotpFlag(false);
+                user.setTotpSecret("");
             }
             
             // enregistrement des modifications

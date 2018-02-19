@@ -41,10 +41,10 @@
                 <span class="dataColon" id="QRColon">:</span>
                 <c:choose>
                     <c:when test="${user.totpFlag == 'FALSE'}">
-                        <input type="submit" class="QRcode"  value="Generer un QR code" />
+                        <input type="submit" class="QRcode" name="Qcode" value="Generer un QR code" />
                     </c:when>
                     <c:when test="${user.totpFlag == 'TRUE'}">  
-                        <input type= "submit" class="QRcode" value="Désactiver la double authentification" />
+                        <input type= "submit" class="QRcode" name="Qcode2" value="Désactiver la double authentification" />
                     </c:when>
                 </c:choose>
             </div> 
