@@ -50,7 +50,7 @@ public class SecurityServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(ATT_USER);
-        Services svc = new Services();
+        Services svc = new Services(user);
         Map<String, String> errors = new HashMap<>();
         String result = null;
         String pwd = request.getParameter(CHAMP_PWD);
@@ -59,6 +59,12 @@ public class SecurityServlet extends HttpServlet {
         String question = request.getParameter(CHAMP_QUEST);
         String answer = request.getParameter(CHAMP_ANS);
         boolean auth2 = "on".equals(request.getParameter(CHAMP_AUTH));
+        
+        Boolean auth = (Boolean) session.getAttribute(ATT_AUTH);
+        // A l'appel de la servlet, affichage de la page d'authentification si l'utilisateur n'a pas de session active
+        if (auth==null){
+            this.getServletContext().getRequestDispatcher("/login").forward(request, response);
+        }
         
         if (!user.getPassword().equals(pwd)){ // vérification du mot de passe
             errors.put(CHAMP_PWD,"Veuillez saisir votre mot de passe");

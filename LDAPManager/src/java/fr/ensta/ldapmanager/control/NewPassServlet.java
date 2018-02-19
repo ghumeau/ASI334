@@ -47,6 +47,12 @@ public class NewPassServlet extends HttpServlet {
         String newpwd1 = request.getParameter(CHAMP_NEWPWD1);
         String newpwd2 = request.getParameter(CHAMP_NEWPWD2);
         
+        Boolean auth = (Boolean) session.getAttribute(ATT_AUTH);
+        // A l'appel de la servlet, affichage de la page d'authentification si l'utilisateur n'a pas de session active
+        if (auth==null){
+            this.getServletContext().getRequestDispatcher("/login").forward(request, response);
+        }
+        
         // changement de mot de passe
         if (Checks.isEmpty(newpwd1)) {errors.put(CHAMP_NEWPWD1,"Veuillez saisir un nouveau mot de passe.");}
         else {

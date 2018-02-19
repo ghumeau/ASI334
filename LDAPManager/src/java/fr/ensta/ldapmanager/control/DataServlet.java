@@ -45,19 +45,34 @@ public class DataServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(ATT_USER);
-        Services svc = new Services();
+        Services svc = new Services(user);
+        boolean modified = false;
         Map<String, String> errors = new HashMap<>();
         String mail = request.getParameter(CHAMP_MAIL);
         String phone = request.getParameter(CHAMP_PHONE);
         
+        Boolean auth = (Boolean) session.getAttribute(ATT_AUTH);
+        // A l'appel de la servlet, affichage de la page d'authentification si l'utilisateur n'a pas de session active
+        if (auth==null){
+            this.getServletContext().getRequestDispatcher("/login").forward(request, response);
+        }
+        
         // tests de la validité des champs et modification en l'absence d'erreurs
         if (!Checks.syntaxe(mail,Checks.Argument.MAIL) && !Checks.isEmpty(mail)) {errors.put(CHAMP_MAIL,"Erreur de syntaxe!");}
-        else{user.setEmail(mail);}
+        else if (!mail.equals(user.getEmail())) {
+            user.setEmail(mail);
+            errors.put(CHAMP_MAIL,"Adresse mail modifiée");
+            modified = true;
+        }
         if (!Checks.syntaxe(phone,Checks.Argument.PHONE)  && !Checks.isEmpty(phone)) {errors.put(CHAMP_PHONE,"Erreur de syntaxe!");}
-        else{user.setPhoneNumber(phone);}
+        else if (!phone.equals(user.getPhoneNumber())) {
+            user.setPhoneNumber(phone);
+            errors.put(CHAMP_MAIL,"Numéro de téléphone modifié");
+            modified = true;
+        }
         
-        // enregistrement des modifications
-        svc.ModifyInfo(user);
+        // enregistrement des modifications le cas échéant
+        if (modified) {svc.ModifyInfo(user);}
         
         // retour à DataView avec les éventuelles erreurs
         //session.setAttribute(ATT_USER, user);

@@ -28,11 +28,14 @@ public class QuestionServlet extends HttpServlet {
     
     public static final String CHAMP_ANSWER = "answer";
     public static final String ATT_AUTH = "authentified";
+    public static final String ATT_UID = "uid";
+    public static final String ATT_QUEST = "securityInfo";
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(ATT_USER);
+        HashMap<String,String> securityInfo = (HashMap<String,String>) session.getAttribute(ATT_QUEST);
         Boolean auth = (Boolean) session.getAttribute(ATT_AUTH);
         // A l'appel de la servlet (GET), affichage de la page UID si l'utilisateur n'a pas de session active
         if (auth==null){
@@ -43,6 +46,10 @@ public class QuestionServlet extends HttpServlet {
                 errors.put(CHAMP_ANSWER, "Trop d'échec, vous avez été bloqué !!!");
                 request.setAttribute(ATT_ERREURS, errors);
             }
+            if (securityInfo==null) {
+                this.getServletContext().getRequestDispatcher("/WEB-INF/UIDView.jsp").forward(request, response);
+            }
+            request.setAttribute(ATT_QUEST, securityInfo.get("securityQuestion"));
             this.getServletContext().getRequestDispatcher("/WEB-INF/QuestionView.jsp").forward(request, response);
         }
         else {this.getServletContext().getRequestDispatcher("/private").forward(request, response);} // si déjà authentifié, transfert sur la page data
@@ -55,6 +62,12 @@ public class QuestionServlet extends HttpServlet {
         Map<String, String> errors = new HashMap<>();
         HashMap<String, String> securityInfo = new HashMap<>();
         Integer echecs = (Integer) session.getAttribute(ATT_ECHECSQ);
+        
+        Boolean auth = (Boolean) session.getAttribute(ATT_AUTH);
+        // A l'appel de la servlet, affichage de la page d'authentification si l'utilisateur n'a pas de session active
+        if (auth==null){
+            this.getServletContext().getRequestDispatcher("/login").forward(request, response);
+        }
         
         if (echecs==null){echecs=0;}
         if (echecs>=maxEchecs){
