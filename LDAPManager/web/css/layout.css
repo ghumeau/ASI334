@@ -18,7 +18,7 @@ and open the template in the editor.
     --pale2 : #9AB5CA;
     --yellow1 : #ED9645;
     --yellow2 : #F1B074;
-    --pale2-rgba : 151,178,197,0.7;   
+    --pale2-rgba : 151,178,197,0.8;   
 }
 
 /*Gestion de la forme générale ----------------------------------------*/
@@ -61,31 +61,34 @@ footer{
 
 form{
     display : inline-block;
-    background : yellow;
-    padding : 4%;
+    padding : 0;
     width : 880px;
     height : auto;
-    margin-left :10px;
+    margin-left :34px;
 }
 
 /*Gestion de lignes-------------------------------------------------------*/
 
-.dataLine,.securityLine,.standardLine,.loginLine{
-    height:54px; 
+.standardLine{
+    height:54px;   
 }
 
 .loginLine{
-    width: auto;
-    
+    height:54px; 
+    width: auto;  
 }
 
 .dataLine{
+    height:54px; 
+}
+
+.securityLine{
+    height : 68px;
     
 }
 
 .buttonLine{
-    height : 44px;
-    
+    height : 44px; 
 }
 
 
@@ -93,13 +96,14 @@ form{
 
 .dataLabel,.securityLabel{
     display: inline-block;
-    height : 40px;
+    height : 30px;
     vertical-align: top;
     margin-top : 10px;
 }
 
 .dataLabel{
-    width : 100px;}
+    width : 100px;
+}
 
 .securityLabel{
     display : inline-block;
@@ -143,6 +147,7 @@ form{
 .dataColon{
     display : inline-block;
     vertical-align: top;
+    height : 30px;
     margin-top : 10px;
     width : 20px;
     
@@ -160,9 +165,16 @@ form{
 .QRcontainer{
     display: inline-block;
     vertical-align: top;
-    width : 200px;
-    height: 200px;
+    width : 250px;
+    height: 250px;
     background : red;
+}
+
+QRframe{
+    display : inline-block;
+    width : 100%;
+    height : 100%;
+    
 }
 
 
@@ -296,11 +308,33 @@ input[submit],input[button]{
     vertical-align: top;
 }
 
+.login{
+    display : inline-block;
+    vertical-align: top;
+    width: 484px;
+    height : 40px;
+    padding-left : 40px;
+    text-decoration: none;
+    background-image: url(../images/login.png);
+    background-repeat: no-repeat;
+    background-color : #4CA5A2;
+    background-size : 36px 36px;   
+}
+
 /*Gestion des erreus---------------------------------------------------------*/
 
 .erreur{
     width: 200px;
-    height : 20px;
+    height : 22px;
     color:red;
+}
+
+.securityErreur{
+    display : block;
+    width: 500px;
+    height : 20px;
+    vertical-align: top;
+    margin-top: 0;
+    margin-left : 320px;
 }
 

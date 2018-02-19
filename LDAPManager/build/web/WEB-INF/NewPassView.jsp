@@ -21,7 +21,7 @@
                 securityLine("password","entrez votre nouveau mot de passe","pass","${erreurs.pass}");
                 securityLine("password","confirmez votre mot de passe","confirm","${erreurs.confirm}");    
             </script>
-            <input type="submit" class="bouton" id="Valider"  value="Valider"</a>  
+            <input type="submit" class="log" id="Valider"  value=""</a>  
       </form>
     </body>
 </html>
