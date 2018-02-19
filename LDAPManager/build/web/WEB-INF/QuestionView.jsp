@@ -20,7 +20,7 @@
                 standardLine("Question de sécurité","Question","${securityInfo}");
                 securityLine("text","entrez la réponse de sécurité","Answer","${erreurs.answer}");
             </script>
-            <input type="submit" class="bouton" value="valider">
+            <input type="submit" class="log" value="">
         </form>
     </body>
 </html>

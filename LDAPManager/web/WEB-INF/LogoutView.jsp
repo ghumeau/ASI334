@@ -17,7 +17,7 @@
         </c:import>
         <form>
         <p>Vous avez été deconnecté</p>
-        <a href="login" class="link">Se connecter</a>
+          <a href="login" ><input type="button" value="Se connecter" class="login" id="loginButton"/>
         </form>
     </body>
 </html>

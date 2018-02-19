@@ -39,7 +39,7 @@ function securityLine(type, label, id, erreur) {
                     <span class='securityLabel' for='proposition'>" + label + "</span>\n\
                     <span class='dataColon' id='" + id + "Colon'>:</span>\n\
                     <input type='" + type + "' id='" + id + "Field' name='" + id + "' class='securityField'>\n\
-                    <span class='erreur'>" + erreur + "</span>\n\
+                    <p class='securityErreur'>" + erreur + "</p>\n\
                     </div>";
     document.write(contenu);
 }

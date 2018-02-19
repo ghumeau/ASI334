@@ -19,7 +19,7 @@
             <script>
                 securityLine("text","entrez votre identifiant","uid","${erreurs.uid}");               
             </script>
-            <input type="submit" class="bouton" value="valider"> 
+            <input type="submit" class="log" value=""> 
       </form>
     </body>
 </html>
