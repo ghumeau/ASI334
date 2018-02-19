@@ -30,7 +30,6 @@
                 <span class="erreur">${resultat}</span><br> 
             </div>
             
-            <a href="./cheat">   acces direct</a>
                   
         </form>
         
