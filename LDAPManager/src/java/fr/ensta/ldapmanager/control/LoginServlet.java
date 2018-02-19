@@ -52,7 +52,12 @@ public class LoginServlet extends HttpServlet {
         if (echecs>=maxEchecs){
             request.setAttribute(ATT_RESULTAT, "Trop d'échec, vous avez été bloqué !!!");
             this.getServletContext().getRequestDispatcher("/WEB-INF/LoginView.jsp").forward(request, response);
-        }        
+        }
+
+        // Si les deux champs sont vides, charger de nouveau la page de login
+        if (Checks.isEmpty(login) && Checks.isEmpty(pwd)) {
+            this.getServletContext().getRequestDispatcher("/WEB-INF/LoginView.jsp").forward(request, response);
+        }
 
         // Verification de la syntaxe de l'UID.
         if (Checks.isEmpty(login)){errors.put(CHAMP_LOGIN,"Veuillez saisir votre UID.");}
@@ -78,7 +83,7 @@ public class LoginServlet extends HttpServlet {
                 this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
             }
         }
-        else{                                            // échec
+        else{                                            // échec de l'authentification
             echecs++;
             session.setAttribute(ATT_ECHECS,echecs);
             result = "Echec de l'authentification, tentatives restantes : " + (maxEchecs-echecs);

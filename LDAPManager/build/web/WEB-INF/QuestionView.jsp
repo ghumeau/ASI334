@@ -21,6 +21,6 @@
                 securityLine("text","entrez la réponse de sécurité","Answer","${erreurs.answer}");
             </script>
             <input type="submit" class="bouton" value="valider">
-      </form>
+        </form>
     </body>
 </html>

@@ -43,9 +43,16 @@ public class NewPassServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Services svc = new Services();
+        String uid = (String) session.getAttribute(ATT_UID);
         Map<String, String> errors = new HashMap<>();
         String newpwd1 = request.getParameter(CHAMP_NEWPWD1);
         String newpwd2 = request.getParameter(CHAMP_NEWPWD2);
+        
+        Boolean auth = (Boolean) session.getAttribute(ATT_AUTH);
+        // A l'appel de la servlet, affichage de la page d'authentification si l'utilisateur n'a pas de session active
+        if (uid==null){
+            this.getServletContext().getRequestDispatcher("/login").forward(request, response);
+        }
         
         // changement de mot de passe
         if (Checks.isEmpty(newpwd1)) {errors.put(CHAMP_NEWPWD1,"Veuillez saisir un nouveau mot de passe.");}
@@ -57,11 +64,12 @@ public class NewPassServlet extends HttpServlet {
             
         if (errors.isEmpty()) {
             // enregistrement du nouveau mot de passe
-            User user = new User((String) session.getAttribute(ATT_UID),newpwd1);
+            User user = new User(uid,newpwd1);
             svc.ModifyPassword(user);
-            session.setAttribute(ATT_USER, user);
+            User authUser = svc.AuthenticationSequence(uid, newpwd1);
+            session.setAttribute(ATT_USER, authUser);
             session.setAttribute(ATT_AUTH, true);
-            request.setAttribute(ATT_USER, user.GetInfo());
+            request.setAttribute(ATT_USER, authUser.GetInfo());
             this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);
         }
         else {
