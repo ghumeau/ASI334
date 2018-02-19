@@ -60,12 +60,11 @@
             
         </form>
         
-        <div class="QRcontainer">
-                <c:if test="${not empty urlQRcode}">
-                    <iframe class="QRframe" src="${urlQRcode}">
-                    </iframe>
-                </c:if>
-            </div>
+
+        <c:if test="${not empty urlQRcode}">
+               <input type="button" onclick="newPopup('${urlQRcode}');return false;" class="QRButton"   />  
+        </c:if>
+     
         
         
     </body>
