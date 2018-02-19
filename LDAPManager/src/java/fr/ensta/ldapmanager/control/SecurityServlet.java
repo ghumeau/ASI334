@@ -79,7 +79,7 @@ public class SecurityServlet extends HttpServlet {
                     user.setPassword(newpwd1);
                     svc.ModifyPassword(user);
                     user = svc.AuthenticationSequence(user.getUid(), user.getPassword());
-                    result = "Modification prise en compte";
+                    errors.put(CHAMP_NEWPWD1,"Modification prise en compte");
                 }
             }
             
@@ -91,7 +91,7 @@ public class SecurityServlet extends HttpServlet {
                 else {
                     user.setSecureQuestion(question);
                     user.setSecureAnswer(answer);
-                    result = "Modification prise en compte";
+                    errors.put(CHAMP_QUEST,"Modification prise en compte");
                 }
             }
             
