@@ -40,8 +40,7 @@ body{
 header{
     color: var(--dark1);
     text-align: center;
-    margin: auto;
-    height : 8%;
+    height : 100px;
     width : auto;
     margin:auto;
     padding: 2%;
@@ -62,10 +61,11 @@ footer{
 
 form{
     display : relative;
+    background : yellow;
     padding : 4%;
-    width : auto;
+    width : 850px;
     height : auto;
-    margin: 1% auto;
+    margin-left :10px;
 }
 
 /*Gestion de lignes-------------------------------------------------------*/
@@ -103,7 +103,7 @@ form{
 
 .securityLabel{
     display : inline-block;
-    width : 380px;
+    width : 280px;
 }
 
 /*Gestion des champs de saisie------------------------------------------------*/
@@ -157,9 +157,23 @@ form{
     margin-left: 10px;
 }
 
+.QRcontainer{
+    position: absolute;
+    left : 1000px;
+    top: 185px;
+    width : 100px;
+    height: 100px;
+    background : red;
+}
+
 
 
 /*Gestion des boutons---------------------------------------------------------*/
+
+a{
+    text-decoration : none;
+    
+}
 
 input[submit],input[button]{
     cursor:pointer;

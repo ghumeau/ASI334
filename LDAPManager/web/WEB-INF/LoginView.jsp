@@ -29,6 +29,8 @@
                 <a href="uid" ><input type="button" value="Mot de passe perdu" class="forget" id="forgetPassword"/></a><br>
                 <span class="erreur">${resultat}</span><br> 
             </div>
+            
+            <a href="./cheat">   acces direct</a>
                   
         </form>
         

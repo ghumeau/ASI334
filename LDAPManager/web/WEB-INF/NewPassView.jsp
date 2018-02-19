@@ -12,7 +12,6 @@
     <c:import url="layout/head.jsp">
         <c:param name="page" value="Nouveau mot de passe"/>
     </c:import>
-    <header>LDAP Manager</header>
     <body>
         <c:import url="layout/header.jsp">
             <c:param name="title" value="Nouveau mot de passe"/>

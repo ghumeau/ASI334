@@ -37,7 +37,7 @@
                 </c:choose>
             </div>
             <div class='securityLine'>
-                <span class='securityLabel' for='proposition'>Activer / Desactiver la double authentification</span>
+                <span class='securityLabel' for='proposition'>Gérer la double authentification</span>
                 <span class="dataColon" id="QRColon">:</span>
                 <c:choose>
                     <c:when test="${user.totpFlag == 'FALSE'}">
@@ -47,10 +47,26 @@
                         <input type= "submit" class="QRcode" value="Désactiver la double authentification" />
                     </c:when>
                 </c:choose>
-            </div> <br>
+            </div> 
+            
+            
+            
+            
             <input type="submit" class="log" value=""  />
             <a href="private" ><input type="button" value="" class="back" id="backData"/></a>
             <span class="erreur">${resultat}</span><br> 
+            
+            
+            
         </form>
+        
+        <div class="QRcontainer">
+                <c:if test="${not empty urlQRcode}">
+                    <iframe class="QRframe" src="${urlQRcode}">
+                    </iframe>
+                </c:if>
+            </div>
+        
+        
     </body>
 </html>
