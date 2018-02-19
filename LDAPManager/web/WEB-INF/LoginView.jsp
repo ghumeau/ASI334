@@ -26,7 +26,7 @@
             </div>
             <div class="LoginLine">
                 <input type="submit" value="" class="log" id="validerLogin"/>
-                <a href="uid" ><input type="button" value="" class="forget" id="forgetPassword"/></a><br>
+                <a href="uid" ><input type="button" value="Mot de passe perdu" class="forget" id="forgetPassword"/></a><br>
                 <span class="erreur">${resultat}</span><br> 
             </div>
                  

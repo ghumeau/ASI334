@@ -37,7 +37,7 @@ function dataLine(label, id, data, erreur) {
 function securityLine(type, label, id, erreur) {
     var contenu = "<div class='securityLine'>\n\
                     <span class='securityLabel' for='proposition'>" + label + "</span>\n\
-                    <span class='securitColon' id='" + id + "Colon'>:</span>\n\
+                    <span class='dataColon' id='" + id + "Colon'>:</span>\n\
                     <input type='" + type + "' id='" + id + "Field' name='" + id + "' class='securityField'>\n\
                     <span class='erreur'>" + erreur + "</span>\n\
                     </div>";

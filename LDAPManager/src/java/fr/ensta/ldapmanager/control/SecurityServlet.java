@@ -77,6 +77,8 @@ public class SecurityServlet extends HttpServlet {
                 else if (!newpwd1.equals(newpwd2)) {errors.put(CHAMP_NEWPWD2,"Mots de passe différents!");}
                 else {
                     user.setPassword(newpwd1);
+                    svc.ModifyPassword(user);
+                    user = svc.AuthenticationSequence(user.getUid(), user.getPassword());
                     result = "Modification prise en compte";
                 }
             }
