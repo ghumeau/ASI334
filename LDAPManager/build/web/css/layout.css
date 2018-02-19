@@ -295,11 +295,10 @@ input[submit],input[button]{
 }
 
 .QRcode{
-    background : orange;
     display: inline-block;
     background: url(../images/qrcode.png);
     background-size :36px 36px;
-    background-color: lightsalmon;
+    background-color: #E67E22;
     background-repeat: no-repeat;
     height : 40px;
     width: 500px;
@@ -319,6 +318,20 @@ input[submit],input[button]{
     background-repeat: no-repeat;
     background-color : #4CA5A2;
     background-size : 36px 36px;   
+}
+
+.QRButton{
+    background : orange;
+    display: inline-block;
+    background: url(../images/qrcode.png);
+    background-size :36px 36px;
+    background-color: #F7DC6F;
+    background-repeat : no-repeat;
+    height : 40px;
+    width: 186px;
+    padding-left:40px;
+    margin-left: 10px;
+    vertical-align: top;
 }
 
 /*Gestion des erreus---------------------------------------------------------*/
