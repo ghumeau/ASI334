@@ -17,19 +17,22 @@
         </c:import>
         <form method="post" action="security" ID="securityForm">
             <script>
-                securityLine("password","Saisir l'ancien mot de passe","pwd","${erreurs.pwd}");
-                securityLine("password","Saisir le nouveau mot de passe","newpwd","${erreurs.newpwd}");
-                securityLine("password","Confirmation du nouveau mot de passe","confirm","${erreurs.confirm}");
-                securityLine("text","Question de sécurité","question","${erreurs.question}");
-                securityLine("text","réponse de sécurité","answer","${erreurs.answer}");
-                securityLine("checkbox","Double Authentification","double","");
+                securityLine("password", "Saisir l'ancien mot de passe", "pwd", "${erreurs.pwd}");
+                securityLine("password", "Saisir le nouveau mot de passe", "newpwd", "${erreurs.newpwd}");
+                securityLine("password", "Confirmation du nouveau mot de passe", "confirm", "${erreurs.confirm}");
+                securityLine("text", "Question de sécurité", "question", "${erreurs.question}");
+                securityLine("text", "réponse de sécurité", "answer", "${erreurs.answer}");
+                securityLine("checkbox", "Double Authentification", "double", "");
             </script>
-            <input type="submit" class="bouton" value="Valider"  /><br><br>
-            <a class="link" id="returnButton"   href="private">retour aux données</a>
-            
-            <div id="QRCode">
-                    ${urlQRcode}
-            </div>
+            <input type="submit" class="log" value=""  />
+            <a href="private" ><input type="button" value="" class="back" id="backData"/></a>
+            <a class="link" id="returnButton"   href="private"></a>
+            <span class="erreur">${resultat}</span><br> 
+
+
+            <iframe class="QRcode" src="${urlQRcode}" sandbox>
+                <p><a href="${urlQRcode}"></a></p>
+            </iframe>
         </form>
     </body>
 </html>

@@ -65,7 +65,7 @@ form{
     padding : 4%;
     width : auto;
     height : auto;
-    margin: 2% auto;
+    margin: 1% auto;
 }
 
 /*Gestion de lignes-------------------------------------------------------*/
@@ -128,6 +128,7 @@ form{
 
 .securityField{
     display: inline-block;
+    height : 40px;
     width: 500px;
     margin-left: 10px;
     vertical-align: top;
@@ -152,6 +153,12 @@ form{
     margin-left: 10px;
 }
 
+.QRcode{
+    height : 200px;
+    width : 200px;
+    
+}
+
 /*Gestion des boutons---------------------------------------------------------*/
 
 input[submit],input[button]{
@@ -168,10 +175,14 @@ input[submit],input[button]{
 }
 
 .forget{
-    width: 40px;
+    width: 210px;
     height : 40px;
+    padding-left : 40px;
+    text-decoration: none;
     background: url(../images/forget.png);
-    background-size : 100% 100%;
+    background-repeat: no-repeat;
+    background-color : #25B7D3;
+    background-size : 36px 36px;
 }
 
 
@@ -214,7 +225,7 @@ input[submit],input[button]{
 .allModify{
     display : inline-block;
     vertical-align: top;
-    width: 480px;
+    width: 484px;
     height : 40px;
     padding-left : 40px;
     background-image: url(../images/modify.png);
@@ -227,7 +238,7 @@ input[submit],input[button]{
 .security{
     display : inline-block;
     vertical-align: top;
-    width: 200px;
+    width: 484px;
     height : 40px;
     padding-left : 40px;
     text-decoration: none;
@@ -240,17 +251,26 @@ input[submit],input[button]{
 .logout{
     display : inline-block;
     vertical-align: top;
-    width: 200px;
+    width: 484px;
     height : 40px;
     padding-left : 40px;
     text-decoration: none;
     background-image: url(../images/logout.png);
     background-repeat: no-repeat;
-    background-color : #A9E370;
+    background-color : #7FCB35;
     background-size : 36px 36px;   
 }
 
-/*Gestion des boutons---------------------------------------------------------*/
+.back{
+    width: 40px;
+    height : 40px;
+    background: url(../images/back.png);
+    background-size : 100% 100%;
+    
+    
+}
+
+/*Gestion des erreus---------------------------------------------------------*/
 
 .erreur{
     width: 200px;
