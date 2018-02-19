@@ -20,7 +20,7 @@ import javax.servlet.http.*;
 @WebServlet(name = "DoubleLoginServlet", urlPatterns = {"/DoubleLoginServlet"})
 public class DoubleLoginServlet extends HttpServlet {
 
-    public static final String CHAMP_CODE = "code";
+    public static final String CHAMP_CODE = "Authenticator";
     public static final String ATT_ERREURS = "erreurs";
     public static final String ATT_ECHECS = "echecs";
     public static final String ATT_USER = "user";
