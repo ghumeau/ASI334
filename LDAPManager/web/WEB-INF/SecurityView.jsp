@@ -23,19 +23,8 @@
                 securityLine("text", "Question de sécurité", "question", "${erreurs.question}");
                 securityLine("text", "réponse de sécurité", "answer", "${erreurs.answer}");
             </script>
-            
-             <div class='securityLine'>
-                <span class='securityLabel' for='proposition'>Etat de la double Authentification</span>
-                <span class="dataColon" id="QRColon">:</span>
-                <c:choose>
-                    <c:when test="${user.totpFlag == 'FALSE'}">
-                        <span class="data">Désactivée</span>
-                    </c:when>
-                    <c:when test="${user.totpFlag == 'TRUE'}">  
-                            <span class="data">Activée</span>
-                    </c:when>
-                </c:choose>
-            </div>
+
+
             <div class='securityLine'>
                 <span class='securityLabel' for='proposition'>Gérer la double authentification</span>
                 <span class="dataColon" id="QRColon">:</span>
@@ -48,24 +37,29 @@
                     </c:when>
                 </c:choose>
             </div> 
-            
-            
-            
-            
+            <div class='securityLine'>
+                <span class='securityLabel' for='proposition'>Etat de la double Authentification</span>
+                <span class="dataColon" id="QRColon">:</span>
+                <c:choose>
+                    <c:when test="${user.totpFlag == 'FALSE'}">
+                        <span class="data">Désactivée</span>
+                    </c:when>
+                    <c:when test="${user.totpFlag == 'TRUE'}">  
+                        <span class="data">Activée</span>
+                    </c:when>
+                </c:choose>
+            </div>
             <input type="submit" class="log" value=""  />
             <a href="private" ><input type="button" value="" class="back" id="backData"/></a>
             <span class="erreur">${resultat}</span><br> 
-            
-            
-            
         </form>
-        
 
-        <c:if test="${not empty urlQRcode}">
-               <input type="button" onclick="newPopup('${urlQRcode}');return false;" class="QRButton"   />  
-        </c:if>
-     
-        
-        
+        <div class="QRcontainer">
+            <img src="${urlQRcode}" class="QRframe"/>
+        </div>
+
+
+
+
     </body>
 </html>
