@@ -8,12 +8,9 @@ A	--> SecurityView	: afficher QRCode ("urlQRcode") ;
 
 A,G	--> QuestionView	: pas d'affichage question/réponse ;
 
-PY, G	--> Data/Security	: pas de persistance des données (VM de tests pas à jour ?) ;
-
 
 En cours :
 --> QuestionView
---> DataView
 --> SecurityView
 
 
@@ -25,4 +22,5 @@ Non testé :
 Validé :
 --> LoginView
 --> UIDView
+--> DataView
 --> LoginView
