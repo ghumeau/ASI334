@@ -41,7 +41,7 @@
                 <span class="dataColon" id="QRColon">:</span>
                 <c:choose>
                     <c:when test="${user.totpFlag == 'FALSE'}">
-                        <input type="submit" class="QRcode" onclick="newPopup('${urlQRcode}');return false;" value="Generer un QR code" />
+                        <input type="submit" class="QRcode"  value="Generer un QR code" />
                     </c:when>
                     <c:when test="${user.totpFlag == 'TRUE'}">  
                         <input type= "submit" class="QRcode" value="Désactiver la double authentification" />

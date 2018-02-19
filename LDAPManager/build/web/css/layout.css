@@ -60,10 +60,10 @@ footer{
 }
 
 form{
-    display : relative;
+    display : inline-block;
     background : yellow;
     padding : 4%;
-    width : 850px;
+    width : 880px;
     height : auto;
     margin-left :10px;
 }
@@ -158,11 +158,10 @@ form{
 }
 
 .QRcontainer{
-    position: absolute;
-    left : 1000px;
-    top: 185px;
-    width : 100px;
-    height: 100px;
+    display: inline-block;
+    vertical-align: top;
+    width : 200px;
+    height: 200px;
     background : red;
 }
 
