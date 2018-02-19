@@ -341,45 +341,6 @@ public class Services {
     }
     
     /********************
-    * Modifies the TOTP key of a user in the LDAP server
-    ********************/
-    /*private void ModifyTotpKey(User userToModify) {
-        try {
-            HashMap oldUserInfo;
-            String DN = DNSearch(userToModify.getUid());
-            String totpSecret = userToModify.getTotpSecret();
-            String techAccountDN = DNSearch(technicalAccount);
-            connector = new LDAPConnector(techAccountDN,techAccPwd);
-            connector.connect();
-            
-            oldUserInfo = RetrieveInfo();
-            
-            if (oldUserInfo.containsKey("totpSecret")) {
-                if (!totpSecret.isEmpty()) {
-                    connector.ModifyTotpKey(DN, totpSecret);
-                }
-                else {
-                    connector.DeleteTotpKey(DN);
-                }
-            }
-            else {
-                if (!totpSecret.isEmpty()) {
-                    connector.AddTotpKey(DN, totpSecret);
-                }
-            }
-            
-            connector.disconnect();
-        }
-        catch (Exception e) {
-            System.out.println("Erreur dans ModifyTotpKey");
-        }
-    }*/
-    
-    /*public void DeleteTotpKey(User userToModify) {
-        
-    }*/
-    
-    /********************
      * Verifies the TOTP key of a user
      * @param userToCheck user whom TOTP key needs to be checked
      * @param inputCode the code filled by the user

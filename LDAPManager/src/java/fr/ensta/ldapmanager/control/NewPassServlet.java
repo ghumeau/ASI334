@@ -73,7 +73,7 @@ public class NewPassServlet extends HttpServlet {
             if (authUser.isTotpFlag()) {
                 authUser.setTotpFlag(false);
                 authUser.setTotpSecret("");
-                svc.ModifyInfo(user);
+                svc.ModifyInfo(authUser);
             }
             request.setAttribute(ATT_USER, authUser.GetInfo());
             this.getServletContext().getRequestDispatcher("/WEB-INF/DataView.jsp").forward(request, response);

@@ -133,9 +133,10 @@ public class User {
         this.totpSecret = totpSecret;
     }
     
-    /*
-    Retrieve the user info
-    */
+    /********************
+     * Get the user info
+     * @return a LinkedHashMap containing all the user info
+    ********************/
     public LinkedHashMap GetInfo() {
         try {
             LinkedHashMap<String,String> infoMap = new LinkedHashMap();
