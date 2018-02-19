@@ -103,16 +103,25 @@ function allCancel() {
     var Data = document.getElementsByClassName("data");
     var DataField = document.getElementsByClassName("dataField");
     var Modify = document.getElementsByClassName("modify");
-    for (var i = 0, len = Data.length; i < len; i++)
+    for (var i = 0, len = Data.length; i < len;
+    i++
+    )
     {
         Data[i].style.display = "inline-block";
         DataField[i].style.display = "none";
         Modify[i].style.display = "inline-block";
     }
-        document.getElementById("modifier").style.display = "inline-block";
+    document.getElementById("modifier").style.display = "inline-block";
     document.getElementById("annuler").style.display = "none";
     document.getElementById("valider").style.display = "none";
 
+}
+
+function newPopup(url) {
+    var top=(screen.height-400)/2;
+    var left=(screen.width-400)/2;
+    window.open(url,'popUpWindow','height=400px,width=400px,left='+left+',top='+top+',\n\
+    resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,directories=no,status=no');
 }
 
 

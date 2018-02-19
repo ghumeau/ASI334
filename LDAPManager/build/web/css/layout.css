@@ -41,7 +41,7 @@ header{
     color: var(--dark1);
     text-align: center;
     margin: auto;
-    height : 10%;
+    height : 8%;
     width : auto;
     margin:auto;
     padding: 2%;
@@ -103,7 +103,7 @@ form{
 
 .securityLabel{
     display : inline-block;
-    width : 260px;
+    width : 380px;
 }
 
 /*Gestion des champs de saisie------------------------------------------------*/
@@ -134,6 +134,10 @@ form{
     vertical-align: top;
 }
 
+#double{
+    width: 1000px;
+}
+
 /*Gestion de l'affichage des données------------------------------------------*/
 
 .dataColon{
@@ -153,11 +157,7 @@ form{
     margin-left: 10px;
 }
 
-.QRcode{
-    height : 200px;
-    width : 200px;
-    
-}
+
 
 /*Gestion des boutons---------------------------------------------------------*/
 
@@ -179,6 +179,7 @@ input[submit],input[button]{
     height : 40px;
     padding-left : 40px;
     text-decoration: none;
+    vertical-align: top;
     background: url(../images/forget.png);
     background-repeat: no-repeat;
     background-color : #25B7D3;
@@ -265,9 +266,21 @@ input[submit],input[button]{
     width: 40px;
     height : 40px;
     background: url(../images/back.png);
-    background-size : 100% 100%;
-    
-    
+    background-size : 100% 100%;  
+}
+
+.QRcode{
+    background : orange;
+    display: inline-block;
+    background: url(../images/qrcode.png);
+    background-size :36px 36px;
+    background-color: lightsalmon;
+    background-repeat: no-repeat;
+    height : 40px;
+    width: 500px;
+    padding-left:40px;
+    margin-left: 10px;
+    vertical-align: top;
 }
 
 /*Gestion des erreus---------------------------------------------------------*/

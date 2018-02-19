@@ -17,22 +17,40 @@
         </c:import>
         <form method="post" action="security" ID="securityForm">
             <script>
-                securityLine("password", "Saisir l'ancien mot de passe", "pwd", "${erreurs.pwd}");
-                securityLine("password", "Saisir le nouveau mot de passe", "newpwd", "${erreurs.newpwd}");
-                securityLine("password", "Confirmation du nouveau mot de passe", "confirm", "${erreurs.confirm}");
+                securityLine("password", "Ancien mot de passe (obligatoire)", "pwd", "${erreurs.pwd}");
+                securityLine("password", "Nouveau mot de passe", "newpwd", "${erreurs.newpwd}");
+                securityLine("password", "Confirmation du mot de passe", "confirm", "${erreurs.confirm}");
                 securityLine("text", "Question de sécurité", "question", "${erreurs.question}");
                 securityLine("text", "réponse de sécurité", "answer", "${erreurs.answer}");
-                securityLine("checkbox", "Double Authentification", "double", "");
             </script>
+            
+             <div class='securityLine'>
+                <span class='securityLabel' for='proposition'>Etat de la double Authentification</span>
+                <span class="dataColon" id="QRColon">:</span>
+                <c:choose>
+                    <c:when test="${user.totpFlag == 'FALSE'}">
+                        <span class="data">Désactivée</span>
+                    </c:when>
+                    <c:when test="${user.totpFlag == 'TRUE'}">  
+                            <span class="data">Activée</span>
+                    </c:when>
+                </c:choose>
+            </div>
+            <div class='securityLine'>
+                <span class='securityLabel' for='proposition'>Activer / Desactiver la double authentification</span>
+                <span class="dataColon" id="QRColon">:</span>
+                <c:choose>
+                    <c:when test="${user.totpFlag == 'FALSE'}">
+                        <input type="submit" class="QRcode" onclick="newPopup('${urlQRcode}');return false;" value="Generer un QR code" />
+                    </c:when>
+                    <c:when test="${user.totpFlag == 'TRUE'}">  
+                        <input type= "submit" class="QRcode" value="Désactiver la double authentification" />
+                    </c:when>
+                </c:choose>
+            </div> <br>
             <input type="submit" class="log" value=""  />
             <a href="private" ><input type="button" value="" class="back" id="backData"/></a>
-            <a class="link" id="returnButton"   href="private"></a>
             <span class="erreur">${resultat}</span><br> 
-
-
-            <iframe class="QRcode" src="${urlQRcode}" sandbox>
-                <p><a href="${urlQRcode}"></a></p>
-            </iframe>
         </form>
     </body>
 </html>
