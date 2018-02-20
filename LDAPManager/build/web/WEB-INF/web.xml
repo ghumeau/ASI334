@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
-    
     <!-- Servlet d'authentification -->
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
@@ -10,7 +9,6 @@
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
-    
     <!-- Servlet de double authentification -->
     <servlet>
         <servlet-name>DoubleLoginServlet</servlet-name>
@@ -20,7 +18,6 @@
         <servlet-name>DoubleLoginServlet</servlet-name>
         <url-pattern>/login2</url-pattern>
     </servlet-mapping>
-    
     <!-- Servlet de récupération de mot de passe - UID -->
     <servlet>
         <servlet-name>UIDServlet</servlet-name>
@@ -30,7 +27,6 @@
         <servlet-name>UIDServlet</servlet-name>
         <url-pattern>/uid</url-pattern>
     </servlet-mapping>
-    
     <!-- Servlet de récupération de mot de passe - Question/réponse -->
     <servlet>
         <servlet-name>QuestionServlet</servlet-name>
@@ -40,7 +36,6 @@
         <servlet-name>QuestionServlet</servlet-name>
         <url-pattern>/question</url-pattern>
     </servlet-mapping>
-    
     <!-- Servlet de récupération de mot de passe - Modification mot de passe -->
     <servlet>
         <servlet-name>NewPassServlet</servlet-name>
@@ -50,7 +45,6 @@
         <servlet-name>NewPassServlet</servlet-name>
         <url-pattern>/new</url-pattern>
     </servlet-mapping>
-    
     <!-- Servlet d'affichage/modification des données -->
     <servlet>
         <servlet-name>DataServlet</servlet-name>
@@ -60,7 +54,6 @@
         <servlet-name>DataServlet</servlet-name>
         <url-pattern>/private</url-pattern>
     </servlet-mapping>
-    
     <!-- Servlet d'affichage/modification des données de sécurité -->
     <servlet>
         <servlet-name>SecurityServlet</servlet-name>
@@ -70,7 +63,6 @@
         <servlet-name>SecurityServlet</servlet-name>
         <url-pattern>/security</url-pattern>
     </servlet-mapping>
-    
     <!-- Servlet de déconnexion -->
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
@@ -80,16 +72,7 @@
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/public</url-pattern>
     </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>CheatServlet</servlet-name>
-        <servlet-class>fr.ensta.ldapmanager.control.CheatServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>CheatServlet</servlet-name>
-        <url-pattern>/cheat</url-pattern>
-    </servlet-mapping>
-    
+    <!-- Durée de session : 5min -->
     <session-config>
         <session-timeout>5</session-timeout>
     </session-config>

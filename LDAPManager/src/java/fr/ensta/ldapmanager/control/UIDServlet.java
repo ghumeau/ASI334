@@ -36,6 +36,7 @@ public class UIDServlet extends HttpServlet {
         Boolean auth = (Boolean) session.getAttribute(ATT_AUTH);
         // A l'appel de la servlet (GET), affichage de la page UID si l'utilisateur n'a pas de session active
         if (auth==null){
+            // Vérification du nombre d'échecs
             Integer echecs = (Integer) session.getAttribute(ATT_ECHECSQ);
             if (echecs==null){session.setAttribute(ATT_ECHECSQ,0);}
             else if (echecs>=maxEchecs){
@@ -45,7 +46,8 @@ public class UIDServlet extends HttpServlet {
             }
             this.getServletContext().getRequestDispatcher("/WEB-INF/UIDView.jsp").forward(request, response);
         }
-        else {this.getServletContext().getRequestDispatcher("/private").forward(request, response);} // si déjà authentifié, transfert sur la page data
+        // Si déjà authentifié, transfert sur la page data
+        else {this.getServletContext().getRequestDispatcher("/private").forward(request, response);}
     }
     
     @Override
@@ -56,6 +58,7 @@ public class UIDServlet extends HttpServlet {
         Map<String, String> errors = new HashMap<>();
         Integer echecs = (Integer) session.getAttribute(ATT_ECHECSQ);
         
+        // Vérification du nombre d'échecs
         if (echecs==null){echecs=0;}
         if (echecs>=maxEchecs){
             errors.put(CHAMP_UID, "Trop d'échec, vous avez été bloqué !!!");
